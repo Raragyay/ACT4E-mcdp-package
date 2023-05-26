@@ -51,13 +51,23 @@ def solve_main() -> None:
         sys.exit(1)
 
     query_data = args.data
+    if model_source.startswith("http"):
+        import requests
 
-    if os.path.exists(model_source):
-        model_source = open(model_source).read()
+        r = requests.get(model_source)
+        if r.status_code != 200:
+            logger.error("Cannot download model from %r", model_source)
+            sys.exit(1)
+
+        model_source = r.text
         data = yaml.load(model_source, Loader=yaml.SafeLoader)
     else:
-        logger.error("URL not implemented yet: %r", model_source)
-        sys.exit(1)
+        if os.path.exists(model_source):
+            model_source = open(model_source).read()
+            data = yaml.load(model_source, Loader=yaml.SafeLoader)
+        else:
+            logger.error("Cannot open file: %r", model_source)
+            sys.exit(1)
 
     model = load_repr1(data, NamedDP)
     logger.info("model: %s", model)
