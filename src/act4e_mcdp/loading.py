@@ -16,8 +16,10 @@ from .nameddps import (
 from .posets import FinitePoset, Numbers, Poset, PosetProduct
 from .primitivedps import (
     AmbientConversion,
+    CatalogueDP,
     Constant,
     DPSeries,
+    EntryInfo,
     JoinNDP,
     Limit,
     M_Ceil_DP,
@@ -95,6 +97,15 @@ def load_ValueFromPoset(ob: dict):
     value = ob["value"]
     value = parse_yaml_value(poset, value)
     return ValueFromPoset(value=value, poset=poset)
+
+
+@loader_for("CatalogueDP")
+def load_CatalogueDP(ob: dict):
+    fields = _load_DP_fields(ob)
+    entries = fields["entries"] = {}
+    for k, v in ob["entries"].items():
+        entries[k] = EntryInfo(**v)
+    return CatalogueDP(**fields)
 
 
 @loader_for("M_Res_MultiplyConstant_DP")

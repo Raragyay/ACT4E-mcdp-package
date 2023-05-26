@@ -443,8 +443,8 @@ class Constant(PrimitiveDP):
           c \leq  \res
         $$
 
-    Note that the functionality $\fun$ do not appear in the relation.
-    As long as the resources is above the limit, the functionality can be anything.
+        Note that the functionality $\fun$ do not appear in the relation.
+        As long as the resources is above the limit, the functionality can be anything.
 
     Attributes:
 
@@ -455,3 +455,40 @@ class Constant(PrimitiveDP):
     """
 
     c: ValueFromPoset
+
+
+@dataclass
+class EntryInfo:
+    r"""
+    Describes $\fun^{\max}_{\imp}$ and $\res^{\min}_{\imp}$ for an implementation.
+    """
+    f_max: object
+    r_min: object
+
+
+@dataclass
+class CatalogueDP(PrimitiveDP):
+    r"""
+    Implements a catalogue.
+
+    The available implementations are strings and each of them has a (max) functionality and a (min) resource.
+
+    Relation:
+
+        $$
+           \bigvee_{\imp \in \impspace}   ( \fun \leq \fun^{\max}_{\imp}) \wedge (\res^{\min}_{\imp} \leq
+           \res)
+        $$
+
+        where $\impspace$ is the set of implementations and $\fun^{\max}_{\imp}, \res^{\min}_{\imp}$ are
+        the functionality and resources of the implementation $\imp$.
+
+    Attributes:
+
+        F (Poset): The functionality poset $\F$
+        R (Poset): The resources poset $\R$
+        entries: A dictionary of entries.
+
+    """
+
+    entries: dict[str, EntryInfo]

@@ -1,0 +1,72 @@
+$schema:
+  title: SimpleWrap
+  kind: NamedDP
+functionalities:
+  f_1:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: J
+  f_2:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: m
+resources:
+  r_1:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: USD
+  r_2:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: W
+dp:
+  $schema:
+    title: CatalogueDP
+    kind: PrimitiveDP
+  F:
+    $schema:
+      kind: Poset
+      title: PosetProduct
+    subs:
+    - $schema:
+        kind: Poset
+        title: Numbers
+      bottom: '0'
+      top: Infinity
+      units: J
+    - $schema:
+        kind: Poset
+        title: Numbers
+      bottom: '0'
+      top: Infinity
+      units: m
+  R:
+    $schema:
+      kind: Poset
+      title: PosetProduct
+    subs:
+    - $schema:
+        kind: Poset
+        title: Numbers
+      bottom: '0'
+      top: Infinity
+      units: USD
+    - $schema:
+        kind: Poset
+        title: Numbers
+      bottom: '0'
+      top: Infinity
+      units: W
+  entries: {}

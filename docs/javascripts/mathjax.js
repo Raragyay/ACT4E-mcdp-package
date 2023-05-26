@@ -16,7 +16,9 @@ window.MathJax = {
             R: '{\\bf R}',
             common: '{\\bf C}',
             opspace: '{\\bf Q}',
-           posA: '{\\bf P}',
+            posA: '{\\bf P}',
+            imp: '{i}',
+            impspace: '{\\bf I}',
         }
     },
     options: {

@@ -11,13 +11,24 @@ These objects corresponds to morphisms in the category of design problems DP.
         - PrimitiveDP
 
 
-## Conversions
+## Simplest operations
 
 ::: act4e_mcdp.primitivedps
     options:
       members:
-        - AmbientConversion
-        - UnitConversion  
+        - Limit
+        - Constant
+        - True_DP
+        - False_DP
+
+## Catalogue
+
+::: act4e_mcdp.primitivedps
+    options:
+      members:
+        - CatalogueDP
+        - EntryInfo
+
 
 
 ## Plumbing
@@ -27,7 +38,7 @@ These objects corresponds to morphisms in the category of design problems DP.
       members:
         - JoinNDP
         - MeetNDualDP  
-
+        
 
 ## Simple unary mathematical operations
 
@@ -86,3 +97,14 @@ The constant is specified by an object of type `ValueFromPoset`.
     options:
       members:
         - DPSeries
+
+
+
+
+## Conversions
+
+::: act4e_mcdp.primitivedps
+    options:
+      members:
+        - AmbientConversion
+        - UnitConversion  
