@@ -38,4 +38,4 @@ metadata = true
 dirty = true
 
 vcs = "git"
-style = "semver"
+#style = "semver"
