@@ -9,10 +9,10 @@ publish: build
 
 
 bump:
-	./bumpversion.sh patch
+	./bump-version.sh patch
 
 bump-minor:
-	./bumpversion.sh minor
+	./bump-version.sh minor
 
 bump-major:
-	./bumpversion.sh major
+	./bump-version.sh major
