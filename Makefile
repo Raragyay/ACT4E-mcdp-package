@@ -1,5 +1,7 @@
 all:
 
+.PHONY: build
+
 build:
 	rm -f dist/*
 	poetry build -f wheel
