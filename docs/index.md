@@ -18,8 +18,12 @@ To install the package, use:
 
 ## API overview
 
-There are three kinds of objects:
+There are three kinds of objects used in this library:
 
-1. [Posets](API_posets.md) 
-2. [PrimitiveDPs](API_primitivedps.md) that represent morphisms in the category of design problems DP.
-3. [NamedDPs](API_nameddps.md) that are used to represent graphs of DPs.
+1. [Posets](API_posets.md), representing partially ordered sets.
+2. [PrimitiveDPs](API_primitivedps.md), representing morphisms in the category of design problems DP.
+3. [NamedDPs](API_nameddps.md), which are used to represent graphs of DPs.
+
+Other API objects:
+
+* [API_solution](API_solution.md) - the API for a solver
