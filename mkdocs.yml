@@ -2,10 +2,14 @@ site_name: ACT4E-mcdp
 #site_url: https://example.com/
 nav:
 - Home: index.md
-- API: API.md
-- API_posets: API_posets.md
-- API_primitivedps: API_primitivedps.md
-- API_nameddps: API_nameddps.md
+- API:
+  - API_posets.md
+  - API_primitivedps.md
+  - API_nameddps.md
+  - API_solution.md
+- About:
+  - about.md
+
 #theme: readthedocs
 theme:
   name: material
@@ -29,7 +33,7 @@ plugins:
         show_docstring_returns: true
         docstring_section_style: spacy
 - search
-
+- autorefs
 
 
 extra_javascript:

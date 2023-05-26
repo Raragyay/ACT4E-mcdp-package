@@ -1,7 +1,6 @@
 # Posets
 
 
-
 ::: act4e_mcdp.posets
     options:
       members:

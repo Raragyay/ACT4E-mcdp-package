@@ -6,10 +6,17 @@ window.MathJax = {
         processEnvironments: true,
         // packages: {'[+]': ['color']},
         macros: {
-            F: '{\\bf \\color{green} F}',
-            R: '{\\bf \\color{red} R}',
-            fun: '{\\color{green}f}',
-            res: '{\\color{red}r}',
+            // F: '{\\bf \\color{green} F}',
+            // R: '{\\bf \\color{red} R}',
+            // fun: '{\\color{green}f}',
+            // res: '{\\color{red}r}',
+            fun: '{f}',
+            res: '{r}',
+            F: '{\\bf F}',
+            R: '{\\bf R}',
+            common: '{\\bf C}',
+            opspace: '{\\bf Q}',
+           posA: '{\\bf P}',
         }
     },
     options: {

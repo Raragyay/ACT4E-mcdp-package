@@ -7,7 +7,7 @@ import yaml
 
 from . import logger
 from .loading import load_repr1, parse_yaml_value
-from .solution_interface import SolutionInterface
+from .solution_interface import SolverInterface
 from .structures import NamedDP
 
 
@@ -37,9 +37,9 @@ def solve_main() -> None:
         logger.error("Could not import solver %r", args.solver, exc_info=e)
         sys.exit(1)
 
-    solver: SolutionInterface
+    solver: SolverInterface
 
-    if isinstance(solver0, SolutionInterface):
+    if isinstance(solver0, SolverInterface):
         solver = solver0
     else:
         solver = solver0()  # type: ignore

@@ -41,23 +41,30 @@ These objects corresponds to morphisms in the category of design problems DP.
 
 ## Adding or multiplying by a constant
 
+The next set of DPs implement addition or multiplication by a constant.
+The constant is specified by an object of type `ValueFromPoset`.
+
 
 ::: act4e_mcdp.primitivedps
     options:
       members:
         - ValueFromPoset
  
-
+## Adding a constant
 
 ::: act4e_mcdp.primitivedps
     options:
       members:
         - M_Fun_AddConstant_DP
         - M_Res_AddConstant_DP
+
+## Multiplying by a constant
+
+::: act4e_mcdp.primitivedps
+    options:
+      members:
         - M_Fun_MultiplyConstant_DP
         - M_Res_MultiplyConstant_DP
-
-
 
 
 ## Adding or multiplying functionality and resources together
