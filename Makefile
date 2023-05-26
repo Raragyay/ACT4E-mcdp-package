@@ -2,7 +2,7 @@ all:
 
 build:
 	rm -f dist/*
-	poetry build
+	poetry build -f wheel
 
 publish: build
 	twine upload dist/*whl
