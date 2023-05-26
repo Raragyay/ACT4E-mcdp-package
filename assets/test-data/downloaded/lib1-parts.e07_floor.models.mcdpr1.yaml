@@ -1,0 +1,48 @@
+$schema:
+  title: CompositeNamedDP
+  kind: NamedDP
+functionalities:
+- f
+resources:
+- r
+nodes:
+  _RuleFunFloor_NWU1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+    - _res
+    resources:
+    - _op0
+    dp:
+      $schema:
+        title: M_FloorFun_DP
+        kind: PrimitiveDP
+        description: f ≤ floor(r)
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        step: '1'
+        units: ''
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      ann:
+connections:
+- from:
+    node: _RuleFunFloor_NWU1
+    node_resource: _op0
+  to:
+    resource: r
+- from:
+    functionality: f
+  to:
+    node: _RuleFunFloor_NWU1
+    node_functionality: _res

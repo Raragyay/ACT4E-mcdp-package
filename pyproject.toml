@@ -1,0 +1,23 @@
+[project]
+name = "ACT4E-mcdp"
+version = "0.1"
+authors = [{ name = "Andrea Censi", email = "AndreaCensi@users.noreply.github.com" }]
+dependencies = [
+    "ACT4E-mcdp",
+]
+
+[tool]
+[tool.poetry]
+name = "ACT4E-mcdp"
+version = "0.1"
+description = ""
+authors = [" <>"]
+packages = [
+    { from = "src", include = "act4e_mcdp" },
+]
+
+[tool.setuptools]
+packages = [
+    "act4e_mcdp",
+]
+package-dir = { "" = "src" }

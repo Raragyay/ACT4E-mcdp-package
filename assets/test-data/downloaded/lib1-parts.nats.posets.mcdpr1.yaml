@@ -1,0 +1,7 @@
+$schema:
+  kind: Poset
+  title: Numbers
+bottom: '0'
+top: Infinity
+step: '1'
+units: ''

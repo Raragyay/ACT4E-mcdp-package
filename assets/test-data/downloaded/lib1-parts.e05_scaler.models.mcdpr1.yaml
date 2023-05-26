@@ -1,0 +1,59 @@
+$schema:
+  title: CompositeNamedDP
+  kind: NamedDP
+functionalities:
+- f
+resources:
+- r
+nodes:
+  _invmultvalue1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+    - _result
+    resources:
+    - _ops0
+    dp:
+      $schema:
+        title: M_Fun_MultiplyConstant_DP
+        kind: PrimitiveDP
+        description: f / 10 ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      vu:
+        $schema:
+          title: NWUValueWithUnits
+        value: '10'
+        unit:
+          $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '10'
+          top: '10'
+          units: ''
+        ann:
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      ann:
+connections:
+- from:
+    node: _invmultvalue1
+    node_resource: _ops0
+  to:
+    resource: r
+- from:
+    functionality: f
+  to:
+    node: _invmultvalue1
+    node_functionality: _result

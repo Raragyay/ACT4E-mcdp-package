@@ -1,0 +1,64 @@
+$schema:
+  title: CompositeNamedDP
+  kind: NamedDP
+functionalities:
+- f
+resources:
+- r_1
+- r_2
+nodes:
+  _invmult1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+    - _result
+    resources:
+    - _ops0
+    - _ops1
+    dp:
+      $schema:
+        title: M_Fun_MultiplyMany_DP
+        kind: PrimitiveDP
+        description: f ≤ r₁⋅r₂
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      ann:
+      R:
+        $schema:
+          kind: Poset
+          title: PosetProduct
+        subs:
+        - $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '0'
+          top: Infinity
+          units: ''
+        - $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '0'
+          top: Infinity
+          units: ''
+connections:
+- from:
+    node: _invmult1
+    node_resource: _ops0
+  to:
+    resource: r_1
+- from:
+    node: _invmult1
+    node_resource: _ops1
+  to:
+    resource: r_2
+- from:
+    functionality: f
+  to:
+    node: _invmult1
+    node_functionality: _result

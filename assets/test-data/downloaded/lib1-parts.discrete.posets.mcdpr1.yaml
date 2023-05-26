@@ -1,0 +1,21 @@
+$schema:
+  title: FinitePoset
+  kind: Poset
+elements:
+- b
+- a
+- d
+- h
+- c
+- e
+relations:
+- - c
+  - d
+- - a
+  - c
+- - b
+  - e
+- - b
+  - d
+- - a
+  - b

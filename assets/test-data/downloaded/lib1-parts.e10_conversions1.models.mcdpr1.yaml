@@ -1,0 +1,48 @@
+$schema:
+  title: CompositeNamedDP
+  kind: NamedDP
+functionalities:
+- f
+resources:
+- r
+nodes:
+  _conversion1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+    - _op0
+    resources:
+    - _res
+    dp:
+      $schema:
+        title: UnitConversion
+        kind: PrimitiveDP
+        description: f * F 1/1000 ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: m
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: km
+      factor: 1/1000
+      ann:
+connections:
+- from:
+    functionality: f
+  to:
+    node: _conversion1
+    node_functionality: _op0
+- from:
+    node: _conversion1
+    node_resource: _res
+  to:
+    resource: r

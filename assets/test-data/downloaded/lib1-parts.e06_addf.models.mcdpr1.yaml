@@ -1,0 +1,100 @@
+$schema:
+  title: CompositeNamedDP
+  kind: NamedDP
+functionalities:
+- f
+resources:
+- r
+nodes:
+  _plus1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+    - _op0
+    resources:
+    - _res
+    dp:
+      $schema:
+        title: M_Res_AddConstant_DP
+        kind: PrimitiveDP
+        description: f + 10 <= r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      vu:
+        $schema:
+          title: NWUValueWithUnits
+        value: '10'
+        unit:
+          $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '10'
+          top: '10'
+          units: ''
+        ann:
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '10'
+        top: Infinity
+        units: ''
+      ann:
+  _conversion1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+    - _op01
+    resources:
+    - _res2
+    dp:
+      $schema:
+        title: AmbientConversion
+        kind: PrimitiveDP
+        description: f ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '10'
+        top: Infinity
+        units: ''
+      common:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
+        units: ''
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      ann:
+connections:
+- from:
+    functionality: f
+  to:
+    node: _plus1
+    node_functionality: _op0
+- from:
+    node: _plus1
+    node_resource: _res
+  to:
+    node: _conversion1
+    node_functionality: _op01
+- from:
+    node: _conversion1
+    node_resource: _res2
+  to:
+    resource: r
