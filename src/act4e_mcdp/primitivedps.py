@@ -6,8 +6,10 @@ from .posets import Poset
 
 __all__ = [
     "AmbientConversion",
+    "Constant",
     "DPSeries",
     "JoinNDP",
+    "Limit",
     "M_Ceil_DP",
     "M_FloorFun_DP",
     "M_Fun_AddConstant_DP",
@@ -399,3 +401,57 @@ class AmbientConversion(PrimitiveDP):
     """
 
     common: Poset
+
+
+@dataclass
+class Limit(PrimitiveDP):
+    r"""
+    Implements a bound on the functionality.
+
+    This is the dual of [Constant][act4e_mcdp.primitivedps.Constant].
+
+    Relation:
+
+        $$
+          \fun \leq  c
+        $$
+
+    Note that the resources $\res$ do not appear in the relation.
+    As long as the functionality is below the limit, the resources can be anything.
+
+    Attributes:
+
+        F (Poset): The functionality poset $\F$
+        R (Poset): The resources poset $\R$
+        c: The constant $c$
+
+    """
+
+    c: ValueFromPoset
+
+
+@dataclass
+class Constant(PrimitiveDP):
+    r"""
+    Implements a bound on the resources.
+
+    This is the dual of [Limit][act4e_mcdp.primitivedps.Limit].
+
+    Relation:
+
+        $$
+          c \leq  \res
+        $$
+
+    Note that the functionality $\fun$ do not appear in the relation.
+    As long as the resources is above the limit, the functionality can be anything.
+
+    Attributes:
+
+        F (Poset): The functionality poset $\F$
+        R (Poset): The resources poset $\R$
+        c: The constant $c$
+
+    """
+
+    c: ValueFromPoset

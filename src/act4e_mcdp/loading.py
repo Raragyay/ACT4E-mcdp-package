@@ -16,8 +16,10 @@ from .nameddps import (
 from .posets import FinitePoset, Numbers, Poset, PosetProduct
 from .primitivedps import (
     AmbientConversion,
+    Constant,
     DPSeries,
     JoinNDP,
+    Limit,
     M_Ceil_DP,
     M_FloorFun_DP,
     M_Fun_AddConstant_DP,
@@ -72,8 +74,12 @@ def _load_DP_fields(ob: dict) -> dict:
 
     if "vu" in ob:
         fields["vu"] = load_repr1(ob["vu"], ValueFromPoset)
+    if "c" in ob:
+        fields["c"] = load_repr1(ob["c"], ValueFromPoset)
     if "opspace" in ob:
         fields["opspace"] = load_repr1(ob["opspace"], Poset)
+    if "common" in ob:
+        fields["common"] = load_repr1(ob["common"], Poset)
     if "C" in ob:
         fields["opspace"] = load_repr1(ob["C"], Poset)
     if "factor" in ob:
@@ -207,6 +213,18 @@ def load_JoinNDP(ob: dict):
 def load_MeetNDualDP(ob: dict):
     fields = _load_DP_fields(ob)
     return MeetNDualDP(**fields)
+
+
+@loader_for("Limit")
+def load_Limit(ob: dict):
+    fields = _load_DP_fields(ob)
+    return Limit(**fields)
+
+
+@loader_for("Constant")
+def load_Constant(ob: dict):
+    fields = _load_DP_fields(ob)
+    return Constant(**fields)
 
 
 #

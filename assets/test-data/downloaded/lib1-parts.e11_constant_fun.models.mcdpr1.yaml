@@ -1,0 +1,114 @@
+$schema:
+  title: CompositeNamedDP
+  kind: NamedDP
+functionalities:
+  f:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: m
+resources: {}
+nodes:
+  _lim1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _l:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '10'
+        top: '10'
+        units: m
+    resources: {}
+    dp:
+      $schema:
+        title: Limit
+        kind: PrimitiveDP
+        description: f ≤ 10 m
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '10'
+        top: '10'
+        units: m
+      c:
+        $schema:
+          title: ValueFromPoset
+        value: '10'
+        poset:
+          $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '10'
+          top: '10'
+          units: m
+      ann:
+      R:
+        $schema:
+          kind: Poset
+          title: PosetProduct
+        subs: []
+  _conversion1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _op0:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: m
+    resources:
+      _res:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '10'
+        top: '10'
+        units: m
+    dp:
+      $schema:
+        title: AmbientConversion
+        kind: PrimitiveDP
+        description: f ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: m
+      common:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
+        units: m
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '10'
+        top: '10'
+        units: m
+      ann:
+connections:
+- from:
+    functionality: f
+  to:
+    node: _conversion1
+    node_functionality: _op0
+- from:
+    node: _conversion1
+    node_resource: _res
+  to:
+    node: _lim1
+    node_functionality: _l
