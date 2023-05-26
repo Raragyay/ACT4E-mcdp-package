@@ -29,7 +29,16 @@ __all__ = [
 
 @dataclass
 class PrimitiveDP:
-    """A PrimitiveDP has the following fields:"""
+    """
+    A generic PrimitiveDP; a morphism of the category DP.
+
+    Other classes derive from this.
+
+    Attributes:
+        description: An optional string description.
+        F: The functionality poset
+        R: The resources poset
+    """
 
     description: Optional[str]
     F: Poset
@@ -38,6 +47,14 @@ class PrimitiveDP:
 
 @dataclass
 class DPSeries(PrimitiveDP):
+    """
+    A series composition of two or more DPs.
+
+    Attributes:
+       subs: The list of DPs
+
+    """
+
     subs: list[PrimitiveDP]
 
 
@@ -119,10 +136,42 @@ class M_Res_AddConstant_DP(PrimitiveDP):
 
 @dataclass
 class UnitConversion(PrimitiveDP):
+    """
+    A unit conversion between real numbers
+    given by a factor F (a fraction).
+
+    Relation:
+
+        $$
+          \\fun \cdot \\text{factor} \\leq \\res
+        $$
+
+
+    Attributes:
+        factor: The fraction F
+
+    """
+
     opspace: Poset
     factor: Fraction
 
 
 @dataclass
 class AmbientConversion(PrimitiveDP):
-    pass
+    """
+    A "conversion" between two posets that are subposets of a common ambient poset.
+
+    Relation:
+
+        $$
+          \\fun \\leq_{C}  \\res
+        $$
+
+        where $C$ is the common ambient poset.
+
+    Attributes:
+        common: The common ambient poset
+
+    """
+
+    common: Poset

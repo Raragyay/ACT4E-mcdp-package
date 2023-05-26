@@ -7,6 +7,8 @@ nav:
 - API_primitivedps: API_primitivedps.md
 - API_nameddps: API_nameddps.md
 #theme: readthedocs
+theme:
+  name: material
 
 plugins:
 - mkdocstrings:
@@ -26,13 +28,24 @@ plugins:
         show_docstring_raises: true
         show_docstring_returns: true
         docstring_section_style: spacy
-
-
 - search
 
+
+
+extra_javascript:
+- javascripts/mathjax.js
+- https://polyfill.io/v3/polyfill.min.js?features=es6
+- https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+#- https://cdn.jsdelivr.net/npm/mathjax/es5/mml-chtml.min.js
+#- https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML
+#- https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/startup.js
 markdown_extensions:
-- markdown.extensions.codehilite
+- pymdownx.highlight:
+    anchor_linenums: true
+- pymdownx.superfences
 - markdown.extensions.toc:
     permalink: true
+- pymdownx.arithmatex:
+    generic: true
 watch:
 - src

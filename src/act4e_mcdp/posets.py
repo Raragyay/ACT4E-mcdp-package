@@ -47,7 +47,19 @@ class Numbers(Poset):
 
 @dataclass
 class FinitePoset(Poset):
-    """Represents a finite poset of elements"""
+    """
+    Represents a finite poset of elements
+
+    Attributes:
+        elements: A set of strings
+        relations: A set of pairs of strings that represent the relations between the elements
+
+
+    Examples:
+
+        >>> FinitePoset(elements={'a', 'b', 'c'}, relations={('a', 'b'), ('b', 'c')})
+
+    """
 
     elements: set[str]
     relations: set[tuple[str, str]]
