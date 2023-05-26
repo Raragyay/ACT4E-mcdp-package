@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any, Collection, Generic, Mapping, TypeVar
 
-from .structures import NamedDP
+from .nameddps import NamedDP
 
 __all__ = ["LowerSet", "SolutionInterface", "UpperSet"]
 

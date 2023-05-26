@@ -10,6 +10,8 @@ logger.setLevel(DEBUG)
 # __version__ = "0.2.1"
 
 from .loading import *
-from .structures import *
 from .main import *
 from .solution_interface import *
+from .nameddps import *
+from .primitivedps import *
+from .posets import *

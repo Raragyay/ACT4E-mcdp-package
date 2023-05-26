@@ -1,15 +1,12 @@
 from dataclasses import dataclass
-from decimal import Decimal
 from fractions import Fraction
-
 from typing import Optional
+
+from .posets import Poset
 
 __all__ = [
     "AmbientConversion",
-    "CompositeNamedDP",
-    "Connection",
     "DPSeries",
-    "FinitePoset",
     "JoinNDP",
     "M_Ceil_DP",
     "M_FloorFun_DP",
@@ -24,48 +21,16 @@ __all__ = [
     "M_Res_MultiplyMany_DP",
     "MeetNDualDP",
     "MeetNDualDP",
-    "ModelFunctionality",
-    "ModelResource",
-    "NamedDP",
-    "NodeFunctionality",
-    "NodeResource",
-    "Numbers",
-    "Numbers",
-    "Poset",
-    "PosetProduct",
     "PrimitiveDP",
-    "SimpleWrap",
     "UnitConversion",
     "ValueFromPoset",
 ]
 
 
 @dataclass
-class Poset:
-    pass
-
-
-@dataclass
-class Numbers(Poset):
-    bottom: Decimal
-    top: Decimal
-    step: Decimal  # if 0 = "continuous"
-    units: str  # if empty = dimensionless
-
-
-@dataclass
-class FinitePoset(Poset):
-    elements: set[str]
-    relations: set[tuple[str, str]]
-
-
-@dataclass
-class PosetProduct(Poset):
-    subs: list[Poset]
-
-
-@dataclass
 class PrimitiveDP:
+    """A PrimitiveDP has the following fields:"""
+
     description: Optional[str]
     F: Poset
     R: Poset
@@ -74,51 +39,6 @@ class PrimitiveDP:
 @dataclass
 class DPSeries(PrimitiveDP):
     subs: list[PrimitiveDP]
-
-
-@dataclass
-class NamedDP:
-    functionalities: dict[str, Poset]
-    resources: dict[str, Poset]
-
-
-@dataclass
-class SimpleWrap(NamedDP):
-    dp: PrimitiveDP
-
-
-@dataclass
-class NodeResource:
-    node: str
-    resource: str
-
-
-@dataclass
-class NodeFunctionality:
-    node: str
-    functionality: str
-
-
-@dataclass
-class ModelFunctionality:
-    functionality: str
-
-
-@dataclass
-class ModelResource:
-    resource: str
-
-
-@dataclass
-class Connection:
-    source: ModelFunctionality | NodeResource
-    target: ModelResource | NodeFunctionality
-
-
-@dataclass
-class CompositeNamedDP(NamedDP):
-    nodes: dict[str, NamedDP]
-    connections: list[Connection]
 
 
 @dataclass

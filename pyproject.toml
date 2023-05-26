@@ -42,3 +42,5 @@ tagged-metadata= false
 vcs = "git"
 style = "pep440"
 strict = true
+
+# pip install "mkdocstrings[python]"  mkdocs-material

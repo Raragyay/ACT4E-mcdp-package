@@ -1,0 +1,38 @@
+site_name: ACT4E-mcdp
+#site_url: https://example.com/
+nav:
+- Home: index.md
+- API: API.md
+- API_posets: API_posets.md
+- API_primitivedps: API_primitivedps.md
+- API_nameddps: API_nameddps.md
+#theme: readthedocs
+
+plugins:
+- mkdocstrings:
+    default_handler: python
+    handlers:
+      python:
+        paths: [src]
+        load_external_modules: true
+        show_if_no_docstring: true
+        show_docstring_description: true
+        show_docstring_examples: true
+        show_docstring_other_parameters: true
+        show_docstring_parameters: true
+        show_docstring_return_type: true
+        show_docstring_type_annotations: true
+        show_source: true
+        show_docstring_raises: true
+        show_docstring_returns: true
+        docstring_section_style: spacy
+
+
+- search
+
+markdown_extensions:
+- markdown.extensions.codehilite
+- markdown.extensions.toc:
+    permalink: true
+watch:
+- src
