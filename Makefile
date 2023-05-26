@@ -19,6 +19,8 @@ bump-minor:
 bump-major:
 	./bump-version.sh major
 
+.PHONY: docs
+
 docs:
 	mkdocs build
 
