@@ -7,4 +7,4 @@ VERSION=`git describe --tags $(git rev-list --tags --max-count=1)`
 VERSION=${VERSION#v}
 
 # Call bumpversion with the --current-version option
-bumpversion --verbose --current-version "$VERSION" patch
+bumpversion --verbose --current-version "$VERSION" $1

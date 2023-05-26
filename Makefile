@@ -7,8 +7,12 @@ build:
 publish: build
 	twine upload dist/*whl
 
-bumpversion:
-	poetry version patch
 
-bumpversion-minor:
-	poetry version minor
+bump:
+	./bumpversion.sh patch
+
+bump-minor:
+	./bumpversion.sh minor
+
+bump-major:
+	./bumpversion.sh major
