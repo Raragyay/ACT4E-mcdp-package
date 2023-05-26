@@ -15,3 +15,4 @@ from .solution_interface import *
 from .nameddps import *
 from .primitivedps import *
 from .posets import *
+from .download import *

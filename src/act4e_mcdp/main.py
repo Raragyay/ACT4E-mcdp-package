@@ -8,7 +8,7 @@ import yaml
 from . import logger
 from .loading import load_repr1, parse_yaml_value
 from .solution_interface import SolverInterface
-from .structures import NamedDP
+from .nameddps import NamedDP
 
 
 def import_from_string(dot_path: str) -> object:

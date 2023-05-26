@@ -4,12 +4,19 @@ from typing import Optional, Type, TypeVar
 import yaml
 
 from . import logger
-from .structures import (
-    AmbientConversion,
+from .nameddps import (
     CompositeNamedDP,
     Connection,
+    ModelFunctionality,
+    ModelResource,
+    NodeFunctionality,
+    NodeResource,
+    SimpleWrap,
+)
+from .posets import FinitePoset, Numbers, Poset, PosetProduct
+from .primitivedps import (
+    AmbientConversion,
     DPSeries,
-    FinitePoset,
     JoinNDP,
     M_Ceil_DP,
     M_FloorFun_DP,
@@ -22,15 +29,7 @@ from .structures import (
     M_Res_MultiplyConstant_DP,
     M_Res_MultiplyMany_DP,
     MeetNDualDP,
-    ModelFunctionality,
-    ModelResource,
-    NodeFunctionality,
-    NodeResource,
-    Numbers,
-    Poset,
-    PosetProduct,
     PrimitiveDP,
-    SimpleWrap,
     UnitConversion,
     ValueFromPoset,
 )
