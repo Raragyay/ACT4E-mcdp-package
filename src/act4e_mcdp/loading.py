@@ -1,15 +1,14 @@
 from dataclasses import dataclass
 from decimal import Decimal
+from fractions import Fraction
 from typing import Optional, Type, TypeVar
 
 import yaml
 
-from mcdp_posets import ValueWithUnits
 from . import logger
 from .structures import (
     CompositeNamedDP,
     Connection,
-    PrimitiveDP,
     DPSeries,
     FinitePoset,
     ModelFunctionality,
@@ -19,6 +18,7 @@ from .structures import (
     Numbers,
     Poset,
     PosetProduct,
+    PrimitiveDP,
     SimpleWrap,
 )
 
@@ -55,7 +55,19 @@ def _load_DP_fields(ob: dict) -> dict:
     description = ob["$schema"].get("description", None)
     F = load_repr1(ob["F"], Poset)
     R = load_repr1(ob["R"], Poset)
-    return dict(description=description, F=F, R=R)
+    fields = dict(description=description, F=F, R=R)
+
+    if "vu" in ob:
+        fields["vu"] = load_repr1(ob["vu"], ValueFromPoset)
+    if "opspace" in ob:
+        fields["opspace"] = load_repr1(ob["opspace"], Poset)
+    if "C" in ob:
+        fields["opspace"] = load_repr1(ob["C"], Poset)
+    if "factor" in ob:
+        from fractions import Fraction
+
+        fields["factor"] = Fraction(ob["factor"])
+    return fields
 
 
 @dataclass
@@ -66,81 +78,155 @@ class ValueFromPoset:
 
 @dataclass
 class M_Res_MultiplyConstant_DP(PrimitiveDP):
-    vu: ValueWithUnits
+    vu: ValueFromPoset
+    opspace: Poset
 
 
 @dataclass
 class M_Fun_MultiplyConstant_DP(PrimitiveDP):
-    vu: ValueWithUnits
+    vu: ValueFromPoset
+    opspace: Poset
+
+
+@dataclass
+class M_Res_AddConstant_DP(PrimitiveDP):
+    vu: ValueFromPoset
+    opspace: Poset
+
+
+@dataclass
+class M_Fun_AddMany_DP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class M_Res_AddMany_DP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class MeetNDualDP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class JoinNDP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class M_Fun_MultiplyMany_DP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class M_Res_MultiplyMany_DP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class M_Ceil_DP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class M_FloorFun_DP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class M_Fun_AddConstant_DP(PrimitiveDP):
+    vu: ValueFromPoset
+    opspace: Poset
+
+
+@dataclass
+class M_Res_AddConstant_DP(PrimitiveDP):
+    vu: ValueFromPoset
+    opspace: Poset
+
+
+@dataclass
+class UnitConversion(PrimitiveDP):
+    opspace: Poset
+    factor: Fraction
+
+
+@dataclass
+class AmbientConversion(PrimitiveDP):
+    pass
+
+
+@loader_for("ValueFromPoset")
+def load_ValueFromPoset(ob: dict):
+    poset = load_repr1(ob["poset"], Poset)
+    value = ob["value"]
+    value = poset.parse_yaml_value(value)
+    return ValueFromPoset(value=value, poset=poset)
 
 
 @loader_for("M_Res_MultiplyConstant_DP")
 def load_M_Res_MultiplyConstant_DP(ob: dict):
     fields = _load_DP_fields(ob)
-    fields["vu"] = load_repr1(ob["vu"], ValueFromPoset)
     return M_Res_MultiplyConstant_DP(**fields)
 
 
 @loader_for("M_Fun_MultiplyConstant_DP")
 def load_M_Fun_MultiplyConstant_DP(ob: dict):
     fields = _load_DP_fields(ob)
-    fields["vu"] = load_repr1(ob["vu"], ValueFromPoset)
     return M_Fun_MultiplyConstant_DP(**fields)
 
 
 @loader_for("M_Res_AddConstant_DP")
 def load_M_Res_AddConstant_DP(ob: dict):
     fields = _load_DP_fields(ob)
-
-    return PrimitiveDP(**fields)
+    return M_Res_AddConstant_DP(**fields)
 
 
 @loader_for("M_Fun_AddMany_DP")
 def load_M_Fun_AddMany_DP(ob: dict):
     fields = _load_DP_fields(ob)
-
-    return PrimitiveDP(**fields)
-
-
-@loader_for("M_Res_MultiplyMany_DP")
-def load_M_Res_MultiplyMany_DP(ob: dict):
-    fields = _load_DP_fields(ob)
-
-    return PrimitiveDP(**fields)
+    return M_Fun_AddMany_DP(**fields)
 
 
 @loader_for("M_Res_AddMany_DP")
 def load_M_Res_AddMany_DP(ob: dict):
     fields = _load_DP_fields(ob)
+    return M_Res_AddMany_DP(**fields)
 
-    return PrimitiveDP(**fields)
+
+@loader_for("M_Res_MultiplyMany_DP")
+def load_M_Res_MultiplyMany_DP(ob: dict):
+    fields = _load_DP_fields(ob)
+    return M_Res_MultiplyMany_DP(**fields)
 
 
 @loader_for("M_Fun_MultiplyMany_DP")
 def load_M_Fun_MultiplyMany_DP(ob: dict):
     fields = _load_DP_fields(ob)
 
-    return PrimitiveDP(**fields)
+    return M_Fun_MultiplyMany_DP(**fields)
 
 
 @loader_for("M_Ceil_DP")
 def load_M_Ceil_DP(ob: dict):
     fields = _load_DP_fields(ob)
 
-    return PrimitiveDP(**fields)
+    return M_Ceil_DP(**fields)
 
 
 @loader_for("M_FloorFun_DP")
 def load_M_FloorFun_DP(ob: dict):
     fields = _load_DP_fields(ob)
 
-    return PrimitiveDP(**fields)
+    return M_FloorFun_DP(**fields)
 
 
 @loader_for("Conversion")
 def load_Conversion(ob: dict):
     fields = _load_DP_fields(ob)
 
+    raise NotImplementedError(ob)
     return PrimitiveDP(**fields)
 
 
@@ -169,35 +255,34 @@ def load_SeriesN(ob: dict):
 def load_M_Fun_AddConstant_DP(ob: dict):
     fields = _load_DP_fields(ob)
 
-    return PrimitiveDP(**fields)
+    return M_Fun_AddConstant_DP(**fields)
 
 
 @loader_for("AmbientConversion")
 def load_AmbientConversion(ob: dict):
     fields = _load_DP_fields(ob)
 
-    return PrimitiveDP(**fields)
+    return AmbientConversion(**fields)
 
 
 @loader_for("UnitConversion")
 def load_UnitConversion(ob: dict):
     fields = _load_DP_fields(ob)
 
-    return PrimitiveDP(**fields)
+    return UnitConversion(**fields)
 
 
 @loader_for("JoinNDP")
 def load_JoinNDP(ob: dict):
     fields = _load_DP_fields(ob)
 
-    return PrimitiveDP(**fields)
+    return JoinNDP(**fields)
 
 
 @loader_for("MeetNDualDP")
 def load_MeetNDualDP(ob: dict):
     fields = _load_DP_fields(ob)
-
-    return PrimitiveDP(**fields)
+    return MeetNDualDP(**fields)
 
 
 #
@@ -261,7 +346,7 @@ def load_FinitePoset(ob: dict):
 def load_Numbers(ob: dict):
     bottom = Decimal(ob["bottom"])
     top = Decimal(ob["top"])
-    units = ob["units"]
+    units = ob.get("units", "")
     step = Decimal(ob.get("step", 0))
     return Numbers(bottom=bottom, top=top, step=step, units=units)
 
@@ -284,7 +369,7 @@ def load_repr1(data: dict, T: Optional[Type[X]] = None) -> X:
     try:
         return loader(data)
     except Exception as e:
-        datas = yaml.dump(data)
+        datas = yaml.dump(data, allow_unicode=True)
         logger.exception("Error while loading %r\n%s", title, datas, exc_info=e)
         msg = f"Error while loading {title!r}: \n{datas}"
         raise ValueError(msg) from e

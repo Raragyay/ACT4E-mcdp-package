@@ -1,4 +1,3 @@
----
 $schema:
   title: CompositeNamedDP
   kind: NamedDP
@@ -22,6 +21,13 @@ nodes:
         title: M_Res_AddMany_DP
         kind: PrimitiveDP
         description: f₁ + f₂ ≤ r
+      opspace:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
+        units: ''
       R:
         $schema:
           kind: Poset

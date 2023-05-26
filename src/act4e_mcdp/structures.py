@@ -23,7 +23,8 @@ __all__ = [
 
 @dataclass
 class Poset:
-    pass
+    def parse_yaml_value(self, ob: object) -> object:
+        raise NotImplementedError(type(self))
 
 
 @dataclass
@@ -33,16 +34,36 @@ class Numbers(Poset):
     step: Decimal  # if 0 = "continuous"
     units: str  # if empty = dimensionless
 
+    def parse_yaml_value(self, ob: object) -> object:
+        if not isinstance(ob, str):
+            msg = "Expected string, got %s" % type(ob)
+            raise ValueError(msg)
+        return Decimal(ob)
+
 
 @dataclass
 class FinitePoset(Poset):
     elements: set[str]
     relations: set[tuple[str, str]]
 
+    def parse_yaml_value(self, ob: object) -> object:
+        return ob
+
 
 @dataclass
 class PosetProduct(Poset):
     subs: list[Poset]
+
+    def parse_yaml_value(self, ob: object) -> object:
+        if not isinstance(ob, list):
+            msg = "Expected list, got %s" % type(ob)
+            raise ValueError(msg)
+        val = []
+        for el, sub in zip(ob, self.subs):
+            el = sub.parse_yaml_value(el)
+            val.append(el)
+
+        return tuple(val)
 
 
 @dataclass

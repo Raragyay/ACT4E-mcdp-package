@@ -24,5 +24,8 @@ def test_loading_all() -> None:
 
 
 def check_one(filename, data: dict) -> None:
-    ob = load_repr1(data)
+    try:
+        ob = load_repr1(data)
+    except Exception as e:
+        raise Exception(f"Error while loading {filename}") from e
     print(ob)

@@ -1,4 +1,3 @@
----
 $schema:
   title: CompositeNamedDP
   kind: NamedDP
@@ -29,6 +28,12 @@ nodes:
         bottom: '0'
         top: Infinity
         units: ''
+      opspace:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
       ann:
       R:
         $schema:
