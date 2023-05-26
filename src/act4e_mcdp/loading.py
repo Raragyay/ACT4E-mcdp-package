@@ -1,16 +1,27 @@
-from dataclasses import dataclass
 from decimal import Decimal
-from fractions import Fraction
 from typing import Optional, Type, TypeVar
 
 import yaml
 
 from . import logger
 from .structures import (
+    AmbientConversion,
     CompositeNamedDP,
     Connection,
     DPSeries,
     FinitePoset,
+    JoinNDP,
+    M_Ceil_DP,
+    M_FloorFun_DP,
+    M_Fun_AddConstant_DP,
+    M_Fun_AddMany_DP,
+    M_Fun_MultiplyConstant_DP,
+    M_Fun_MultiplyMany_DP,
+    M_Res_AddConstant_DP,
+    M_Res_AddMany_DP,
+    M_Res_MultiplyConstant_DP,
+    M_Res_MultiplyMany_DP,
+    MeetNDualDP,
     ModelFunctionality,
     ModelResource,
     NodeFunctionality,
@@ -20,6 +31,8 @@ from .structures import (
     PosetProduct,
     PrimitiveDP,
     SimpleWrap,
+    UnitConversion,
+    ValueFromPoset,
 )
 
 loaders = {}
@@ -27,6 +40,7 @@ loaders = {}
 __all__ = [
     "load_repr1",
     "loader_for",
+    "parse_yaml_value",
 ]
 
 
@@ -70,98 +84,11 @@ def _load_DP_fields(ob: dict) -> dict:
     return fields
 
 
-@dataclass
-class ValueFromPoset:
-    value: object
-    poset: Poset
-
-
-@dataclass
-class M_Res_MultiplyConstant_DP(PrimitiveDP):
-    vu: ValueFromPoset
-    opspace: Poset
-
-
-@dataclass
-class M_Fun_MultiplyConstant_DP(PrimitiveDP):
-    vu: ValueFromPoset
-    opspace: Poset
-
-
-@dataclass
-class M_Res_AddConstant_DP(PrimitiveDP):
-    vu: ValueFromPoset
-    opspace: Poset
-
-
-@dataclass
-class M_Fun_AddMany_DP(PrimitiveDP):
-    opspace: Poset
-
-
-@dataclass
-class M_Res_AddMany_DP(PrimitiveDP):
-    opspace: Poset
-
-
-@dataclass
-class MeetNDualDP(PrimitiveDP):
-    opspace: Poset
-
-
-@dataclass
-class JoinNDP(PrimitiveDP):
-    opspace: Poset
-
-
-@dataclass
-class M_Fun_MultiplyMany_DP(PrimitiveDP):
-    opspace: Poset
-
-
-@dataclass
-class M_Res_MultiplyMany_DP(PrimitiveDP):
-    opspace: Poset
-
-
-@dataclass
-class M_Ceil_DP(PrimitiveDP):
-    opspace: Poset
-
-
-@dataclass
-class M_FloorFun_DP(PrimitiveDP):
-    opspace: Poset
-
-
-@dataclass
-class M_Fun_AddConstant_DP(PrimitiveDP):
-    vu: ValueFromPoset
-    opspace: Poset
-
-
-@dataclass
-class M_Res_AddConstant_DP(PrimitiveDP):
-    vu: ValueFromPoset
-    opspace: Poset
-
-
-@dataclass
-class UnitConversion(PrimitiveDP):
-    opspace: Poset
-    factor: Fraction
-
-
-@dataclass
-class AmbientConversion(PrimitiveDP):
-    pass
-
-
 @loader_for("ValueFromPoset")
 def load_ValueFromPoset(ob: dict):
     poset = load_repr1(ob["poset"], Poset)
     value = ob["value"]
-    value = poset.parse_yaml_value(value)
+    value = parse_yaml_value(poset, value)
     return ValueFromPoset(value=value, poset=poset)
 
 
@@ -268,14 +195,12 @@ def load_AmbientConversion(ob: dict):
 @loader_for("UnitConversion")
 def load_UnitConversion(ob: dict):
     fields = _load_DP_fields(ob)
-
     return UnitConversion(**fields)
 
 
 @loader_for("JoinNDP")
 def load_JoinNDP(ob: dict):
     fields = _load_DP_fields(ob)
-
     return JoinNDP(**fields)
 
 
@@ -298,6 +223,9 @@ def load_MeetNDualDP(ob: dict):
 def load_CompositeNamedDP(ob: dict):
     functionalities = ob["functionalities"]
     resources = ob["resources"]
+
+    functionalities = {k: load_repr1(v, Poset) for k, v in functionalities.items()}
+    resources = {k: load_repr1(v, Poset) for k, v in resources.items()}
     loaded_nodes = {}
     nodes = ob["nodes"]
     for k, v in nodes.items():
@@ -327,8 +255,12 @@ def load_CompositeNamedDP(ob: dict):
 
 @loader_for("SimpleWrap")
 def load_SimpleWrap(ob: dict):
-    functionalities = ob["functionalities"]
-    resources = ob["resources"]
+    functionalities = {}
+    for k, v in ob["functionalities"].items():
+        functionalities[k] = load_repr1(v, Poset)
+    resources = {}
+    for k, v in ob["resources"].items():
+        resources[k] = load_repr1(v, Poset)
     dp = load_repr1(ob["dp"], PrimitiveDP)
     return SimpleWrap(functionalities=functionalities, resources=resources, dp=dp)
 
@@ -373,3 +305,25 @@ def load_repr1(data: dict, T: Optional[Type[X]] = None) -> X:
         logger.exception("Error while loading %r\n%s", title, datas, exc_info=e)
         msg = f"Error while loading {title!r}: \n{datas}"
         raise ValueError(msg) from e
+
+
+def parse_yaml_value(poset: Poset, ob: object) -> object:
+    match poset:
+        case Numbers():
+            if not isinstance(ob, (int, str, float, bool)):
+                msg = "Expected string, got %s" % type(ob)
+                raise ValueError(msg)
+            return Decimal(ob)
+        case FinitePoset():
+            return ob
+        case PosetProduct(subs):
+            if not isinstance(ob, list):
+                msg = "Expected list, got %s" % type(ob)
+                raise ValueError(msg)
+            val = []
+            for el, sub in zip(ob, subs):
+                el = parse_yaml_value(sub, el)
+                val.append(el)
+            return val
+        case _:
+            raise NotImplementedError(type(poset))

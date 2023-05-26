@@ -2,18 +2,44 @@ $schema:
   title: CompositeNamedDP
   kind: NamedDP
 functionalities:
-- f
+  f:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    step: '1'
+    units: ''
 resources:
-- r
+  r:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: ''
 nodes:
   _RuleFunFloor_NWU1:
     $schema:
       title: SimpleWrap
       kind: NamedDP
     functionalities:
-    - _res
+      _res:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        step: '1'
+        units: ''
     resources:
-    - _op0
+      _op0:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
     dp:
       $schema:
         title: M_FloorFun_DP

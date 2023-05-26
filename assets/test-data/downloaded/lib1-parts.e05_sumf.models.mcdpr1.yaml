@@ -2,20 +2,56 @@ $schema:
   title: CompositeNamedDP
   kind: NamedDP
 functionalities:
-- f_1
-- f_2
+  f_1:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: ''
+  f_2:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: ''
 resources:
-- r
+  r:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: ''
 nodes:
   _sum1:
     $schema:
       title: SimpleWrap
       kind: NamedDP
     functionalities:
-    - _term0
-    - _term1
+      _term0:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      _term1:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
     resources:
-    - _result
+      _result:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
     dp:
       $schema:
         title: M_Res_AddMany_DP

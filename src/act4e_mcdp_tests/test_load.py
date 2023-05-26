@@ -4,7 +4,6 @@ from os.path import join
 import yaml
 
 from act4e_mcdp import load_repr1
-from . import logger
 
 
 def test_loading_all() -> None:

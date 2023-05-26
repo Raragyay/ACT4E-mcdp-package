@@ -1,7 +1,7 @@
 $schema:
   title: CompositeNamedDP
   kind: NamedDP
-functionalities: []
-resources: []
+functionalities: {}
+resources: {}
 nodes: {}
 connections: []

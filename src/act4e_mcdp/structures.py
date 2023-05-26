@@ -1,15 +1,32 @@
 from dataclasses import dataclass
 from decimal import Decimal
+from fractions import Fraction
 
 from typing import Optional
 
 __all__ = [
+    "AmbientConversion",
     "CompositeNamedDP",
     "Connection",
     "DPSeries",
     "FinitePoset",
+    "JoinNDP",
+    "M_Ceil_DP",
+    "M_FloorFun_DP",
+    "M_Fun_AddConstant_DP",
+    "M_Fun_AddMany_DP",
+    "M_Fun_MultiplyConstant_DP",
+    "M_Fun_MultiplyMany_DP",
+    "M_Fun_MultiplyMany_DP",
+    "M_Res_AddConstant_DP",
+    "M_Res_AddMany_DP",
+    "M_Res_MultiplyConstant_DP",
+    "M_Res_MultiplyMany_DP",
+    "MeetNDualDP",
+    "MeetNDualDP",
     "ModelFunctionality",
     "ModelResource",
+    "NamedDP",
     "NodeFunctionality",
     "NodeResource",
     "Numbers",
@@ -18,13 +35,14 @@ __all__ = [
     "PosetProduct",
     "PrimitiveDP",
     "SimpleWrap",
+    "UnitConversion",
+    "ValueFromPoset",
 ]
 
 
 @dataclass
 class Poset:
-    def parse_yaml_value(self, ob: object) -> object:
-        raise NotImplementedError(type(self))
+    pass
 
 
 @dataclass
@@ -34,36 +52,16 @@ class Numbers(Poset):
     step: Decimal  # if 0 = "continuous"
     units: str  # if empty = dimensionless
 
-    def parse_yaml_value(self, ob: object) -> object:
-        if not isinstance(ob, str):
-            msg = "Expected string, got %s" % type(ob)
-            raise ValueError(msg)
-        return Decimal(ob)
-
 
 @dataclass
 class FinitePoset(Poset):
     elements: set[str]
     relations: set[tuple[str, str]]
 
-    def parse_yaml_value(self, ob: object) -> object:
-        return ob
-
 
 @dataclass
 class PosetProduct(Poset):
     subs: list[Poset]
-
-    def parse_yaml_value(self, ob: object) -> object:
-        if not isinstance(ob, list):
-            msg = "Expected list, got %s" % type(ob)
-            raise ValueError(msg)
-        val = []
-        for el, sub in zip(ob, self.subs):
-            el = sub.parse_yaml_value(el)
-            val.append(el)
-
-        return tuple(val)
 
 
 @dataclass
@@ -80,8 +78,8 @@ class DPSeries(PrimitiveDP):
 
 @dataclass
 class NamedDP:
-    functionalities: list[str]
-    resources: list[str]
+    functionalities: dict[str, Poset]
+    resources: dict[str, Poset]
 
 
 @dataclass
@@ -121,3 +119,90 @@ class Connection:
 class CompositeNamedDP(NamedDP):
     nodes: dict[str, NamedDP]
     connections: list[Connection]
+
+
+@dataclass
+class ValueFromPoset:
+    value: object
+    poset: Poset
+
+
+@dataclass
+class M_Res_MultiplyConstant_DP(PrimitiveDP):
+    vu: ValueFromPoset
+    opspace: Poset
+
+
+@dataclass
+class M_Fun_MultiplyConstant_DP(PrimitiveDP):
+    vu: ValueFromPoset
+    opspace: Poset
+
+
+@dataclass
+class M_Res_AddConstant_DP(PrimitiveDP):
+    vu: ValueFromPoset
+    opspace: Poset
+
+
+@dataclass
+class M_Fun_AddMany_DP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class M_Res_AddMany_DP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class MeetNDualDP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class JoinNDP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class M_Fun_MultiplyMany_DP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class M_Res_MultiplyMany_DP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class M_Ceil_DP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class M_FloorFun_DP(PrimitiveDP):
+    opspace: Poset
+
+
+@dataclass
+class M_Fun_AddConstant_DP(PrimitiveDP):
+    vu: ValueFromPoset
+    opspace: Poset
+
+
+@dataclass
+class M_Res_AddConstant_DP(PrimitiveDP):
+    vu: ValueFromPoset
+    opspace: Poset
+
+
+@dataclass
+class UnitConversion(PrimitiveDP):
+    opspace: Poset
+    factor: Fraction
+
+
+@dataclass
+class AmbientConversion(PrimitiveDP):
+    pass

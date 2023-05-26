@@ -2,20 +2,56 @@ $schema:
   title: CompositeNamedDP
   kind: NamedDP
 functionalities:
-- distance
+  distance:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: m
 resources:
-- speed
-- time
+  speed:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: furlongs/s
+  time:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: hours
 nodes:
   _invmult1:
     $schema:
       title: SimpleWrap
       kind: NamedDP
     functionalities:
-    - _result
+      _result:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: fur*h/s
     resources:
-    - _ops0
-    - _ops1
+      _ops0:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: furlongs/s
+      _ops1:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: hours
     dp:
       $schema:
         title: M_Fun_MultiplyMany_DP
@@ -57,9 +93,21 @@ nodes:
       title: SimpleWrap
       kind: NamedDP
     functionalities:
-    - _result
+      _result:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '-0.01380823'
+        top: Infinity
+        units: fur*h/s
     resources:
-    - _op0
+      _op0:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: fur*h/s
     dp:
       $schema:
         title: M_Res_AddConstant_DP
@@ -103,9 +151,21 @@ nodes:
       title: SimpleWrap
       kind: NamedDP
     functionalities:
-    - _op0
+      _op0:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: m
     resources:
-    - _res
+      _res:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '-0.01380823'
+        top: Infinity
+        units: fur*h/s
     dp:
       $schema:
         title: SeriesN

@@ -11,7 +11,7 @@ dependencies = [
 name = "ACT4E-mcdp"
 version = "0.1"
 description = ""
-authors = [" <>"]
+authors = ["Andrea Censi <AndreaCensi@users.noreply.github.com>"]
 packages = [
     { from = "src", include = "act4e_mcdp" },
 ]
@@ -21,3 +21,10 @@ packages = [
     "act4e_mcdp",
 ]
 package-dir = { "" = "src" }
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+act4e-mcdp-solve = 'act4e_mcdp:solve_main'

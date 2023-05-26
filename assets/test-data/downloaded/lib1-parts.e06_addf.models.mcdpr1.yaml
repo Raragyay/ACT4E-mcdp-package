@@ -2,18 +2,42 @@ $schema:
   title: CompositeNamedDP
   kind: NamedDP
 functionalities:
-- f
+  f:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: ''
 resources:
-- r
+  r:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: ''
 nodes:
   _plus1:
     $schema:
       title: SimpleWrap
       kind: NamedDP
     functionalities:
-    - _op0
+      _op0:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
     resources:
-    - _res
+      _res:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '10'
+        top: Infinity
+        units: ''
     dp:
       $schema:
         title: M_Res_AddConstant_DP
@@ -57,9 +81,21 @@ nodes:
       title: SimpleWrap
       kind: NamedDP
     functionalities:
-    - _op01
+      _op01:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '10'
+        top: Infinity
+        units: ''
     resources:
-    - _res2
+      _res2:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
     dp:
       $schema:
         title: AmbientConversion
