@@ -3,6 +3,7 @@ name = "ACT4E-mcdp"
 authors = [{ name = "Andrea Censi", email = "AndreaCensi@users.noreply.github.com" }]
 dependencies = [
     "ACT4E-mcdp",
+    "coloredlogs",
 ]
 
 [tool]
