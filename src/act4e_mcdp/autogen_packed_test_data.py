@@ -140,6 +140,10 @@ __all__ = [
     "lib1_parts_e10_conversions1_models_mcdpr1_yaml_fresh",
     "lib1_parts_e10_conversions2_models_mcdpr1_yaml",
     "lib1_parts_e10_conversions2_models_mcdpr1_yaml_fresh",
+    "lib1_parts_e11_constant_fun_models_mcdpr1_yaml",
+    "lib1_parts_e11_constant_fun_models_mcdpr1_yaml_fresh",
+    "lib1_parts_e11_constant_res_models_mcdpr1_yaml",
+    "lib1_parts_e11_constant_res_models_mcdpr1_yaml_fresh",
     "lib1_parts_nats_posets_mcdpr1_yaml",
     "lib1_parts_nats_posets_mcdpr1_yaml_fresh",
     "lib1_parts_reals_posets_mcdpr1_yaml",
@@ -151,8 +155,8 @@ __all__ = [
 
 
 lib1_parts_discrete_posets_mcdpr1_yaml: str = decode_to_str(
-    b"eJxNijkKwDAMBHu/QkXafEAPSJ0v+FiwiA+I9X8i202Kgd1hjhEzqmdHpKIFTJc0Udx9QE0+0hLTfiio"
-    b"aDrYnZSNaAQjGd6Ae1G8Sm8rmZJoJzOeO60dfns38efhPkb+JHg=",
+    b"eJxNirsNwCAMBXumcJE2CzBA6qzA50lYASMF768YaFKcdH6+Y6SCFrwjUtYKTxcLK+4+oDY+LNnTvlDR"
+    b"IDq8OykYxUhGNqIB96IG5S4rmRHRfs1wel4el+Pn+dcn9wFHAiR4",
 )
 
 
@@ -167,7 +171,7 @@ _check_md5(
     "lib1_parts_discrete_posets_mcdpr1_yaml",
     lib1_parts_discrete_posets_mcdpr1_yaml,
     149,
-    "da99ccdf93e76923fea64b4e4e3d047b",
+    "c9661b0bd5daf948643f6b0043954d36",
     "../../assets/test-data/downloaded/lib1-parts.discrete.posets.mcdpr1.yaml",
 )
 lib1_parts_e01_empty_models_mcdpr1_yaml: str = decode_to_str(
@@ -568,6 +572,58 @@ _check_md5(
     "c82585c7a83af500a45a04c8042d5736",
     "../../assets/test-data/downloaded/lib1-parts.e10_conversions2.models.mcdpr1.yaml",
 )
+lib1_parts_e11_constant_fun_models_mcdpr1_yaml: str = decode_to_str(
+    b"eJzFVd1KwzAYve9TfBeDXQ2229zJZCCIDAW9EBn9STHY/JCkgyE+gO/hk/kkJlnamqWdOjfWi5KcNN85"
+    b"p8lJRip/xjRFCYAmusII5pwKrojGNynFxeXSjLwQViBo+mXNck04SyuiCVZ2amlfAKOumH2205ZcYe0R"
+    b"T3FT0wxL5cCMa80pgvF07PqaCwRXrCSM6I1DatNSCGgiseK1zA0lvL4ljBdb8lVF6KxXgKe7I1RU+EGm"
+    b"IhDW+TMGYk/2WVVNK6rdb3DAZGB05p22bgOkdWs7oWOLFKIREOnxvNeEkk6OlygtSNbY23WVsMolEdY1"
+    b"ghI+3z9gNvW8AIvzGgfI9wrwVPdpVeOF5DSUsrbwTnlhv/heoqfqkLFBawPm+uxFBlPGGu7bw3+2g5eS"
+    b"F3Xejao6M0SPTzYcOWdrI9ms8qkywsX0BJtld68ER0L0O7ugNKpk1z7PFv45qRc0I5jpebtCh6VWnjCy"
+    b"f1sFk1pOKWfHFzKJiH8l5x/BOs4p5kJuIsiwi47ZkhMozXmFokRtzHLaS5hvh+zthoL0tvBqZ5oNYFB2"
+    b"39wmKMglJCa0d+kwU5V8AeZ+IyY=",
+)
+
+
+def lib1_parts_e11_constant_fun_models_mcdpr1_yaml_fresh() -> str:
+    return get_updated_str(
+        lib1_parts_e11_constant_fun_models_mcdpr1_yaml,
+        "../../assets/test-data/downloaded/lib1-parts.e11_constant_fun.models.mcdpr1.yaml",
+    )
+
+
+_check_md5(
+    "lib1_parts_e11_constant_fun_models_mcdpr1_yaml",
+    lib1_parts_e11_constant_fun_models_mcdpr1_yaml,
+    2092,
+    "563104572fd6b5530dd4813ca08b645a",
+    "../../assets/test-data/downloaded/lib1-parts.e11_constant_fun.models.mcdpr1.yaml",
+)
+lib1_parts_e11_constant_res_models_mcdpr1_yaml: str = decode_to_str(
+    b"eJzFVctKAzEU3c9X3IXQVaHdZieVgptSFHQhUuaRweDkQZIpFPED/A+/zC8xSTOPtBm1OtJZlNybzD3n"
+    b"3NwzvVD5E6YpSgA00RVGsOBUcEU0XqUUF1drs/NMWIGgicua5ZpwllZEE6wQvLwmEitey9xE5ri0PwAX"
+    b"XWn77IusucLaZzzgqqYZlsolM641pwgms4mLNRcIrllJGNE7l6nNymDShPFiD7fJo3i++i2hosL3MhUB"
+    b"j04cQEyQzQei7NMgRdDiCgdUBkrnXmorN8i0cm1QiAbuCL29PKZ0yjp8z0kSarRtsVfsimGVSyKscATz"
+    b"GVD4eHsH6fe/VurR7tKqxkvJaah5a9MHOoQ90S8RqTrUwcEeDnQx1seDTgLcnPcqAVLGGsTl77m49Fry"
+    b"os67XVVnBujh0ZmDs60ha255PrJNGlNwMTtvL499Krv1iJQOGQXfpSNW35v1kmYEM71ob+hU15aBZf8w"
+    b"ReNMdM4p5Wx8FtOjRv+g/f/j8NNGwJvcWJBhZx0zlVMozQdzz8T+hSFj0TbYNKPss5qHBzsvd6/0bblD"
+    b"zo5RkNi7PTiz7AF2GzL5BESnHiE=",
+)
+
+
+def lib1_parts_e11_constant_res_models_mcdpr1_yaml_fresh() -> str:
+    return get_updated_str(
+        lib1_parts_e11_constant_res_models_mcdpr1_yaml,
+        "../../assets/test-data/downloaded/lib1-parts.e11_constant_res.models.mcdpr1.yaml",
+    )
+
+
+_check_md5(
+    "lib1_parts_e11_constant_res_models_mcdpr1_yaml",
+    lib1_parts_e11_constant_res_models_mcdpr1_yaml,
+    2079,
+    "1befc235bc8bd89ea9f9221a291625be",
+    "../../assets/test-data/downloaded/lib1-parts.e11_constant_res.models.mcdpr1.yaml",
+)
 lib1_parts_nats_posets_mcdpr1_yaml: str = decode_to_str(
     b"eJwNx7ENgEAIAMCeKShMaLVlAxvjCr5iJPqPESzcXrq7ztdD6sKAeGrbGGdziVxoXMI4vbXI41Aswioj"
     b"9QRhN+PYdm0aH3hIlgaCN+9Jgh+sjBrN",
@@ -647,6 +703,8 @@ resources = {
     "lib1-parts.e07_floor.models.mcdpr1.yaml": lib1_parts_e07_floor_models_mcdpr1_yaml,
     "lib1-parts.e10_conversions1.models.mcdpr1.yaml": lib1_parts_e10_conversions1_models_mcdpr1_yaml,
     "lib1-parts.e10_conversions2.models.mcdpr1.yaml": lib1_parts_e10_conversions2_models_mcdpr1_yaml,
+    "lib1-parts.e11_constant_fun.models.mcdpr1.yaml": lib1_parts_e11_constant_fun_models_mcdpr1_yaml,
+    "lib1-parts.e11_constant_res.models.mcdpr1.yaml": lib1_parts_e11_constant_res_models_mcdpr1_yaml,
     "lib1-parts.nats.posets.mcdpr1.yaml": lib1_parts_nats_posets_mcdpr1_yaml,
     "lib1-parts.reals.posets.mcdpr1.yaml": lib1_parts_reals_posets_mcdpr1_yaml,
     "lib1-parts.reals_with_units.posets.mcdpr1.yaml": lib1_parts_reals_with_units_posets_mcdpr1_yaml,
