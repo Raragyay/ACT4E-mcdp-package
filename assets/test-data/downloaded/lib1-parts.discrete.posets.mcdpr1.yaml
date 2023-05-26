@@ -1,3 +1,4 @@
+---
 $schema:
   title: FinitePoset
   kind: Poset

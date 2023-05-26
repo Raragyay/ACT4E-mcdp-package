@@ -8,10 +8,10 @@ from . import logger
 
 
 def test_loading_all() -> None:
-    directory = 'assets/test-data/downloaded'
+    directory = "assets/test-data/downloaded"
     # find all *yaml file there
 
-    files = glob(join(directory, '*.yaml'))
+    files = glob(join(directory, "*.mcdpr1.yaml"))
     for filename in files:
         with open(filename) as f:
             content = f.read()

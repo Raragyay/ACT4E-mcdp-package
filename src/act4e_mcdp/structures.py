@@ -1,19 +1,24 @@
 from dataclasses import dataclass
 from decimal import Decimal
 
-__all__ = [
-    "Numbers",
+from typing import Optional
 
-    "CompositeNamedDP", "Connection", "PrimitiveDP", "DPSeries", "FinitePoset", "ModelFunctionality",
+__all__ = [
+    "CompositeNamedDP",
+    "Connection",
+    "DPSeries",
+    "FinitePoset",
+    "ModelFunctionality",
     "ModelResource",
     "NodeFunctionality",
-    "NodeResource", 'Numbers',
+    "NodeResource",
+    "Numbers",
+    "Numbers",
     "Poset",
-    "PosetProduct", "SimpleWrap",
-
+    "PosetProduct",
+    "PrimitiveDP",
+    "SimpleWrap",
 ]
-
-from typing import Optional
 
 
 @dataclass
