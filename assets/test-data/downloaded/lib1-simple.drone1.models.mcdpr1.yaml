@@ -1,0 +1,828 @@
+$schema:
+  title: CompositeNamedDP
+  kind: NamedDP
+functionalities:
+  endurance:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: s
+  extra_payload:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: kg
+  extra_power:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: W
+resources:
+  mass:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: kg
+nodes:
+  battery:
+    $schema:
+      title: CompositeNamedDP
+      kind: NamedDP
+    functionalities:
+      capacity:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: J
+    resources:
+      mass:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: kg
+    nodes:
+      _mult1:
+        $schema:
+          title: SimpleWrap
+          kind: NamedDP
+        functionalities:
+          _op0:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: J
+        resources:
+          _res:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: J*kg/Wh
+        dp:
+          $schema:
+            title: M_Res_DivideConstant_DP
+            kind: PrimitiveDP
+            description: f / 500 Wh/kg ≤ r
+          F:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: J
+          vu:
+            $schema:
+              title: ValueFromPoset
+            value: '500'
+            poset:
+              $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '500'
+              top: '500'
+              units: Wh/kg
+          opspace:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: J
+          R:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: J*kg/Wh
+          ann:
+      _conversion1:
+        $schema:
+          title: SimpleWrap
+          kind: NamedDP
+        functionalities:
+          _op01:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: J*kg/Wh
+        resources:
+          _res2:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+        dp:
+          $schema:
+            title: UnitConversion
+            kind: PrimitiveDP
+            description: f * F 1/3600 ≤ r
+          F:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: J*kg/Wh
+          R:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+          opspace:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: -Infinity
+            top: Infinity
+            units: J*kg/Wh
+          factor: 1/3600
+          ann:
+    connections:
+    - from:
+        functionality: capacity
+      to:
+        node: _mult1
+        node_functionality: _op0
+    - from:
+        node: _mult1
+        node_resource: _res
+      to:
+        node: _conversion1
+        node_functionality: _op01
+    - from:
+        node: _conversion1
+        node_resource: _res2
+      to:
+        resource: mass
+  actuation:
+    $schema:
+      title: CompositeNamedDP
+      kind: NamedDP
+    functionalities:
+      lift:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: N
+    resources:
+      power:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: W
+    nodes:
+      _prod1:
+        $schema:
+          title: SimpleWrap
+          kind: NamedDP
+        functionalities:
+          _factor0:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: N
+        resources:
+          _result:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: N²
+        dp:
+          $schema:
+            title: M_Power_DP
+            kind: PrimitiveDP
+            description: f² ≤ r
+          F:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: N
+          R:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: N²
+          num: 2
+          den: 1
+          ann:
+      _mult1:
+        $schema:
+          title: SimpleWrap
+          kind: NamedDP
+        functionalities:
+          _op0:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: N²
+        resources:
+          _res:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: W
+        dp:
+          $schema:
+            title: M_Res_MultiplyConstant_DP
+            kind: PrimitiveDP
+            description: f ⋅ 0.002 W/N² ≤ r
+          F:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: N²
+          vu:
+            $schema:
+              title: ValueFromPoset
+            value: '0.002'
+            poset:
+              $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '0.002'
+              top: '0.002'
+              units: W/N²
+          opspace:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: -Infinity
+            top: Infinity
+          R:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: W
+          ann:
+    connections:
+    - from:
+        functionality: lift
+      to:
+        node: _prod1
+        node_functionality: _factor0
+    - from:
+        node: _prod1
+        node_resource: _result
+      to:
+        node: _mult1
+        node_functionality: _op0
+    - from:
+        node: _mult1
+        node_resource: _res
+      to:
+        resource: power
+  _sum1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _term0:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: W
+      _term1:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: W
+    resources:
+      _result:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: W
+    dp:
+      $schema:
+        title: M_Res_AddMany_DP
+        kind: PrimitiveDP
+        description: f₁ + f₂ ≤ r
+      opspace:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
+        units: W
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: W
+      ann:
+      F:
+        $schema:
+          kind: Poset
+          title: PosetProduct
+        subs:
+        - $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '0'
+          top: Infinity
+          units: W
+        - $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '0'
+          top: Infinity
+          units: W
+  power:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      power:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: W
+    resources:
+      power:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: W
+    dp:
+      $schema:
+        title: IdentityDP
+        kind: PrimitiveDP
+        description: f ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: W
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: W
+      ann:
+  _prod1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _op0:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: W
+      _op1:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: s
+    resources:
+      _res:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: J
+    dp:
+      $schema:
+        title: M_Res_MultiplyMany_DP
+        kind: PrimitiveDP
+        description: f₁⋅f₂ ≤ r
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: J
+      opspace:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
+      ann:
+      F:
+        $schema:
+          kind: Poset
+          title: PosetProduct
+        subs:
+        - $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '0'
+          top: Infinity
+          units: W
+        - $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '0'
+          top: Infinity
+          units: s
+  energy:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      energy:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: J
+    resources:
+      energy:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: J
+    dp:
+      $schema:
+        title: IdentityDP
+        kind: PrimitiveDP
+        description: f ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: J
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: J
+      ann:
+  _sum2:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _term01:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: kg
+      _term11:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: kg
+    resources:
+      _result2:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: kg
+    dp:
+      $schema:
+        title: M_Res_AddMany_DP
+        kind: PrimitiveDP
+        description: f₁ + f₂ ≤ r
+      opspace:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
+        units: kg
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: kg
+      ann:
+      F:
+        $schema:
+          kind: Poset
+          title: PosetProduct
+        subs:
+        - $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '0'
+          top: Infinity
+          units: kg
+        - $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '0'
+          top: Infinity
+          units: kg
+  _mult1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _op01:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: kg
+    resources:
+      _res2:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: N
+    dp:
+      $schema:
+        title: M_Res_MultiplyConstant_DP
+        kind: PrimitiveDP
+        description: f ⋅ 9.81 m/s² ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: kg
+      vu:
+        $schema:
+          title: ValueFromPoset
+        value: '9.81'
+        poset:
+          $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '9.81'
+          top: '9.81'
+          units: m/s²
+      opspace:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: N
+      ann:
+  weight:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      weight:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: N
+    resources:
+      weight:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: N
+    dp:
+      $schema:
+        title: IdentityDP
+        kind: PrimitiveDP
+        description: f ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: N
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: N
+      ann:
+  _join_fname1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _a:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: kg
+    resources:
+      _mass_0:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: kg
+      _mass_1:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: kg
+    dp:
+      $schema:
+        title: MeetNDualDP
+        kind: PrimitiveDP
+        description: f ≤  r₁ ∨ r₂
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: kg
+      C:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: kg
+      ann:
+      R:
+        $schema:
+          kind: Poset
+          title: PosetProduct
+        subs:
+        - $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '0'
+          top: Infinity
+          units: kg
+        - $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '0'
+          top: Infinity
+          units: kg
+connections:
+- from:
+    node: actuation
+    node_resource: power
+  to:
+    node: _sum1
+    node_functionality: _term0
+- from:
+    functionality: extra_power
+  to:
+    node: _sum1
+    node_functionality: _term1
+- from:
+    node: _sum1
+    node_resource: _result
+  to:
+    node: power
+    node_functionality: power
+- from:
+    node: power
+    node_resource: power
+  to:
+    node: _prod1
+    node_functionality: _op0
+- from:
+    functionality: endurance
+  to:
+    node: _prod1
+    node_functionality: _op1
+- from:
+    node: _prod1
+    node_resource: _res
+  to:
+    node: energy
+    node_functionality: energy
+- from:
+    node: energy
+    node_resource: energy
+  to:
+    node: battery
+    node_functionality: capacity
+- from:
+    functionality: extra_payload
+  to:
+    node: _sum2
+    node_functionality: _term11
+- from:
+    node: _sum2
+    node_resource: _result2
+  to:
+    node: _mult1
+    node_functionality: _op01
+- from:
+    node: _mult1
+    node_resource: _res2
+  to:
+    node: weight
+    node_functionality: weight
+- from:
+    node: weight
+    node_resource: weight
+  to:
+    node: actuation
+    node_functionality: lift
+- from:
+    node: _join_fname1
+    node_resource: _mass_0
+  to:
+    node: _sum2
+    node_functionality: _term01
+- from:
+    node: _join_fname1
+    node_resource: _mass_1
+  to:
+    resource: mass
+- from:
+    node: battery
+    node_resource: mass
+  to:
+    node: _join_fname1
+    node_functionality: _a

@@ -406,6 +406,35 @@ class AmbientConversion(PrimitiveDP):
 
 
 @dataclass
+class IdentityDP(PrimitiveDP):
+    r"""
+    This is the identity DP ($\F = \R$)
+
+    Relation:
+
+        $$
+          \fun \leq \res
+        $$
+
+
+    Attributes:
+
+        F (Poset): The functionality poset $\F$
+        R (Poset): The resources poset $\R$
+
+
+    Note: It can be seen as a special case of [AmbientConversion][
+    act4e_mcdp.primitivedps.AmbientConversion] where $\common = \F = \R$.
+    """
+
+
+@dataclass
+class DPLoop2(PrimitiveDP):
+    r""" """
+    dp: PrimitiveDP
+
+
+@dataclass
 class Limit(PrimitiveDP):
     r"""
     Implements a bound on the functionality.

@@ -16,6 +16,11 @@ These objects corresponds to morphisms in the category of design problems DP.
 ::: act4e_mcdp.primitivedps
     options:
       members:
+        - IdentityDP
+
+::: act4e_mcdp.primitivedps
+    options:
+      members:
         - Limit
         - Constant
         - True_DP
@@ -108,3 +113,11 @@ The constant is specified by an object of type `ValueFromPoset`.
       members:
         - AmbientConversion
         - UnitConversion  
+
+
+## Other
+
+::: act4e_mcdp.primitivedps
+    options:
+      members:
+        - DPLoop2

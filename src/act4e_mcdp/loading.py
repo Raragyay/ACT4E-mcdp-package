@@ -18,8 +18,10 @@ from .primitivedps import (
     AmbientConversion,
     CatalogueDP,
     Constant,
+    DPLoop2,
     DPSeries,
     EntryInfo,
+    IdentityDP,
     JoinNDP,
     Limit,
     M_Ceil_DP,
@@ -112,6 +114,19 @@ def load_CatalogueDP(ob: dict):
 def load_M_Res_MultiplyConstant_DP(ob: dict):
     fields = _load_DP_fields(ob)
     return M_Res_MultiplyConstant_DP(**fields)
+
+
+@loader_for("IdentityDP")
+def load_Identity_DP(ob: dict):
+    fields = _load_DP_fields(ob)
+    return IdentityDP(**fields)
+
+
+@loader_for("DPLoop2")
+def load_DPLoop2(ob: dict):
+    fields = _load_DP_fields(ob)
+    fields["dp"] = load_repr1(ob["dp1"], PrimitiveDP)
+    return DPLoop2(**fields)
 
 
 @loader_for("M_Fun_MultiplyConstant_DP")
