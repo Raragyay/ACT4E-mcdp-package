@@ -17,6 +17,7 @@ from .posets import FinitePoset, Numbers, Poset, PosetProduct
 from .primitivedps import (
     AmbientConversion,
     CatalogueDP,
+    M_Res_DivideConstant_DP,
     Constant,
     DPLoop2,
     DPSeries,
@@ -30,11 +31,14 @@ from .primitivedps import (
     M_Fun_AddMany_DP,
     M_Fun_MultiplyConstant_DP,
     M_Fun_MultiplyMany_DP,
+    M_Power_DP,
     M_Res_AddConstant_DP,
     M_Res_AddMany_DP,
     M_Res_MultiplyConstant_DP,
     M_Res_MultiplyMany_DP,
     MeetNDualDP,
+    Mux,
+    ParallelDP,
     PrimitiveDP,
     UnitConversion,
     ValueFromPoset,
@@ -116,10 +120,23 @@ def load_M_Res_MultiplyConstant_DP(ob: dict):
     return M_Res_MultiplyConstant_DP(**fields)
 
 
+@loader_for("M_Res_DivideConstant_DP")
+def load_M_Res_DivideConstant_DP(ob: dict):
+    fields = _load_DP_fields(ob)
+    return M_Res_DivideConstant_DP(**fields)
+
+
 @loader_for("IdentityDP")
 def load_Identity_DP(ob: dict):
     fields = _load_DP_fields(ob)
     return IdentityDP(**fields)
+
+
+@loader_for("Mux")
+def load_Mux(ob: dict):
+    fields = _load_DP_fields(ob)
+    fields["coords"] = ob["coords"]
+    return Mux(**fields)
 
 
 @loader_for("DPLoop2")
@@ -166,6 +183,13 @@ def load_M_Fun_MultiplyMany_DP(ob: dict):
     return M_Fun_MultiplyMany_DP(**fields)
 
 
+@loader_for("M_Power_DP")
+def load_M_Power_DP(ob: dict):
+    fields = _load_DP_fields(ob)
+
+    return M_Power_DP(**fields, num=ob["num"], den=ob["den"])
+
+
 @loader_for("M_Ceil_DP")
 def load_M_Ceil_DP(ob: dict):
     fields = _load_DP_fields(ob)
@@ -198,6 +222,18 @@ def load_SeriesN(ob: dict):
         subs.append(dp)
 
     return DPSeries(**fields, subs=subs)
+
+
+@loader_for("ParallelN")
+def load_ParallelN(ob: dict):
+    fields = _load_DP_fields(ob)
+
+    subs = []
+    for dp in ob["dps"]:
+        dp = load_repr1(dp, PrimitiveDP)
+        subs.append(dp)
+
+    return ParallelDP(**fields, subs=subs)
 
 
 #
@@ -346,7 +382,7 @@ def load_repr1(data: dict, T: Optional[Type[X]] = None) -> X:
     except Exception as e:
         datas = yaml.dump(data, allow_unicode=True)
         logger.exception("Error while loading %r\n%s", title, datas, exc_info=e)
-        msg = f"Error while loading {title!r}: \n{datas}"
+        msg = f"Error while loading {title!r}:"
         raise ValueError(msg) from e
 
 

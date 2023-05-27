@@ -43,7 +43,10 @@ These objects corresponds to morphisms in the category of design problems DP.
       members:
         - JoinNDP
         - MeetNDualDP  
-        
+        - Mux
+
+M_Power_DP
+M_Res_DivideConstant_DP
 
 ## Simple unary mathematical operations
 

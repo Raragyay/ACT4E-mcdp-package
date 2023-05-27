@@ -8,8 +8,10 @@ __all__ = [
     "AmbientConversion",
     "CatalogueDP",
     "Constant",
+    "DPLoop2",
     "DPSeries",
     "EntryInfo",
+    "IdentityDP",
     "JoinNDP",
     "Limit",
     "M_Ceil_DP",
@@ -19,12 +21,16 @@ __all__ = [
     "M_Fun_MultiplyConstant_DP",
     "M_Fun_MultiplyMany_DP",
     "M_Fun_MultiplyMany_DP",
+    "M_Power_DP",
     "M_Res_AddConstant_DP",
     "M_Res_AddMany_DP",
+    "M_Res_DivideConstant_DP",
     "M_Res_MultiplyConstant_DP",
     "M_Res_MultiplyMany_DP",
     "MeetNDualDP",
     "MeetNDualDP",
+    "Mux",
+    "ParallelDP",
     "PrimitiveDP",
     "UnitConversion",
     "ValueFromPoset",
@@ -59,6 +65,13 @@ class DPSeries(PrimitiveDP):
         R: The resources poset $\R$
         subs: The list of DPs
     """
+
+    subs: list[PrimitiveDP]
+
+
+@dataclass
+class ParallelDP(PrimitiveDP):
+    r""" """
 
     subs: list[PrimitiveDP]
 
@@ -103,6 +116,14 @@ class M_Res_MultiplyConstant_DP(PrimitiveDP):
         opspace: The poset $\opspace$ where the multiplication and comparison take place.
 
     """
+
+    vu: ValueFromPoset
+    opspace: Poset
+
+
+@dataclass
+class M_Res_DivideConstant_DP(PrimitiveDP):
+    r""" """
 
     vu: ValueFromPoset
     opspace: Poset
@@ -251,6 +272,20 @@ class JoinNDP(PrimitiveDP):
     """
 
     opspace: Poset
+
+
+@dataclass
+class Mux(PrimitiveDP):
+    r""" """
+
+    coords: object
+
+
+@dataclass
+class M_Power_DP(PrimitiveDP):
+    r""" """
+    num: int
+    den: int
 
 
 @dataclass
