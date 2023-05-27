@@ -6,9 +6,10 @@ from importlib import import_module
 import yaml
 
 from . import logger
+from .primitivedps import PrimitiveDP
 from .loading import load_repr1, parse_yaml_value
-from .solution_interface import SolverInterface
 from .nameddps import NamedDP
+from .solution_interface import DPSolverInterface
 
 
 def import_from_string(dot_path: str) -> object:
@@ -17,13 +18,13 @@ def import_from_string(dot_path: str) -> object:
     return getattr(module, name)
 
 
-__all__ = ["solve_main"]
+__all__ = ["solve_dp_main"]
 
 
-def solve_main() -> None:
+def solve_dp_main() -> None:
     queries = ["FixFunMinRes", "FixResMaxFun"]
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", help="Model source (file or URL)", required=True)
+    parser.add_argument("--model", help="DP Model source (file or URL)", required=True)
     parser.add_argument("--query", help="query", default="FixFunMinRes", required=False)
     parser.add_argument("--data", help="data (YAML Format)", required=True)
     parser.add_argument("--solver", help="Model source (file or URL)", required=True)
@@ -37,12 +38,16 @@ def solve_main() -> None:
         logger.error("Could not import solver %r", args.solver, exc_info=e)
         sys.exit(1)
 
-    solver: SolverInterface
+    solver: DPSolverInterface
 
-    if isinstance(solver0, SolverInterface):
+    if isinstance(solver0, DPSolverInterface):
         solver = solver0
     else:
+        # noinspection PyCallingNonCallable
         solver = solver0()  # type: ignore
+    if not isinstance(solver, DPSolverInterface):
+        msg = f"Expected a DPSolverInterface, got {solver!r}"
+        raise ValueError(msg)
 
     query = args.query
 
@@ -69,44 +74,33 @@ def solve_main() -> None:
             logger.error("Cannot open file: %r", model_source)
             sys.exit(1)
 
-    model = load_repr1(data, NamedDP)
+    model = load_repr1(data, PrimitiveDP)
+    if not isinstance(model, PrimitiveDP):
+        if isinstance(model, NamedDP):
+            msg = f"Expected a PrimitiveDP, not a NamedDP. Did you mean to use 'act4e-mcdp-solve-mcdp'?"
+            raise ValueError(msg)
+
+        msg = f"Expected a NamedDP, got {model!r}"
+        raise ValueError(msg)
     logger.info("model: %s", model)
 
     yaml_query = yaml.load(query_data, Loader=yaml.SafeLoader)
-    if not isinstance(yaml_query, dict):
-        raise ValueError(f"Expected dict, got {yaml_query!r}")
 
     if query == "FixFunMinRes":
-        found = set(yaml_query)
-        expected = set(model.functionalities)
-        if found != expected:
-            msg = f"Expected {expected}, got {found}"
-            raise ValueError(msg)
-
-        value = {}
-        for k, v in model.functionalities.items():
-            value[k] = parse_yaml_value(v, yaml_query[k])
+        value = parse_yaml_value(model.F, yaml_query)
 
         logger.info("query: %s", value)
 
-        solution = solver.solve_FixFunMinRes(model, value)
+        solution = solver.solve_dp_FixFunMinRes(model, value)
 
         logger.info("solution: %s", solution)
 
     elif query == "FixResMaxFun":
-        found = set(yaml_query)
-        expected = set(model.resources)
-        if found != expected:
-            msg = f"Expected {expected}, got {found}"
-            raise ValueError(msg)
-
-        value = {}
-        for k, v in model.resources.items():
-            value[k] = parse_yaml_value(v, yaml_query[k])
+        value = parse_yaml_value(model.R, yaml_query)
 
         logger.info("query: %s", value)
 
-        solution = solver.solve_FixResMaxFun(model, value)
+        solution = solver.solve_dp_FixFunMinRes(model, value)
 
         logger.info("solution: %s", solution)
 

@@ -5,10 +5,6 @@
     options:
       members:
         - ValueFromPoset
- 
-
-::: act4e_mcdp.solution_interface
-    options:
-      members:
         - UpperSet
         - LowerSet
+        - Interval

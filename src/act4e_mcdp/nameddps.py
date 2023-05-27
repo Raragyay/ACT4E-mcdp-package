@@ -56,6 +56,7 @@ class SimpleWrap(NamedDP):
 class NodeResource:
     """
     A resource of a node.
+    Used by the [Connection][act4e_mcdp.nameddps.Connection] class.
 
     Attributes:
         node: the node name
@@ -70,7 +71,8 @@ class NodeResource:
 @dataclass
 class NodeFunctionality:
     """
-    A functionality of a node
+    A functionality of a node.
+    Used by the [Connection][act4e_mcdp.nameddps.Connection] class.
 
     Attributes:
         node: the node name
@@ -84,7 +86,8 @@ class NodeFunctionality:
 @dataclass
 class ModelFunctionality:
     """
-    A functionality of the entire diagram
+    A functionality of the entire diagram.
+    Used by the [Connection][act4e_mcdp.nameddps.Connection] class.
 
     Attributes:
         functionality: the functionality name
@@ -96,7 +99,8 @@ class ModelFunctionality:
 @dataclass
 class ModelResource:
     """
-    A resource of the entire diagram
+    A resource of the entire diagram.
+    Used by the [Connection][act4e_mcdp.nameddps.Connection] class.
 
     Attributes:
         resource: the resource name

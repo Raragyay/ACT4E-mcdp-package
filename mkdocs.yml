@@ -12,6 +12,7 @@ nav:
     - API/primitivedps/35_mimo.md
     - API/primitivedps/40_conversions.md
     - API/primitivedps/50_catalogue.md
+  - API/nameddps/index.md
   - API/structures/index.md
   - API/API_solution.md
 - About:

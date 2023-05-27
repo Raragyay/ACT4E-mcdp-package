@@ -390,7 +390,7 @@ def parse_yaml_value(poset: Poset, ob: object) -> object:
     match poset:
         case Numbers():
             if not isinstance(ob, (int, str, float, bool)):
-                msg = "Expected string, got %s" % type(ob)
+                msg = "For Poset of numbers, expected string or int, got %s" % type(ob)
                 raise ValueError(msg)
             return Decimal(ob)
         case FinitePoset():

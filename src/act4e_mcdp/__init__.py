@@ -10,7 +10,8 @@ logger.setLevel(DEBUG)
 # __version__ = "0.2.1"
 
 from .loading import *
-from .main import *
+from .main_solve_mcdp import *
+from .main_solve_dp import *
 from .solution_interface import *
 from .nameddps import *
 from .primitivedps import *

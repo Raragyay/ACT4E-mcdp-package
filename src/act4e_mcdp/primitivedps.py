@@ -530,6 +530,12 @@ class Constant(PrimitiveDP):
 class EntryInfo:
     r"""
     Describes $\fun^{\max}_{\imp}$ and $\res^{\min}_{\imp}$ for an implementation.
+
+
+    Attributes:
+        f_max: The maximum functionality $\fun^{\max}_{\imp}$
+        r_min: The minimum resources $\res^{\min}_{\imp}$
+
     """
     f_max: object
     r_min: object
