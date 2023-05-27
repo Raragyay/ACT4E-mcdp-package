@@ -46,7 +46,7 @@ dps:
             title: Numbers
           bottom: '0'
           top: Infinity
-          units: J*kg/Wh
+          units: N
       coords:
         $schema:
           title: ComposeList
@@ -71,7 +71,7 @@ dps:
               rest:
                 $schema:
                   title: CoordsComp
-                index: 1
+                index: 2
                 ntot: 3
                 rest:
                   $schema:
@@ -86,7 +86,7 @@ dps:
             rest:
               $schema:
                 title: CoordsComp
-              index: 2
+              index: 0
               ntot: 3
               rest:
                 $schema:
@@ -101,7 +101,7 @@ dps:
           rest:
             $schema:
               title: CoordsComp
-            index: 0
+            index: 1
             ntot: 3
             rest:
               $schema:
@@ -116,6 +116,23 @@ dps:
         - $schema:
             title: ComposeList
           components:
+          - $schema:
+              title: CoordsComp
+            index: 0
+            ntot: 2
+            rest:
+              $schema:
+                title: CoordsComp
+              index: 1
+              ntot: 2
+              rest:
+                $schema:
+                  title: CoordsComp
+                index: 0
+                ntot: 1
+                rest:
+                  $schema:
+                    title: CoordsIdentity
           - $schema:
               title: CoordsComp
             index: 1
@@ -150,23 +167,6 @@ dps:
                   rest:
                     $schema:
                       title: CoordsIdentity
-          - $schema:
-              title: CoordsComp
-            index: 0
-            ntot: 2
-            rest:
-              $schema:
-                title: CoordsComp
-              index: 1
-              ntot: 2
-              rest:
-                $schema:
-                  title: CoordsComp
-                index: 0
-                ntot: 1
-                rest:
-                  $schema:
-                    title: CoordsIdentity
         - $schema:
             title: CoordsComp
           index: 0
@@ -202,7 +202,7 @@ dps:
                 title: Numbers
               bottom: '0'
               top: Infinity
-              units: J*kg/Wh
+              units: N
             - $schema:
                 kind: Poset
                 title: PosetProduct
@@ -212,7 +212,7 @@ dps:
                   title: Numbers
                 bottom: '0'
                 top: Infinity
-                units: kg
+                units: W
           - $schema:
               kind: Poset
               title: PosetProduct
@@ -222,7 +222,7 @@ dps:
                 title: Numbers
               bottom: '0'
               top: Infinity
-              units: W
+              units: s
         - $schema:
             kind: Poset
             title: PosetProduct
@@ -232,7 +232,7 @@ dps:
               title: Numbers
             bottom: '0'
             top: Infinity
-            units: s
+            units: kg
       ann:
     - $schema:
         title: ParallelN
@@ -258,446 +258,6 @@ dps:
                   title: SeriesN
                   kind: PrimitiveDP
                 dps:
-                - $schema:
-                    title: UnitConversion
-                    kind: PrimitiveDP
-                    description: f * F 1/3600 ≤ r
-                  F:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: J*kg/Wh
-                  R:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                  opspace:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: -Infinity
-                    top: Infinity
-                    units: J*kg/Wh
-                  factor: 1/3600
-                  ann:
-                - $schema:
-                    title: MeetNDualDP
-                    kind: PrimitiveDP
-                    description: f ≤  r₁ ∨ r₂
-                  F:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                  C:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                  ann:
-                  R:
-                    $schema:
-                      kind: Poset
-                      title: PosetProduct
-                    subs:
-                    - $schema:
-                        kind: Poset
-                        title: Numbers
-                      bottom: '0'
-                      top: Infinity
-                      units: kg
-                    - $schema:
-                        kind: Poset
-                        title: Numbers
-                      bottom: '0'
-                      top: Infinity
-                      units: kg
-                labels:
-                - - 0
-                - - 1
-                ann:
-                F:
-                  $schema:
-                    kind: Poset
-                    title: Numbers
-                  bottom: '0'
-                  top: Infinity
-                  units: J*kg/Wh
-                R:
-                  $schema:
-                    kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-              - $schema:
-                  title: IdentityDP
-                  kind: PrimitiveDP
-                  description: f ≤ r
-                F:
-                  $schema:
-                    kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                R:
-                  $schema:
-                    kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                ann:
-              labels:
-              - - 0
-              - - 1
-              ann:
-              F:
-                $schema:
-                  kind: Poset
-                  title: PosetProduct
-                subs:
-                - $schema:
-                    kind: Poset
-                    title: Numbers
-                  bottom: '0'
-                  top: Infinity
-                  units: J*kg/Wh
-                - $schema:
-                    kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-              R:
-                $schema:
-                  kind: Poset
-                  title: PosetProduct
-                subs:
-                - $schema:
-                    kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                - $schema:
-                    kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-            - $schema:
-                title: Mux
-                kind: PrimitiveDP
-                description: mux(f) ≤ r
-              F:
-                $schema:
-                  kind: Poset
-                  title: PosetProduct
-                subs:
-                - $schema:
-                    kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                - $schema:
-                    kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-              coords:
-                $schema:
-                  title: ComposeList
-                components:
-                - $schema:
-                    title: CoordsComp
-                  index: 0
-                  ntot: 2
-                  rest:
-                    $schema:
-                      title: CoordsComp
-                    index: 1
-                    ntot: 2
-                    rest:
-                      $schema:
-                        title: ComposeList
-                      components:
-                      - $schema:
-                          title: CoordsIdentity
-                - $schema:
-                    title: ComposeList
-                  components:
-                  - $schema:
-                      title: CoordsComp
-                    index: 1
-                    ntot: 2
-                    rest:
-                      $schema:
-                        title: CoordsComp
-                      index: 0
-                      ntot: 1
-                      rest:
-                        $schema:
-                          title: CoordsIdentity
-                  - $schema:
-                      title: CoordsComp
-                    index: 0
-                    ntot: 2
-                    rest:
-                      $schema:
-                        title: CoordsComp
-                      index: 0
-                      ntot: 2
-                      rest:
-                        $schema:
-                          title: CoordsIdentity
-              coords2:
-                $schema:
-                  title: ComposeList
-                components:
-                - $schema:
-                    title: ComposeList
-                  components:
-                  - $schema:
-                      title: CoordsComp
-                    index: 1
-                    ntot: 2
-                    rest:
-                      $schema:
-                        title: CoordsComp
-                      index: 1
-                      ntot: 2
-                      rest:
-                        $schema:
-                          title: CoordsIdentity
-                  - $schema:
-                      title: CoordsComp
-                    index: 0
-                    ntot: 2
-                    rest:
-                      $schema:
-                        title: CoordsComp
-                      index: 0
-                      ntot: 1
-                      rest:
-                        $schema:
-                          title: CoordsIdentity
-                - $schema:
-                    title: CoordsComp
-                  index: 1
-                  ntot: 2
-                  rest:
-                    $schema:
-                      title: CoordsComp
-                    index: 0
-                    ntot: 2
-                    rest:
-                      $schema:
-                        title: ComposeList
-                      components:
-                      - $schema:
-                          title: CoordsIdentity
-              R:
-                $schema:
-                  kind: Poset
-                  title: PosetProduct
-                subs:
-                - $schema:
-                    kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                - $schema:
-                    kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-              ann:
-            - $schema:
-                title: ParallelN
-                kind: PrimitiveDP
-              dps:
-              - $schema:
-                  title: IdentityDP
-                  kind: PrimitiveDP
-                  description: f ≤ r
-                F:
-                  $schema:
-                    kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                R:
-                  $schema:
-                    kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                ann:
-              - $schema:
-                  title: SeriesN
-                  kind: PrimitiveDP
-                dps:
-                - $schema:
-                    title: M_Res_AddMany_DP
-                    kind: PrimitiveDP
-                    description: f₁ + f₂ ≤ r
-                  opspace:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: -Infinity
-                    top: Infinity
-                    units: kg
-                  R:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                  ann:
-                  F:
-                    $schema:
-                      kind: Poset
-                      title: PosetProduct
-                    subs:
-                    - $schema:
-                        kind: Poset
-                        title: Numbers
-                      bottom: '0'
-                      top: Infinity
-                      units: kg
-                    - $schema:
-                        kind: Poset
-                        title: Numbers
-                      bottom: '0'
-                      top: Infinity
-                      units: kg
-                - $schema:
-                    title: M_Res_MultiplyConstant_DP
-                    kind: PrimitiveDP
-                    description: f ⋅ 9.81 m/s² ≤ r
-                  F:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
-                  vu:
-                    $schema:
-                      title: ValueFromPoset
-                    value: '9.81'
-                    poset:
-                      $schema:
-                        kind: Poset
-                        title: Numbers
-                      bottom: '9.81'
-                      top: '9.81'
-                      units: m/s²
-                  opspace:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: -Infinity
-                    top: Infinity
-                  R:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: N
-                  ann:
                 - $schema:
                     title: M_Power_DP
                     kind: PrimitiveDP
@@ -758,9 +318,25 @@ dps:
                 labels:
                 - - 0
                 - - 1
-                - - 2
-                - - 3
                 ann:
+                F:
+                  $schema:
+                    kind: Poset
+                    title: Numbers
+                  bottom: '0'
+                  top: Infinity
+                  units: N
+                R:
+                  $schema:
+                    kind: Poset
+                    title: Numbers
+                  bottom: '0'
+                  top: Infinity
+                  units: W
+              - $schema:
+                  title: IdentityDP
+                  kind: PrimitiveDP
+                  description: f ≤ r
                 F:
                   $schema:
                     kind: Poset
@@ -771,20 +347,19 @@ dps:
                       title: Numbers
                     bottom: '0'
                     top: Infinity
-                    units: kg
+                    units: W
+                R:
+                  $schema:
+                    kind: Poset
+                    title: PosetProduct
+                  subs:
                   - $schema:
                       kind: Poset
                       title: Numbers
                     bottom: '0'
                     top: Infinity
-                    units: kg
-                R:
-                  $schema:
-                    kind: Poset
-                    title: Numbers
-                  bottom: '0'
-                  top: Infinity
-                  units: W
+                    units: W
+                ann:
               labels:
               - - 0
               - - 1
@@ -796,14 +371,10 @@ dps:
                 subs:
                 - $schema:
                     kind: Poset
-                    title: PosetProduct
-                  subs:
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
+                    title: Numbers
+                  bottom: '0'
+                  top: Infinity
+                  units: N
                 - $schema:
                     kind: Poset
                     title: PosetProduct
@@ -813,13 +384,7 @@ dps:
                       title: Numbers
                     bottom: '0'
                     top: Infinity
-                    units: kg
-                  - $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: kg
+                    units: W
               R:
                 $schema:
                   kind: Poset
@@ -827,6 +392,12 @@ dps:
                 subs:
                 - $schema:
                     kind: Poset
+                    title: Numbers
+                  bottom: '0'
+                  top: Infinity
+                  units: W
+                - $schema:
+                    kind: Poset
                     title: PosetProduct
                   subs:
                   - $schema:
@@ -834,7 +405,124 @@ dps:
                       title: Numbers
                     bottom: '0'
                     top: Infinity
-                    units: kg
+                    units: W
+            - $schema:
+                title: Mux
+                kind: PrimitiveDP
+                description: mux(f) ≤ r
+              F:
+                $schema:
+                  kind: Poset
+                  title: PosetProduct
+                subs:
+                - $schema:
+                    kind: Poset
+                    title: Numbers
+                  bottom: '0'
+                  top: Infinity
+                  units: W
+                - $schema:
+                    kind: Poset
+                    title: PosetProduct
+                  subs:
+                  - $schema:
+                      kind: Poset
+                      title: Numbers
+                    bottom: '0'
+                    top: Infinity
+                    units: W
+              coords:
+                $schema:
+                  title: ComposeList
+                components:
+                - $schema:
+                    title: CoordsComp
+                  index: 1
+                  ntot: 2
+                  rest:
+                    $schema:
+                      title: CoordsComp
+                    index: 0
+                    ntot: 1
+                    rest:
+                      $schema:
+                        title: CoordsIdentity
+                - $schema:
+                    title: CoordsComp
+                  index: 0
+                  ntot: 2
+                  rest:
+                    $schema:
+                      title: CoordsIdentity
+              coords2:
+                $schema:
+                  title: ComposeList
+                components:
+                - $schema:
+                    title: CoordsComp
+                  index: 1
+                  ntot: 2
+                  rest:
+                    $schema:
+                      title: CoordsIdentity
+                - $schema:
+                    title: CoordsComp
+                  index: 0
+                  ntot: 2
+                  rest:
+                    $schema:
+                      title: ComposeList
+                    components:
+                    - $schema:
+                        title: CoordsIdentity
+              R:
+                $schema:
+                  kind: Poset
+                  title: PosetProduct
+                subs:
+                - $schema:
+                    kind: Poset
+                    title: Numbers
+                  bottom: '0'
+                  top: Infinity
+                  units: W
+                - $schema:
+                    kind: Poset
+                    title: Numbers
+                  bottom: '0'
+                  top: Infinity
+                  units: W
+              ann:
+            - $schema:
+                title: M_Res_AddMany_DP
+                kind: PrimitiveDP
+                description: f₁ + f₂ ≤ r
+              opspace:
+                $schema:
+                  kind: Poset
+                  title: Numbers
+                bottom: -Infinity
+                top: Infinity
+                units: W
+              R:
+                $schema:
+                  kind: Poset
+                  title: Numbers
+                bottom: '0'
+                top: Infinity
+                units: W
+              ann:
+              F:
+                $schema:
+                  kind: Poset
+                  title: PosetProduct
+                subs:
+                - $schema:
+                    kind: Poset
+                    title: Numbers
+                  bottom: '0'
+                  top: Infinity
+                  units: W
                 - $schema:
                     kind: Poset
                     title: Numbers
@@ -856,7 +544,7 @@ dps:
                   title: Numbers
                 bottom: '0'
                 top: Infinity
-                units: J*kg/Wh
+                units: N
               - $schema:
                   kind: Poset
                   title: PosetProduct
@@ -866,28 +554,14 @@ dps:
                     title: Numbers
                   bottom: '0'
                   top: Infinity
-                  units: kg
+                  units: W
             R:
               $schema:
                 kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: PosetProduct
-                subs:
-                - $schema:
-                    kind: Poset
-                    title: Numbers
-                  bottom: '0'
-                  top: Infinity
-                  units: kg
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: W
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: W
           - $schema:
               title: IdentityDP
               kind: PrimitiveDP
@@ -902,7 +576,7 @@ dps:
                   title: Numbers
                 bottom: '0'
                 top: Infinity
-                units: W
+                units: s
             R:
               $schema:
                 kind: Poset
@@ -913,7 +587,7 @@ dps:
                   title: Numbers
                 bottom: '0'
                 top: Infinity
-                units: W
+                units: s
             ann:
           labels:
           - - 0
@@ -933,7 +607,7 @@ dps:
                   title: Numbers
                 bottom: '0'
                 top: Infinity
-                units: J*kg/Wh
+                units: N
               - $schema:
                   kind: Poset
                   title: PosetProduct
@@ -943,7 +617,7 @@ dps:
                     title: Numbers
                   bottom: '0'
                   top: Infinity
-                  units: kg
+                  units: W
             - $schema:
                 kind: Poset
                 title: PosetProduct
@@ -953,7 +627,7 @@ dps:
                   title: Numbers
                 bottom: '0'
                 top: Infinity
-                units: W
+                units: s
           R:
             $schema:
               kind: Poset
@@ -961,24 +635,10 @@ dps:
             subs:
             - $schema:
                 kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: PosetProduct
-                subs:
-                - $schema:
-                    kind: Poset
-                    title: Numbers
-                  bottom: '0'
-                  top: Infinity
-                  units: kg
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: W
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: W
             - $schema:
                 kind: Poset
                 title: PosetProduct
@@ -988,7 +648,7 @@ dps:
                   title: Numbers
                 bottom: '0'
                 top: Infinity
-                units: W
+                units: s
         - $schema:
             title: Mux
             kind: PrimitiveDP
@@ -1000,24 +660,10 @@ dps:
             subs:
             - $schema:
                 kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: PosetProduct
-                subs:
-                - $schema:
-                    kind: Poset
-                    title: Numbers
-                  bottom: '0'
-                  top: Infinity
-                  units: kg
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: W
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: W
             - $schema:
                 kind: Poset
                 title: PosetProduct
@@ -1027,612 +673,69 @@ dps:
                   title: Numbers
                 bottom: '0'
                 top: Infinity
-                units: W
+                units: s
           coords:
             $schema:
               title: ComposeList
             components:
             - $schema:
                 title: CoordsComp
-              index: 0
+              index: 1
               ntot: 2
               rest:
                 $schema:
                   title: CoordsComp
                 index: 0
-                ntot: 2
+                ntot: 1
                 rest:
                   $schema:
                     title: CoordsIdentity
             - $schema:
-                title: ComposeList
-              components:
-              - $schema:
-                  title: CoordsComp
-                index: 1
-                ntot: 2
-                rest:
-                  $schema:
-                    title: CoordsComp
-                  index: 0
-                  ntot: 1
-                  rest:
-                    $schema:
-                      title: CoordsIdentity
-              - $schema:
-                  title: CoordsComp
-                index: 0
-                ntot: 2
-                rest:
-                  $schema:
-                    title: CoordsComp
-                  index: 1
-                  ntot: 2
-                  rest:
-                    $schema:
-                      title: CoordsIdentity
+                title: CoordsComp
+              index: 0
+              ntot: 2
+              rest:
+                $schema:
+                  title: CoordsIdentity
           coords2:
             $schema:
               title: ComposeList
             components:
             - $schema:
-                title: ComposeList
-              components:
-              - $schema:
-                  title: CoordsComp
-                index: 0
-                ntot: 2
-                rest:
-                  $schema:
-                    title: CoordsIdentity
-              - $schema:
-                  title: CoordsComp
-                index: 1
-                ntot: 2
-                rest:
-                  $schema:
-                    title: CoordsComp
-                  index: 1
-                  ntot: 2
-                  rest:
-                    $schema:
-                      title: CoordsIdentity
-            - $schema:
                 title: CoordsComp
               index: 1
               ntot: 2
               rest:
                 $schema:
-                  title: CoordsComp
-                index: 0
-                ntot: 2
-                rest:
-                  $schema:
-                    title: ComposeList
-                  components:
-                  - $schema:
-                      title: CoordsIdentity
-          R:
-            $schema:
-              kind: Poset
-              title: PosetProduct
-            subs:
+                  title: CoordsIdentity
             - $schema:
-                kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: kg
-            - $schema:
-                kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: W
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: W
-          ann:
-        - $schema:
-            title: ParallelN
-            kind: PrimitiveDP
-          dps:
-          - $schema:
-              title: IdentityDP
-              kind: PrimitiveDP
-              description: f ≤ r
-            F:
-              $schema:
-                kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: kg
-            R:
-              $schema:
-                kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: kg
-            ann:
-          - $schema:
-              title: M_Res_AddMany_DP
-              kind: PrimitiveDP
-              description: f₁ + f₂ ≤ r
-            opspace:
-              $schema:
-                kind: Poset
-                title: Numbers
-              bottom: -Infinity
-              top: Infinity
-              units: W
-            R:
-              $schema:
-                kind: Poset
-                title: Numbers
-              bottom: '0'
-              top: Infinity
-              units: W
-            ann:
-            F:
-              $schema:
-                kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: W
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: W
-          labels:
-          - - 0
-          - - 1
-          ann:
-          F:
-            $schema:
-              kind: Poset
-              title: PosetProduct
-            subs:
-            - $schema:
-                kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: kg
-            - $schema:
-                kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: W
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: W
-          R:
-            $schema:
-              kind: Poset
-              title: PosetProduct
-            subs:
-            - $schema:
-                kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: kg
-            - $schema:
-                kind: Poset
-                title: Numbers
-              bottom: '0'
-              top: Infinity
-              units: W
-        labels:
-        - - 0
-        - - 1
-        - - 2
-        ann:
-        F:
-          $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: PosetProduct
-            subs:
-            - $schema:
-                kind: Poset
-                title: Numbers
-              bottom: '0'
-              top: Infinity
-              units: J*kg/Wh
-            - $schema:
-                kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: kg
-          - $schema:
-              kind: Poset
-              title: PosetProduct
-            subs:
-            - $schema:
-                kind: Poset
-                title: Numbers
-              bottom: '0'
-              top: Infinity
-              units: W
-        R:
-          $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: PosetProduct
-            subs:
-            - $schema:
-                kind: Poset
-                title: Numbers
-              bottom: '0'
-              top: Infinity
-              units: kg
-          - $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: W
-      - $schema:
-          title: IdentityDP
-          kind: PrimitiveDP
-          description: f ≤ r
-        F:
-          $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: s
-        R:
-          $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: s
-        ann:
-      labels:
-      - - 0
-      - - 1
-      ann:
-      F:
-        $schema:
-          kind: Poset
-          title: PosetProduct
-        subs:
-        - $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: PosetProduct
-            subs:
-            - $schema:
-                kind: Poset
-                title: Numbers
-              bottom: '0'
-              top: Infinity
-              units: J*kg/Wh
-            - $schema:
-                kind: Poset
-                title: PosetProduct
-              subs:
-              - $schema:
-                  kind: Poset
-                  title: Numbers
-                bottom: '0'
-                top: Infinity
-                units: kg
-          - $schema:
-              kind: Poset
-              title: PosetProduct
-            subs:
-            - $schema:
-                kind: Poset
-                title: Numbers
-              bottom: '0'
-              top: Infinity
-              units: W
-        - $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: s
-      R:
-        $schema:
-          kind: Poset
-          title: PosetProduct
-        subs:
-        - $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: PosetProduct
-            subs:
-            - $schema:
-                kind: Poset
-                title: Numbers
-              bottom: '0'
-              top: Infinity
-              units: kg
-          - $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: W
-        - $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: s
-    - $schema:
-        title: Mux
-        kind: PrimitiveDP
-        description: mux(f) ≤ r
-      F:
-        $schema:
-          kind: Poset
-          title: PosetProduct
-        subs:
-        - $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: PosetProduct
-            subs:
-            - $schema:
-                kind: Poset
-                title: Numbers
-              bottom: '0'
-              top: Infinity
-              units: kg
-          - $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: W
-        - $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: s
-      coords:
-        $schema:
-          title: ComposeList
-        components:
-        - $schema:
-            title: CoordsComp
-          index: 0
-          ntot: 2
-          rest:
-            $schema:
-              title: CoordsComp
-            index: 0
-            ntot: 2
-            rest:
-              $schema:
-                title: CoordsIdentity
-        - $schema:
-            title: ComposeList
-          components:
-          - $schema:
-              title: CoordsComp
-            index: 1
-            ntot: 2
-            rest:
-              $schema:
                 title: CoordsComp
               index: 0
-              ntot: 1
-              rest:
-                $schema:
-                  title: CoordsIdentity
-          - $schema:
-              title: CoordsComp
-            index: 0
-            ntot: 2
-            rest:
-              $schema:
-                title: CoordsComp
-              index: 1
               ntot: 2
               rest:
                 $schema:
-                  title: CoordsIdentity
-      coords2:
-        $schema:
-          title: ComposeList
-        components:
-        - $schema:
-            title: ComposeList
-          components:
-          - $schema:
-              title: CoordsComp
-            index: 0
-            ntot: 2
-            rest:
-              $schema:
-                title: CoordsIdentity
-          - $schema:
-              title: CoordsComp
-            index: 1
-            ntot: 2
-            rest:
-              $schema:
-                title: CoordsComp
-              index: 1
-              ntot: 2
-              rest:
-                $schema:
-                  title: CoordsIdentity
-        - $schema:
-            title: CoordsComp
-          index: 1
-          ntot: 2
-          rest:
+                  title: ComposeList
+                components:
+                - $schema:
+                    title: CoordsIdentity
+          R:
             $schema:
-              title: CoordsComp
-            index: 0
-            ntot: 2
-            rest:
-              $schema:
-                title: ComposeList
-              components:
-              - $schema:
-                  title: CoordsIdentity
-      R:
-        $schema:
-          kind: Poset
-          title: PosetProduct
-        subs:
-        - $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
               kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: kg
-        - $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: s
-          - $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: W
-      ann:
-    - $schema:
-        title: ParallelN
-        kind: PrimitiveDP
-      dps:
-      - $schema:
-          title: IdentityDP
-          kind: PrimitiveDP
-          description: f ≤ r
-        F:
-          $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: kg
-        R:
-          $schema:
-            kind: Poset
-            title: PosetProduct
-          subs:
-          - $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: kg
-        ann:
-      - $schema:
-          title: SeriesN
-          kind: PrimitiveDP
-        dps:
+              title: PosetProduct
+            subs:
+            - $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: s
+            - $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: W
+          ann:
         - $schema:
             title: M_Res_MultiplyMany_DP
             kind: PrimitiveDP
@@ -1705,6 +808,506 @@ dps:
             top: Infinity
             units: J*kg/Wh
           ann:
+        - $schema:
+            title: UnitConversion
+            kind: PrimitiveDP
+            description: f * F 1/3600 ≤ r
+          F:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: J*kg/Wh
+          R:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+          opspace:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: -Infinity
+            top: Infinity
+            units: J*kg/Wh
+          factor: 1/3600
+          ann:
+        - $schema:
+            title: MeetNDualDP
+            kind: PrimitiveDP
+            description: f ≤  r₁ ∨ r₂
+          F:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+          C:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+          ann:
+          R:
+            $schema:
+              kind: Poset
+              title: PosetProduct
+            subs:
+            - $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: kg
+            - $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: kg
+        labels:
+        - - 0
+        - - 1
+        - - 2
+        - - 3
+        - - 4
+        - - 5
+        ann:
+        F:
+          $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: PosetProduct
+            subs:
+            - $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: N
+            - $schema:
+                kind: Poset
+                title: PosetProduct
+              subs:
+              - $schema:
+                  kind: Poset
+                  title: Numbers
+                bottom: '0'
+                top: Infinity
+                units: W
+          - $schema:
+              kind: Poset
+              title: PosetProduct
+            subs:
+            - $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: s
+        R:
+          $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+      - $schema:
+          title: IdentityDP
+          kind: PrimitiveDP
+          description: f ≤ r
+        F:
+          $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+        R:
+          $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+        ann:
+      labels:
+      - - 0
+      - - 1
+      ann:
+      F:
+        $schema:
+          kind: Poset
+          title: PosetProduct
+        subs:
+        - $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: PosetProduct
+            subs:
+            - $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: N
+            - $schema:
+                kind: Poset
+                title: PosetProduct
+              subs:
+              - $schema:
+                  kind: Poset
+                  title: Numbers
+                bottom: '0'
+                top: Infinity
+                units: W
+          - $schema:
+              kind: Poset
+              title: PosetProduct
+            subs:
+            - $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: s
+        - $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+      R:
+        $schema:
+          kind: Poset
+          title: PosetProduct
+        subs:
+        - $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+        - $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+    - $schema:
+        title: Mux
+        kind: PrimitiveDP
+        description: mux(f) ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: PosetProduct
+        subs:
+        - $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+        - $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+      coords:
+        $schema:
+          title: ComposeList
+        components:
+        - $schema:
+            title: CoordsComp
+          index: 0
+          ntot: 2
+          rest:
+            $schema:
+              title: CoordsComp
+            index: 1
+            ntot: 2
+            rest:
+              $schema:
+                title: ComposeList
+              components:
+              - $schema:
+                  title: CoordsIdentity
+        - $schema:
+            title: ComposeList
+          components:
+          - $schema:
+              title: CoordsComp
+            index: 1
+            ntot: 2
+            rest:
+              $schema:
+                title: CoordsComp
+              index: 0
+              ntot: 1
+              rest:
+                $schema:
+                  title: CoordsIdentity
+          - $schema:
+              title: CoordsComp
+            index: 0
+            ntot: 2
+            rest:
+              $schema:
+                title: CoordsComp
+              index: 0
+              ntot: 2
+              rest:
+                $schema:
+                  title: CoordsIdentity
+      coords2:
+        $schema:
+          title: ComposeList
+        components:
+        - $schema:
+            title: ComposeList
+          components:
+          - $schema:
+              title: CoordsComp
+            index: 1
+            ntot: 2
+            rest:
+              $schema:
+                title: CoordsComp
+              index: 1
+              ntot: 2
+              rest:
+                $schema:
+                  title: CoordsIdentity
+          - $schema:
+              title: CoordsComp
+            index: 0
+            ntot: 2
+            rest:
+              $schema:
+                title: CoordsComp
+              index: 0
+              ntot: 1
+              rest:
+                $schema:
+                  title: CoordsIdentity
+        - $schema:
+            title: CoordsComp
+          index: 1
+          ntot: 2
+          rest:
+            $schema:
+              title: CoordsComp
+            index: 0
+            ntot: 2
+            rest:
+              $schema:
+                title: ComposeList
+              components:
+              - $schema:
+                  title: CoordsIdentity
+      R:
+        $schema:
+          kind: Poset
+          title: PosetProduct
+        subs:
+        - $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+        - $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+      ann:
+    - $schema:
+        title: ParallelN
+        kind: PrimitiveDP
+      dps:
+      - $schema:
+          title: IdentityDP
+          kind: PrimitiveDP
+          description: f ≤ r
+        F:
+          $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+        R:
+          $schema:
+            kind: Poset
+            title: PosetProduct
+          subs:
+          - $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+        ann:
+      - $schema:
+          title: SeriesN
+          kind: PrimitiveDP
+        dps:
+        - $schema:
+            title: M_Res_AddMany_DP
+            kind: PrimitiveDP
+            description: f₁ + f₂ ≤ r
+          opspace:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: -Infinity
+            top: Infinity
+            units: kg
+          R:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+          ann:
+          F:
+            $schema:
+              kind: Poset
+              title: PosetProduct
+            subs:
+            - $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: kg
+            - $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '0'
+              top: Infinity
+              units: kg
+        - $schema:
+            title: M_Res_MultiplyConstant_DP
+            kind: PrimitiveDP
+            description: f ⋅ 9.81 m/s² ≤ r
+          F:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: kg
+          vu:
+            $schema:
+              title: ValueFromPoset
+            value: '9.81'
+            poset:
+              $schema:
+                kind: Poset
+                title: Numbers
+              bottom: '9.81'
+              top: '9.81'
+              units: m/s²
+          opspace:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: -Infinity
+            top: Infinity
+          R:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: N
+          ann:
         labels:
         - - 0
         - - 1
@@ -1719,20 +1322,20 @@ dps:
               title: Numbers
             bottom: '0'
             top: Infinity
-            units: s
+            units: kg
           - $schema:
               kind: Poset
               title: Numbers
             bottom: '0'
             top: Infinity
-            units: W
+            units: kg
         R:
           $schema:
             kind: Poset
             title: Numbers
           bottom: '0'
           top: Infinity
-          units: J*kg/Wh
+          units: N
       labels:
       - - 0
       - - 1
@@ -1761,13 +1364,13 @@ dps:
               title: Numbers
             bottom: '0'
             top: Infinity
-            units: s
+            units: kg
           - $schema:
               kind: Poset
               title: Numbers
             bottom: '0'
             top: Infinity
-            units: W
+            units: kg
       R:
         $schema:
           kind: Poset
@@ -1788,7 +1391,7 @@ dps:
             title: Numbers
           bottom: '0'
           top: Infinity
-          units: J*kg/Wh
+          units: N
     labels:
     - - 0
     - - 1
@@ -1827,7 +1430,7 @@ dps:
           title: Numbers
         bottom: '0'
         top: Infinity
-        units: J*kg/Wh
+        units: N
     R:
       $schema:
         kind: Poset
@@ -1848,7 +1451,7 @@ dps:
           title: Numbers
         bottom: '0'
         top: Infinity
-        units: J*kg/Wh
+        units: N
   ann:
   F:
     $schema:

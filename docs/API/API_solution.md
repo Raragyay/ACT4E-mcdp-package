@@ -12,9 +12,3 @@ This is the interface that you need to implement to solve the exercise.
 
 
 ## Utility classes
-
-::: act4e_mcdp.solution_interface
-    options:
-      members:
-        - UpperSet
-        - LowerSet

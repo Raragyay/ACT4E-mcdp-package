@@ -3,62 +3,9 @@ $schema:
   kind: PrimitiveDP
 dps:
 - $schema:
-    title: Conversion
+    title: UnitConversion
     kind: PrimitiveDP
     description: f * F 3937/2851200000 ≤ r
-  amap:
-    $schema:
-      title: MMap_M_Scale_Upper
-    dom:
-      $schema:
-        kind: Poset
-        title: Numbers
-      bottom: '0'
-      top: Infinity
-      units: m
-    factor: 3937/2851200000
-    opspace:
-      $schema:
-        kind: Poset
-        title: Numbers
-      bottom: -Infinity
-      top: Infinity
-      units: m
-    cod:
-      $schema:
-        kind: Poset
-        title: Numbers
-      bottom: '0'
-      top: Infinity
-      units: fur*h/s
-    ann:
-  amap_dual:
-    $schema:
-      title: MMap_M_Scale_Lower
-    dom:
-      $schema:
-        kind: Poset
-        title: Numbers
-      bottom: '0'
-      top: Infinity
-      units: fur*h/s
-    factor: 2851200000/3937
-    opspace:
-      $schema:
-        kind: Poset
-        title: Numbers
-      bottom: -Infinity
-      top: Infinity
-      units: m
-    cod:
-      $schema:
-        kind: Poset
-        title: Numbers
-      bottom: '0'
-      top: Infinity
-      units: m
-    ann:
-  ann:
   F:
     $schema:
       kind: Poset
@@ -73,6 +20,15 @@ dps:
     bottom: '0'
     top: Infinity
     units: fur*h/s
+  opspace:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: -Infinity
+    top: Infinity
+    units: m
+  factor: 3937/2851200000
+  ann:
 - $schema:
     title: AmbientConversion
     kind: PrimitiveDP

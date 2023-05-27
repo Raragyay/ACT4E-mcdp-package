@@ -458,8 +458,11 @@ class IdentityDP(PrimitiveDP):
         R (Poset): The resources poset $\R$
 
 
-    Note: It can be seen as a special case of [AmbientConversion][
-    act4e_mcdp.primitivedps.AmbientConversion] where $\common = \F = \R$.
+    Note:
+
+        It can be seen as a special case
+        of [AmbientConversion][act4e_mcdp.primitivedps.AmbientConversion]
+        where $\common = \F = \R$.
     """
 
 

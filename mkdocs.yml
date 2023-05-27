@@ -3,10 +3,17 @@ site_name: ACT4E-mcdp
 nav:
 - Home: index.md
 - API:
-  - API_posets.md
-  - API_primitivedps.md
-  - API_nameddps.md
-  - API_solution.md
+  - API/posets/index.md
+  - PrimitiveDPs:
+    - API/primitivedps/00_index.md
+    - API/primitivedps/10_plumbing.md
+    - API/primitivedps/20_composite.md
+    - API/primitivedps/30_scalar.md
+    - API/primitivedps/35_mimo.md
+    - API/primitivedps/40_conversions.md
+    - API/primitivedps/50_catalogue.md
+  - API/structures/index.md
+  - API/API_solution.md
 - About:
   - about.md
 
