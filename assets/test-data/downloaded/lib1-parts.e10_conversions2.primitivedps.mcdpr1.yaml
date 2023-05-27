@@ -1,0 +1,203 @@
+$schema:
+  title: SeriesN
+  kind: PrimitiveDP
+dps:
+- $schema:
+    title: Conversion
+    kind: PrimitiveDP
+    description: f * F 3937/2851200000 ≤ r
+  amap:
+    $schema:
+      title: MMap_M_Scale_Upper
+    dom:
+      $schema:
+        kind: Poset
+        title: Numbers
+      bottom: '0'
+      top: Infinity
+      units: m
+    factor: 3937/2851200000
+    opspace:
+      $schema:
+        kind: Poset
+        title: Numbers
+      bottom: -Infinity
+      top: Infinity
+      units: m
+    cod:
+      $schema:
+        kind: Poset
+        title: Numbers
+      bottom: '0'
+      top: Infinity
+      units: fur*h/s
+    ann:
+  amap_dual:
+    $schema:
+      title: MMap_M_Scale_Lower
+    dom:
+      $schema:
+        kind: Poset
+        title: Numbers
+      bottom: '0'
+      top: Infinity
+      units: fur*h/s
+    factor: 2851200000/3937
+    opspace:
+      $schema:
+        kind: Poset
+        title: Numbers
+      bottom: -Infinity
+      top: Infinity
+      units: m
+    cod:
+      $schema:
+        kind: Poset
+        title: Numbers
+      bottom: '0'
+      top: Infinity
+      units: m
+    ann:
+  ann:
+  F:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: m
+  R:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: fur*h/s
+- $schema:
+    title: AmbientConversion
+    kind: PrimitiveDP
+    description: f ≤ r
+  F:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: fur*h/s
+  common:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: -Infinity
+    top: Infinity
+    units: fur*h/s
+  R:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '-0.01380823'
+    top: Infinity
+    units: fur*h/s
+  ann:
+- $schema:
+    title: M_Res_AddConstant_DP
+    kind: PrimitiveDP
+    description: f + 0.01380823 fur*h/s <= r
+  F:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '-0.01380823'
+    top: Infinity
+    units: fur*h/s
+  vu:
+    $schema:
+      title: ValueFromPoset
+    value: '0.01380823'
+    poset:
+      $schema:
+        kind: Poset
+        title: Numbers
+      bottom: '0.01380823'
+      top: '0.01380823'
+      units: fur*h/s
+  opspace:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: -Infinity
+    top: Infinity
+    units: fur*h/s
+  R:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: fur*h/s
+  ann:
+- $schema:
+    title: M_Fun_MultiplyMany_DP
+    kind: PrimitiveDP
+    description: f ≤ r₁⋅r₂
+  F:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: fur*h/s
+  opspace:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: -Infinity
+    top: Infinity
+  ann:
+  R:
+    $schema:
+      kind: Poset
+      title: PosetProduct
+    subs:
+    - $schema:
+        kind: Poset
+        title: Numbers
+      bottom: '0'
+      top: Infinity
+      units: furlongs/s
+    - $schema:
+        kind: Poset
+        title: Numbers
+      bottom: '0'
+      top: Infinity
+      units: hours
+labels:
+- - 0
+- - 1
+- - 2
+- - 3
+ann:
+F:
+  $schema:
+    kind: Poset
+    title: Numbers
+  bottom: '0'
+  top: Infinity
+  units: m
+R:
+  $schema:
+    kind: Poset
+    title: PosetProduct
+  subs:
+  - $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: furlongs/s
+  - $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: hours

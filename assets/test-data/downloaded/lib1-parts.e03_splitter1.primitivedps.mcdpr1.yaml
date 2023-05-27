@@ -1,0 +1,36 @@
+$schema:
+  title: MeetNDualDP
+  kind: PrimitiveDP
+  description: f ≤  r₁ ∨ r₂
+F:
+  $schema:
+    kind: Poset
+    title: Numbers
+  bottom: '0'
+  top: Infinity
+  units: ''
+C:
+  $schema:
+    kind: Poset
+    title: Numbers
+  bottom: '0'
+  top: Infinity
+  units: ''
+ann:
+R:
+  $schema:
+    kind: Poset
+    title: PosetProduct
+  subs:
+  - $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: ''
+  - $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: ''

@@ -1,0 +1,21 @@
+$schema:
+  title: CatalogueDP
+  kind: PrimitiveDP
+F:
+  $schema:
+    kind: Poset
+    title: Numbers
+  bottom: '0'
+  top: Infinity
+  units: ''
+R:
+  $schema:
+    kind: Poset
+    title: Numbers
+  bottom: '0'
+  top: Infinity
+  units: ''
+entries:
+  model1:
+    f_max: Infinity
+    r_min: '0'

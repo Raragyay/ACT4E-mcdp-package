@@ -1,0 +1,38 @@
+$schema:
+  title: CatalogueDP
+  kind: PrimitiveDP
+F:
+  $schema:
+    kind: Poset
+    title: PosetProduct
+  subs:
+  - $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: J
+  - $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: m
+R:
+  $schema:
+    kind: Poset
+    title: PosetProduct
+  subs:
+  - $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: USD
+  - $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: W
+entries: {}

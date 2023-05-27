@@ -6,8 +6,10 @@ from .posets import Poset
 
 __all__ = [
     "AmbientConversion",
+    "CatalogueDP",
     "Constant",
     "DPSeries",
+    "EntryInfo",
     "JoinNDP",
     "Limit",
     "M_Ceil_DP",

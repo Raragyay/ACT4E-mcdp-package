@@ -1,0 +1,27 @@
+$schema:
+  title: M_FloorFun_DP
+  kind: PrimitiveDP
+  description: f ≤ floor(r)
+F:
+  $schema:
+    kind: Poset
+    title: Numbers
+  bottom: '0'
+  top: Infinity
+  step: '1'
+  units: ''
+opspace:
+  $schema:
+    kind: Poset
+    title: Numbers
+  bottom: '0'
+  top: Infinity
+  units: ''
+R:
+  $schema:
+    kind: Poset
+    title: Numbers
+  bottom: '0'
+  top: Infinity
+  units: ''
+ann:

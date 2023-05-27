@@ -1,0 +1,28 @@
+$schema:
+  title: Limit
+  kind: PrimitiveDP
+  description: f ≤ 10 m
+F:
+  $schema:
+    kind: Poset
+    title: Numbers
+  bottom: '0'
+  top: Infinity
+  units: m
+c:
+  $schema:
+    title: ValueFromPoset
+  value: '10'
+  poset:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '10'
+    top: '10'
+    units: m
+ann:
+R:
+  $schema:
+    kind: Poset
+    title: PosetProduct
+  subs: []

@@ -1,0 +1,35 @@
+$schema:
+  title: M_Res_MultiplyMany_DP
+  kind: PrimitiveDP
+  description: f₁⋅f₂ ≤ r
+R:
+  $schema:
+    kind: Poset
+    title: Numbers
+  bottom: '0'
+  top: Infinity
+  units: ''
+opspace:
+  $schema:
+    kind: Poset
+    title: Numbers
+  bottom: -Infinity
+  top: Infinity
+ann:
+F:
+  $schema:
+    kind: Poset
+    title: PosetProduct
+  subs:
+  - $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: ''
+  - $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: ''

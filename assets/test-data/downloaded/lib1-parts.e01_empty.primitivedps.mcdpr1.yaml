@@ -1,0 +1,22 @@
+$schema:
+  title: Mux
+  kind: PrimitiveDP
+  description: mux(f) ≤ r
+F:
+  $schema:
+    kind: Poset
+    title: PosetProduct
+  subs: []
+coords:
+  $schema:
+    title: CoordsIdentity
+coords2:
+  $schema:
+    title: ComposeList
+  components: []
+R:
+  $schema:
+    kind: Poset
+    title: PosetProduct
+  subs: []
+ann:

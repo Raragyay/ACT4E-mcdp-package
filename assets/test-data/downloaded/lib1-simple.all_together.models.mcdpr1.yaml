@@ -1,0 +1,382 @@
+$schema:
+  title: CompositeNamedDP
+  kind: NamedDP
+functionalities:
+  f_1:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: ''
+resources:
+  r_1:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    units: ''
+nodes:
+  _RuleResCeil_NWU1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _op0:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+    resources:
+      _res:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        step: '1'
+        units: ''
+    dp:
+      $schema:
+        title: M_Ceil_DP
+        kind: PrimitiveDP
+        description: ceil(f) ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      opspace:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        step: '1'
+        units: ''
+      ann:
+  _mult1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _op01:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        step: '1'
+        units: ''
+    resources:
+      _res2:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+    dp:
+      $schema:
+        title: M_Res_MultiplyConstant_DP
+        kind: PrimitiveDP
+        description: f ⋅ 8 ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        step: '1'
+        units: ''
+      vu:
+        $schema:
+          title: ValueFromPoset
+        value: '8'
+        poset:
+          $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '8'
+          top: '8'
+          units: ''
+      opspace:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      ann:
+  _RuleFunFloor_NWU1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _res3:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        step: '1'
+        units: ''
+    resources:
+      _op02:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+    dp:
+      $schema:
+        title: M_FloorFun_DP
+        kind: PrimitiveDP
+        description: f ≤ floor(r)
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        step: '1'
+        units: ''
+      opspace:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      ann:
+  _invmultvalue1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _result:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+    resources:
+      _ops0:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        step: '1'
+        units: ''
+    dp:
+      $schema:
+        title: M_Fun_MultiplyConstant_DP
+        kind: PrimitiveDP
+        description: f / 1.2 ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      vu:
+        $schema:
+          title: ValueFromPoset
+        value: '1.2'
+        poset:
+          $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '1.2'
+          top: '1.2'
+          units: ''
+      opspace:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        step: '1'
+        units: ''
+      ann:
+  _invplusop1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _res3:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '10'
+        top: Infinity
+        units: ''
+    resources:
+      _op02:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+    dp:
+      $schema:
+        title: M_Fun_AddConstant_DP
+        kind: PrimitiveDP
+        description: f ≤ r + 10
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '10'
+        top: Infinity
+        units: ''
+      vu:
+        $schema:
+          title: ValueFromPoset
+        value: '10'
+        poset:
+          $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '10'
+          top: '10'
+          units: ''
+      opspace:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
+        units: ''
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      ann:
+  _conversion1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _op02:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+    resources:
+      _res3:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '10'
+        top: Infinity
+        units: ''
+    dp:
+      $schema:
+        title: AmbientConversion
+        kind: PrimitiveDP
+        description: f ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        units: ''
+      common:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
+        units: ''
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '10'
+        top: Infinity
+        units: ''
+      ann:
+connections:
+- from:
+    functionality: f_1
+  to:
+    node: _RuleResCeil_NWU1
+    node_functionality: _op0
+- from:
+    node: _RuleResCeil_NWU1
+    node_resource: _res
+  to:
+    node: _mult1
+    node_functionality: _op01
+- from:
+    node: _RuleFunFloor_NWU1
+    node_resource: _op02
+  to:
+    resource: r_1
+- from:
+    node: _invmultvalue1
+    node_resource: _ops0
+  to:
+    node: _RuleFunFloor_NWU1
+    node_functionality: _res3
+- from:
+    node: _invplusop1
+    node_resource: _op02
+  to:
+    node: _invmultvalue1
+    node_functionality: _result
+- from:
+    node: _mult1
+    node_resource: _res2
+  to:
+    node: _conversion1
+    node_functionality: _op02
+- from:
+    node: _conversion1
+    node_resource: _res3
+  to:
+    node: _invplusop1
+    node_functionality: _res3
