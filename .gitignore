@@ -2,3 +2,4 @@ dist
 poetry.lock
 site
 ./downloaded
+output_summary.yaml

@@ -22,11 +22,11 @@ class UpperSet(Generic[X]):
     Describes a finitely-supported **upper set** of elements of type X.
 
     Attributes:
-        minima: A list of elements of type X, which are the minimal elements of the set.
+        minimals: A list of elements of type X, which are the minimal elements of the set.
 
     """
 
-    minima: list[X]
+    minimals: list[X]
 
 
 @dataclass
@@ -35,11 +35,11 @@ class LowerSet(Generic[X]):
     Describes a finitely-supported **lower set** of elements of type X.
 
     Attributes:
-        maxima: A list of elements of type X, which are the minimal elements of the set.
+        maximals: A list of elements of type X, which are the minimal elements of the set.
 
     """
 
-    maxima: list[X]
+    maximals: list[X]
 
 
 @dataclass(kw_only=True)

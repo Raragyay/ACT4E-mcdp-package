@@ -17,7 +17,6 @@ from .posets import FinitePoset, Numbers, Poset, PosetProduct
 from .primitivedps import (
     AmbientConversion,
     CatalogueDP,
-    M_Res_DivideConstant_DP,
     Constant,
     DPLoop2,
     DPSeries,
@@ -34,6 +33,7 @@ from .primitivedps import (
     M_Power_DP,
     M_Res_AddConstant_DP,
     M_Res_AddMany_DP,
+    M_Res_DivideConstant_DP,
     M_Res_MultiplyConstant_DP,
     M_Res_MultiplyMany_DP,
     MeetNDualDP,
@@ -43,6 +43,7 @@ from .primitivedps import (
     UnitConversion,
     ValueFromPoset,
 )
+from .solution_interface import Interval, LowerSet, UpperSet
 
 loaders = {}
 
@@ -351,6 +352,25 @@ def load_FinitePoset(ob: dict):
     relations = set(tuple(x) for x in relations)
     elements = set(elements)
     return FinitePoset(elements=elements, relations=relations)
+
+
+@loader_for("Interval")
+def load_Interval(ob: dict):
+    pessimistic = load_repr1(ob["pessimistic"])
+    optimistic = load_repr1(ob["optimistic"])
+    return Interval(pessimistic=pessimistic, optimistic=optimistic)
+
+
+@loader_for("LowerSet")
+def load_LowerSet(ob: dict):
+    maximals = ob["maximals"]
+    return LowerSet(maximals=maximals)
+
+
+@loader_for("UpperSet")
+def load_UpperSet(ob: dict):
+    minimals = ob["minimals"]
+    return UpperSet(minimals=minimals)
 
 
 @loader_for("Numbers")
