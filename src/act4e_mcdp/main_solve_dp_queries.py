@@ -87,7 +87,8 @@ def solve_dp_queries_main() -> None:
                     status = "failed"
 
             info_struct = {
-                "testcase": fn,
+                # "testcase": fn,
+                "dp": filename,
                 "query": repr(query),
                 "value": repr(data_parsed),
                 "result_expected": repr(result),
@@ -115,7 +116,8 @@ def solve_dp_queries_main() -> None:
                     status = "failed"
 
             info_struct = {
-                "testcase": fn,
+                # "testcase": fn,
+                "dp": filename,
                 "query": repr(query),
                 "value": repr(data_parsed),
                 "result_expected": repr(result),
