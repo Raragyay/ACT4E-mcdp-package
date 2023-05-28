@@ -1,0 +1,19 @@
+dp: lib1-parts.primitivedps.e10_conversions2.mcdpr1.yaml
+query: FixResMaxFun
+approximated: true
+value:
+- '26.49000000'
+- '5'
+result:
+  $schema:
+    title: Interval
+  pessimistic:
+    $schema:
+      title: LowerSet
+    maximals:
+    - '95911117.5'
+  optimistic:
+    $schema:
+      title: LowerSet
+    maximals:
+    - '95911117.5'

@@ -1,0 +1,19 @@
+dp: lib1-parts.primitivedps.e05_multr.mcdpr1.yaml
+query: FixResMaxFun
+approximated: true
+value:
+- '1.99000000'
+- '5.55000000'
+result:
+  $schema:
+    title: Interval
+  pessimistic:
+    $schema:
+      title: LowerSet
+    maximals:
+    - '11.0445000'
+  optimistic:
+    $schema:
+      title: LowerSet
+    maximals:
+    - '11.0445000'

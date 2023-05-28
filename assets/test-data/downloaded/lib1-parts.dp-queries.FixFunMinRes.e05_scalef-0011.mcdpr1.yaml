@@ -1,0 +1,17 @@
+dp: lib1-parts.primitivedps.e05_scalef.mcdpr1.yaml
+query: FixFunMinRes
+approximated: false
+value: Infinity
+result:
+  $schema:
+    title: Interval
+  pessimistic:
+    $schema:
+      title: UpperSet
+    minimals:
+    - Infinity
+  optimistic:
+    $schema:
+      title: UpperSet
+    minimals:
+    - Infinity
