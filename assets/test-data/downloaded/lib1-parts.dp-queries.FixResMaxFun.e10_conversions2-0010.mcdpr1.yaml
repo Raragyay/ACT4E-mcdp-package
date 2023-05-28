@@ -1,6 +1,6 @@
 dp: lib1-parts.primitivedps.e10_conversions2.mcdpr1.yaml
 query: FixResMaxFun
-approximated: true
+approximated: false
 value:
 - Infinity
 - '35.80000000'

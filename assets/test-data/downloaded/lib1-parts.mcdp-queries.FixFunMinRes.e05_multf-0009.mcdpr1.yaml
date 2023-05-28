@@ -1,6 +1,6 @@
 mcdp: assets/test-data/downloaded/lib1-parts.models.e05_multf.mcdpr1.yaml
 query: FixFunMinRes
-approximated: true
+approximated: false
 value:
   f_1: Infinity
   f_2: Infinity

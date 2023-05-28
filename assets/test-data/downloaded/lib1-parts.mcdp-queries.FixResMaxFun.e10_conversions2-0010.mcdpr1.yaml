@@ -1,6 +1,6 @@
 mcdp: assets/test-data/downloaded/lib1-parts.models.e10_conversions2.mcdpr1.yaml
 query: FixResMaxFun
-approximated: true
+approximated: false
 value:
   speed: Infinity
   time: '35.80000000'

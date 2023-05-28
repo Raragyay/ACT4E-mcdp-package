@@ -1,6 +1,6 @@
 dp: lib1-parts.primitivedps.e05_multr.mcdpr1.yaml
 query: FixResMaxFun
-approximated: true
+approximated: false
 value:
 - '4.44000000'
 - '38.15000000'

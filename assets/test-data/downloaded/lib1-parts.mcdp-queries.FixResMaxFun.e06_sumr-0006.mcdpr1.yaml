@@ -1,6 +1,6 @@
 mcdp: assets/test-data/downloaded/lib1-parts.models.e06_sumr.mcdpr1.yaml
 query: FixResMaxFun
-approximated: true
+approximated: false
 value:
   r1: '9.90000000'
   r2: '5'

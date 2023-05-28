@@ -1,6 +1,6 @@
 mcdp: assets/test-data/downloaded/lib1-simple.models.drone1.mcdpr1.yaml
 query: FixFunMinRes
-approximated: true
+approximated: false
 value:
   endurance: Infinity
   extra_payload: '4.41000000'

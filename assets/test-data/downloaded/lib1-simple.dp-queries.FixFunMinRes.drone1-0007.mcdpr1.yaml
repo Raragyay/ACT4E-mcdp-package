@@ -1,6 +1,6 @@
 dp: lib1-simple.primitivedps.drone1.mcdpr1.yaml
 query: FixFunMinRes
-approximated: true
+approximated: false
 value:
 - '27.69000000'
 - '3.98000000'

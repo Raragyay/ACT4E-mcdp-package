@@ -1,6 +1,6 @@
 dp: lib1-parts.primitivedps.e05_multf.mcdpr1.yaml
 query: FixFunMinRes
-approximated: true
+approximated: false
 value:
 - '0.45000000'
 - '0'

@@ -1,6 +1,6 @@
 mcdp: assets/test-data/downloaded/lib1-parts.models.e05_multr.mcdpr1.yaml
 query: FixResMaxFun
-approximated: true
+approximated: false
 value:
   r_1: '5.5'
   r_2: '40.65000000'

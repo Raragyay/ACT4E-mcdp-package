@@ -12,18 +12,18 @@ result:
       title: UpperSet
     minimals:
     - r_1: '1'
-      r_2: '1'
+      r_2: '3'
     - r_1: '4'
       r_2: '1'
     - r_1: '1'
-      r_2: '3'
+      r_2: '1'
   optimistic:
     $schema:
       title: UpperSet
     minimals:
     - r_1: '1'
-      r_2: '1'
+      r_2: '3'
     - r_1: '4'
       r_2: '1'
     - r_1: '1'
-      r_2: '3'
+      r_2: '1'
