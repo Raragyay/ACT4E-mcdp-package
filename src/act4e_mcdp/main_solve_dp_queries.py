@@ -131,17 +131,15 @@ def solve_dp_queries_main() -> None:
 
         all_output[fn] = info_struct
 
-        logger.info(yaml.dump(info_struct))
+        # logger.info(yaml.dump(info_struct))
 
     fn_out = args.output
     dn = os.path.dirname(fn_out)
     if dn:
         os.makedirs(dn, exist_ok=True)
     with open(fn_out, "w") as f:
-        yaml.dump(all_output, f, allow_unicode=True, default_flow_style=False)
+        f.write(yaml.dump(all_output, allow_unicode=True, default_flow_style=False))
 
     logger.info("Summary:\n" + yaml.dump(summary, allow_unicode=True, default_flow_style=False))
 
     logger.info("Find the summary at %r", fn_out)
-
-    return
