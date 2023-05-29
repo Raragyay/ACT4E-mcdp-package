@@ -3,7 +3,7 @@ all:
 .PHONY: build
 
 build:
-	rm -f dist/*
+	rm -rf dist/*
 	poetry build -f wheel
 
 publish: build
