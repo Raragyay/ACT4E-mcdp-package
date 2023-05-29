@@ -47,3 +47,8 @@ style = "pep440"
 strict = true
 
 # pip install "mkdocstrings[python]"  mkdocs-material
+
+[tool.poetry-dynamic-versioning.substitution]
+folders = [
+  { path = "src" }
+]
