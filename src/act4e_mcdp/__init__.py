@@ -1,6 +1,6 @@
-import coloredlogs
+import coloredlogs  # type: ignore
 
-coloredlogs.install(level="DEBUG")
+coloredlogs.install(level="DEBUG")  # type: ignore
 
 from logging import getLogger, DEBUG
 

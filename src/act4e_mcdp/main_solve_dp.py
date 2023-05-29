@@ -1,19 +1,19 @@
 import argparse
 import os
 import sys
-from importlib import import_module
 
 import yaml
 
 from . import logger
-from .primitivedps import PrimitiveDP
 from .loading import load_repr1, parse_yaml_value
 from .nameddps import NamedDP
+from .primitivedps import PrimitiveDP
 from .solution_interface import DPSolverInterface
 from .utils import import_from_string
 
-
-__all__ = ["solve_dp_main"]
+__all__ = [
+    "solve_dp_main",
+]
 
 
 def solve_dp_main() -> None:

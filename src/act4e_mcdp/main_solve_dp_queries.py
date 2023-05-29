@@ -2,17 +2,15 @@ import argparse
 import glob
 import os
 import sys
-from importlib import import_module
-from typing import cast, Any
+from typing import Any, cast
+
 import yaml
 
 from . import logger
 from .loading import load_repr1, parse_yaml_value
 from .primitivedps import PrimitiveDP
 from .solution_interface import DPSolverInterface, Interval, LowerSet, UpperSet
-
 from .utils import import_from_string
-
 
 __all__ = [
     "solve_dp_queries_main",

@@ -1,5 +1,5 @@
 from decimal import Decimal
-from typing import Callable, Optional, Type, TypeVar, Any, cast
+from typing import Any, Callable, cast, Optional, Type, TypeVar
 
 import yaml
 
@@ -46,20 +46,19 @@ from .primitivedps import (
 )
 from .solution_interface import Interval, LowerSet, UpperSet
 
-
 __all__ = [
     "load_repr1",
     "loader_for",
     "parse_yaml_value",
 ]
 
-F = Callable[[dict[str, Any]], object]
+FF = Callable[[dict[str, Any]], object]
 
-loaders: dict[str, F] = {}
+loaders: dict[str, FF] = {}
 
 
-def loader_for(classname: str) -> Callable[[F], F]:
-    def dc(f: F) -> F:
+def loader_for(classname: str) -> Callable[[FF], FF]:
+    def dc(f: FF) -> FF:
         if classname in loaders:
             msg = f"Already registered loader for {classname!r}"
             raise ValueError(msg)
@@ -209,12 +208,12 @@ def load_M_FloorFun_DP(ob: dict[str, Any]):
     return M_FloorFun_DP(**fields)
 
 
-@loader_for("Conversion")
-def load_Conversion(ob: dict[str, Any]):
-    fields = _load_DP_fields(ob)
-
-    raise NotImplementedError(ob)
-    return PrimitiveDP(**fields)
+# @loader_for("Conversion")
+# def load_Conversion(ob: dict[str, Any]):
+#     fields = _load_DP_fields(ob)
+#
+#     raise NotImplementedError(ob)
+#
 
 
 @loader_for("SeriesN")
@@ -403,6 +402,11 @@ def load_repr1(data: dict[str, Any], T: Optional[Type[X]] = None) -> X:
     loader = loaders[title]
     try:
         res = loader(data)
+
+        if T is not None:
+            if not isinstance(res, T):
+                msg = f"Expected {T!r}, got {type(res)!r}"
+                raise ValueError(msg)
 
         return cast(X, res)
     except Exception as e:
