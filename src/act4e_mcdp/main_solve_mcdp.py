@@ -2,13 +2,14 @@ import argparse
 import os
 import sys
 from importlib import import_module
-from typing import cast, Any
+from typing import Any, cast
+
 import yaml
 
 from . import logger
-from .primitivedps import PrimitiveDP
 from .loading import load_repr1, parse_yaml_value
 from .nameddps import NamedDP
+from .primitivedps import PrimitiveDP
 from .solution_interface import MCDPSolverInterface
 
 

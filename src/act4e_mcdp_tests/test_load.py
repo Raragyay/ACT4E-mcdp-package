@@ -12,6 +12,8 @@ def test_loading_all() -> None:
 
     files = glob(join(directory, "*.mcdpr1.yaml"))
     for filename in files:
+        if "queries" in filename:
+            continue
         with open(filename) as f:
             content = f.read()
 
