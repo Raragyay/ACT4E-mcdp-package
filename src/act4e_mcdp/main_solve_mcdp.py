@@ -2,7 +2,7 @@ import argparse
 import os
 import sys
 from importlib import import_module
-
+from typing import cast, Any
 import yaml
 
 from . import logger
@@ -75,7 +75,7 @@ def solve_mcdp_main() -> None:
             sys.exit(1)
 
     model = load_repr1(data, NamedDP)
-    if not isinstance(model, NamedDP):
+    if not isinstance(model, NamedDP):  # type: ignore
         if isinstance(model, PrimitiveDP):
             msg = f"Expected a NamedDP, got a PrimitiveDP. Did you mean to use 'act4e-mcdp-solve-dp'?"
             raise ValueError(msg)
@@ -84,9 +84,10 @@ def solve_mcdp_main() -> None:
         raise ValueError(msg)
     logger.info("model: %s", model)
 
-    yaml_query = yaml.load(query_data, Loader=yaml.SafeLoader)
-    if not isinstance(yaml_query, dict):
-        raise ValueError(f"Expected dict, got {yaml_query!r}")
+    yaml_query0 = yaml.load(query_data, Loader=yaml.SafeLoader)
+    if not isinstance(yaml_query0, dict):
+        raise ValueError(f"Expected dict, got {yaml_query0!r}")
+    yaml_query = cast(dict[str, Any], yaml_query0)
 
     if query == "FixFunMinRes":
         found = set(yaml_query)

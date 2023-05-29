@@ -10,12 +10,7 @@ from .primitivedps import PrimitiveDP
 from .loading import load_repr1, parse_yaml_value
 from .nameddps import NamedDP
 from .solution_interface import DPSolverInterface
-
-
-def import_from_string(dot_path: str) -> object:
-    module_path, _, name = dot_path.rpartition(".")
-    module = import_module(module_path)
-    return getattr(module, name)
+from .utils import import_from_string
 
 
 __all__ = ["solve_dp_main"]
@@ -75,7 +70,7 @@ def solve_dp_main() -> None:
             sys.exit(1)
 
     model = load_repr1(data, PrimitiveDP)
-    if not isinstance(model, PrimitiveDP):
+    if not isinstance(model, PrimitiveDP):  # type: ignore
         if isinstance(model, NamedDP):
             msg = f"Expected a PrimitiveDP, not a NamedDP. Did you mean to use 'act4e-mcdp-solve-mcdp'?"
             raise ValueError(msg)

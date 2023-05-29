@@ -1,5 +1,5 @@
 from decimal import Decimal
-from typing import Optional, Type, TypeVar
+from typing import Callable, Optional, Type, TypeVar, Any, cast
 
 import yaml
 
@@ -9,6 +9,7 @@ from .nameddps import (
     Connection,
     ModelFunctionality,
     ModelResource,
+    NamedDP,
     NodeFunctionality,
     NodeResource,
     SimpleWrap,
@@ -45,7 +46,6 @@ from .primitivedps import (
 )
 from .solution_interface import Interval, LowerSet, UpperSet
 
-loaders = {}
 
 __all__ = [
     "load_repr1",
@@ -53,9 +53,13 @@ __all__ = [
     "parse_yaml_value",
 ]
 
+F = Callable[[dict[str, Any]], object]
 
-def loader_for(classname: str):
-    def dc(f):
+loaders: dict[str, F] = {}
+
+
+def loader_for(classname: str) -> Callable[[F], F]:
+    def dc(f: F) -> F:
         if classname in loaders:
             msg = f"Already registered loader for {classname!r}"
             raise ValueError(msg)
@@ -66,8 +70,8 @@ def loader_for(classname: str):
 
 
 @loader_for("PosetProduct")
-def load_PosetProduct(ob: dict):
-    subs = []
+def load_PosetProduct(ob: dict[str, Any]) -> PosetProduct:
+    subs: list[Poset] = []
     for p in ob["subs"]:
         p = load_repr1(p, Poset)
         subs.append(p)
@@ -75,7 +79,7 @@ def load_PosetProduct(ob: dict):
     return PosetProduct(subs=subs)
 
 
-def _load_DP_fields(ob: dict) -> dict:
+def _load_DP_fields(ob: dict[str, Any]) -> dict[str, Any]:
     description = ob["$schema"].get("description", None)
     F = load_repr1(ob["F"], Poset)
     R = load_repr1(ob["R"], Poset)
@@ -99,7 +103,7 @@ def _load_DP_fields(ob: dict) -> dict:
 
 
 @loader_for("ValueFromPoset")
-def load_ValueFromPoset(ob: dict):
+def load_ValueFromPoset(ob: dict[str, Any]):
     poset = load_repr1(ob["poset"], Poset)
     value = ob["value"]
     value = parse_yaml_value(poset, value)
@@ -107,7 +111,7 @@ def load_ValueFromPoset(ob: dict):
 
 
 @loader_for("CatalogueDP")
-def load_CatalogueDP(ob: dict):
+def load_CatalogueDP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     entries = fields["entries"] = {}
     for k, v in ob["entries"].items():
@@ -116,97 +120,97 @@ def load_CatalogueDP(ob: dict):
 
 
 @loader_for("M_Res_MultiplyConstant_DP")
-def load_M_Res_MultiplyConstant_DP(ob: dict):
+def load_M_Res_MultiplyConstant_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return M_Res_MultiplyConstant_DP(**fields)
 
 
 @loader_for("M_Res_DivideConstant_DP")
-def load_M_Res_DivideConstant_DP(ob: dict):
+def load_M_Res_DivideConstant_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return M_Res_DivideConstant_DP(**fields)
 
 
 @loader_for("IdentityDP")
-def load_Identity_DP(ob: dict):
+def load_Identity_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return IdentityDP(**fields)
 
 
 @loader_for("Mux")
-def load_Mux(ob: dict):
+def load_Mux(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     fields["coords"] = ob["coords"]
     return Mux(**fields)
 
 
 @loader_for("DPLoop2")
-def load_DPLoop2(ob: dict):
+def load_DPLoop2(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     fields["dp"] = load_repr1(ob["dp1"], PrimitiveDP)
     return DPLoop2(**fields)
 
 
 @loader_for("M_Fun_MultiplyConstant_DP")
-def load_M_Fun_MultiplyConstant_DP(ob: dict):
+def load_M_Fun_MultiplyConstant_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return M_Fun_MultiplyConstant_DP(**fields)
 
 
 @loader_for("M_Res_AddConstant_DP")
-def load_M_Res_AddConstant_DP(ob: dict):
+def load_M_Res_AddConstant_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return M_Res_AddConstant_DP(**fields)
 
 
 @loader_for("M_Fun_AddMany_DP")
-def load_M_Fun_AddMany_DP(ob: dict):
+def load_M_Fun_AddMany_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return M_Fun_AddMany_DP(**fields)
 
 
 @loader_for("M_Res_AddMany_DP")
-def load_M_Res_AddMany_DP(ob: dict):
+def load_M_Res_AddMany_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return M_Res_AddMany_DP(**fields)
 
 
 @loader_for("M_Res_MultiplyMany_DP")
-def load_M_Res_MultiplyMany_DP(ob: dict):
+def load_M_Res_MultiplyMany_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return M_Res_MultiplyMany_DP(**fields)
 
 
 @loader_for("M_Fun_MultiplyMany_DP")
-def load_M_Fun_MultiplyMany_DP(ob: dict):
+def load_M_Fun_MultiplyMany_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
 
     return M_Fun_MultiplyMany_DP(**fields)
 
 
 @loader_for("M_Power_DP")
-def load_M_Power_DP(ob: dict):
+def load_M_Power_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
 
     return M_Power_DP(**fields, num=ob["num"], den=ob["den"])
 
 
 @loader_for("M_Ceil_DP")
-def load_M_Ceil_DP(ob: dict):
+def load_M_Ceil_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
 
     return M_Ceil_DP(**fields)
 
 
 @loader_for("M_FloorFun_DP")
-def load_M_FloorFun_DP(ob: dict):
+def load_M_FloorFun_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
 
     return M_FloorFun_DP(**fields)
 
 
 @loader_for("Conversion")
-def load_Conversion(ob: dict):
+def load_Conversion(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
 
     raise NotImplementedError(ob)
@@ -214,10 +218,10 @@ def load_Conversion(ob: dict):
 
 
 @loader_for("SeriesN")
-def load_SeriesN(ob: dict):
+def load_SeriesN(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
 
-    subs = []
+    subs: list[PrimitiveDP] = []
     for dp in ob["dps"]:
         dp = load_repr1(dp, PrimitiveDP)
         subs.append(dp)
@@ -226,10 +230,10 @@ def load_SeriesN(ob: dict):
 
 
 @loader_for("ParallelN")
-def load_ParallelN(ob: dict):
+def load_ParallelN(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
 
-    subs = []
+    subs: list[PrimitiveDP] = []
     for dp in ob["dps"]:
         dp = load_repr1(dp, PrimitiveDP)
         subs.append(dp)
@@ -239,7 +243,7 @@ def load_ParallelN(ob: dict):
 
 #
 # @loader_for('M_Ceil_DP')
-# def load_M_Ceil_DP(ob: dict):
+# def load_M_Ceil_DP(ob: dict[str, Any]):
 #     F = load_repr1(ob['F'], Poset)
 #     R = load_repr1(ob['R'], Poset)
 #
@@ -247,52 +251,52 @@ def load_ParallelN(ob: dict):
 
 
 @loader_for("M_Fun_AddConstant_DP")
-def load_M_Fun_AddConstant_DP(ob: dict):
+def load_M_Fun_AddConstant_DP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
 
     return M_Fun_AddConstant_DP(**fields)
 
 
 @loader_for("AmbientConversion")
-def load_AmbientConversion(ob: dict):
+def load_AmbientConversion(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
 
     return AmbientConversion(**fields)
 
 
 @loader_for("UnitConversion")
-def load_UnitConversion(ob: dict):
+def load_UnitConversion(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return UnitConversion(**fields)
 
 
 @loader_for("JoinNDP")
-def load_JoinNDP(ob: dict):
+def load_JoinNDP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return JoinNDP(**fields)
 
 
 @loader_for("MeetNDualDP")
-def load_MeetNDualDP(ob: dict):
+def load_MeetNDualDP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return MeetNDualDP(**fields)
 
 
 @loader_for("Limit")
-def load_Limit(ob: dict):
+def load_Limit(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return Limit(**fields)
 
 
 @loader_for("Constant")
-def load_Constant(ob: dict):
+def load_Constant(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     return Constant(**fields)
 
 
 #
 # @loader_for('M_Fun_MultiplyConstant_DP')
-# def load_M_Fun_MultiplyConstant_DP(ob: dict):
+# def load_M_Fun_MultiplyConstant_DP(ob: dict[str, Any]):
 #     F = load_repr1(ob['F'], Poset)
 #     R = load_repr1(ob['R'], Poset)
 #
@@ -300,7 +304,7 @@ def load_Constant(ob: dict):
 
 
 @loader_for("CompositeNamedDP")
-def load_CompositeNamedDP(ob: dict):
+def load_CompositeNamedDP(ob: dict[str, Any]):
     functionalities = ob["functionalities"]
     resources = ob["resources"]
 
@@ -309,9 +313,9 @@ def load_CompositeNamedDP(ob: dict):
     loaded_nodes = {}
     nodes = ob["nodes"]
     for k, v in nodes.items():
-        node = load_repr1(v)
+        node = load_repr1(v, NamedDP)
         loaded_nodes[k] = node
-    connections = []
+    connections: list[Connection] = []
 
     for c in ob["connections"]:
         source = c["from"]
@@ -334,7 +338,7 @@ def load_CompositeNamedDP(ob: dict):
 
 
 @loader_for("SimpleWrap")
-def load_SimpleWrap(ob: dict):
+def load_SimpleWrap(ob: dict[str, Any]):
     functionalities = {}
     for k, v in ob["functionalities"].items():
         functionalities[k] = load_repr1(v, Poset)
@@ -346,7 +350,7 @@ def load_SimpleWrap(ob: dict):
 
 
 @loader_for("FinitePoset")
-def load_FinitePoset(ob: dict):
+def load_FinitePoset(ob: dict[str, Any]):
     elements = ob["elements"]
     relations = ob["relations"]
     relations = set(tuple(x) for x in relations)
@@ -355,26 +359,26 @@ def load_FinitePoset(ob: dict):
 
 
 @loader_for("Interval")
-def load_Interval(ob: dict):
-    pessimistic = load_repr1(ob["pessimistic"])
-    optimistic = load_repr1(ob["optimistic"])
+def load_Interval(ob: dict[str, Any]) -> Interval[Any]:
+    pessimistic = load_repr1(ob["pessimistic"], object)
+    optimistic = load_repr1(ob["optimistic"], object)
     return Interval(pessimistic=pessimistic, optimistic=optimistic)
 
 
 @loader_for("LowerSet")
-def load_LowerSet(ob: dict):
+def load_LowerSet(ob: dict[str, Any]):
     maximals = ob["maximals"]
     return LowerSet(maximals=maximals)
 
 
 @loader_for("UpperSet")
-def load_UpperSet(ob: dict):
+def load_UpperSet(ob: dict[str, Any]):
     minimals = ob["minimals"]
     return UpperSet(minimals=minimals)
 
 
 @loader_for("Numbers")
-def load_Numbers(ob: dict):
+def load_Numbers(ob: dict[str, Any]):
     bottom = Decimal(ob["bottom"])
     top = Decimal(ob["top"])
     units = ob.get("units", "")
@@ -388,7 +392,7 @@ def load_Numbers(ob: dict):
 X = TypeVar("X")
 
 
-def load_repr1(data: dict, T: Optional[Type[X]] = None) -> X:
+def load_repr1(data: dict[str, Any], T: Optional[Type[X]] = None) -> X:
     if "$schema" not in data:
         raise ValueError("Missing $schema")
     schema = data["$schema"]
@@ -398,7 +402,9 @@ def load_repr1(data: dict, T: Optional[Type[X]] = None) -> X:
         raise ValueError(msg)
     loader = loaders[title]
     try:
-        return loader(data)
+        res = loader(data)
+
+        return cast(X, res)
     except Exception as e:
         datas = yaml.dump(data, allow_unicode=True)
         logger.exception("Error while loading %r\n%s", title, datas, exc_info=e)
@@ -419,8 +425,9 @@ def parse_yaml_value(poset: Poset, ob: object) -> object:
             if not isinstance(ob, list):
                 msg = "Expected list, got %s" % type(ob)
                 raise ValueError(msg)
-            val = []
-            for el, sub in zip(ob, subs):
+            obl = cast(list[Any], ob)
+            val: list[Any] = []
+            for el, sub in zip(obl, subs):
                 el = parse_yaml_value(sub, el)
                 val.append(el)
             return tuple(val)

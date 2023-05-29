@@ -3,7 +3,7 @@ import glob
 import os
 import sys
 from importlib import import_module
-
+from typing import cast, Any
 import yaml
 
 from . import logger
@@ -11,14 +11,12 @@ from .loading import load_repr1, parse_yaml_value
 from .primitivedps import PrimitiveDP
 from .solution_interface import DPSolverInterface, Interval, LowerSet, UpperSet
 
-
-def import_from_string(dot_path: str) -> object:
-    module_path, _, name = dot_path.rpartition(".")
-    module = import_module(module_path)
-    return getattr(module, name)
+from .utils import import_from_string
 
 
-__all__ = ["solve_dp_queries_main"]
+__all__ = [
+    "solve_dp_queries_main",
+]
 
 
 def solve_dp_queries_main() -> None:
@@ -49,7 +47,7 @@ def solve_dp_queries_main() -> None:
     queries_dir = args.queries_dir
     all_output = {}
 
-    summary = {
+    summary: dict[str, list[str]] = {
         "failed": [],
         "succeeded": [],
         "comparison_not_implemented": [],
@@ -57,7 +55,7 @@ def solve_dp_queries_main() -> None:
 
     for fn in glob.glob(queries_dir + "/**/*.dp-queries.*.mcdpr1.yaml", recursive=True):
         data = yaml.load(open(fn).read(), Loader=yaml.SafeLoader)
-        filename_rel = data["dp"]
+        filename_rel = cast(str, data["dp"])
         filename = os.path.join(os.path.dirname(fn), filename_rel)
         if not os.path.exists(filename):
             logger.error("File %r does not exist", filename)
@@ -71,15 +69,17 @@ def solve_dp_queries_main() -> None:
 
         if query == "FixFunMinRes":
             data_parsed = parse_yaml_value(model.F, data["value"])
-            result: Interval[UpperSet] = load_repr1(data["result"], Interval)
-            result.pessimistic.minimals = [parse_yaml_value(model.R, x) for x in result.pessimistic.minimals]
-            result.optimistic.minimals = [parse_yaml_value(model.R, x) for x in result.optimistic.minimals]
+            result1: Interval[UpperSet[Any]] = load_repr1(data["result"], Interval)
+            result1.pessimistic.minimals = [
+                parse_yaml_value(model.R, x) for x in result1.pessimistic.minimals
+            ]
+            result1.optimistic.minimals = [parse_yaml_value(model.R, x) for x in result1.optimistic.minimals]
 
             solution = solver.solve_dp_FixFunMinRes(model, data_parsed)
             if approximated:
                 status = "comparison_not_implemented"
             else:
-                ok = solution == result
+                ok = solution == result1
                 if ok:
                     status = "succeeded"
                 else:
@@ -90,7 +90,7 @@ def solve_dp_queries_main() -> None:
                 "dp": filename,
                 "query": query,
                 "value": repr(data_parsed),
-                "result_expected": repr(result),
+                "result_expected": repr(result1),
                 "result_obtained": repr(solution),
                 "status": status,
             }
@@ -99,16 +99,18 @@ def solve_dp_queries_main() -> None:
         elif query == "FixResMaxFun":
             data_parsed = parse_yaml_value(model.R, data["value"])
 
-            result: Interval[LowerSet] = load_repr1(data["result"], Interval)
+            result2: Interval[LowerSet[Any]] = load_repr1(data["result"], Interval)
 
-            result.pessimistic.maximals = [parse_yaml_value(model.F, x) for x in result.pessimistic.maximals]
-            result.optimistic.maximals = [parse_yaml_value(model.F, x) for x in result.optimistic.maximals]
+            result2.pessimistic.maximals = [
+                parse_yaml_value(model.F, x) for x in result2.pessimistic.maximals
+            ]
+            result2.optimistic.maximals = [parse_yaml_value(model.F, x) for x in result2.optimistic.maximals]
 
             solution = solver.solve_dp_FixResMaxFun(model, data_parsed)
             if approximated:
                 status = "comparison_not_implemented"
             else:
-                ok = solution == result
+                ok = solution == result2
                 if ok:
                     status = "succeeded"
                 else:
@@ -119,7 +121,7 @@ def solve_dp_queries_main() -> None:
                 "dp": filename,
                 "query": query,
                 "value": repr(data_parsed),
-                "result_expected": repr(result),
+                "result_expected": repr(result2),
                 "result_obtained": repr(solution),
                 "status": status,
             }
@@ -138,8 +140,12 @@ def solve_dp_queries_main() -> None:
     dn = os.path.dirname(fn_out)
     if dn:
         os.makedirs(dn, exist_ok=True)
+
+    from . import __version__
+
+    output = {"metadata": {"ACT4E-mcdp-version": __version__}, "queries": all_output, "summary": summary}
     with open(fn_out, "w") as f:
-        f.write(yaml.dump(all_output, allow_unicode=True, default_flow_style=False))
+        f.write(yaml.dump(output, allow_unicode=True, default_flow_style=False))
 
     logger.info("Summary:\n" + yaml.dump(summary, allow_unicode=True, default_flow_style=False))
 
