@@ -423,6 +423,6 @@ def parse_yaml_value(poset: Poset, ob: object) -> object:
             for el, sub in zip(ob, subs):
                 el = parse_yaml_value(sub, el)
                 val.append(el)
-            return val
+            return tuple(val)
         case _:
             raise NotImplementedError(type(poset))

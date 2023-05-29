@@ -65,11 +65,10 @@ def solve_dp_queries_main() -> None:
         data_dp = yaml.load(open(filename).read(), Loader=yaml.SafeLoader)
         model = load_repr1(data_dp, PrimitiveDP)
 
-        logger.info(f"query: {fn} {data} {model}")
+        # logger.info(f"query: {fn} {data} {model}")
         query = data["query"]
         approximated = data["approximated"]
 
-        info_struct = {}
         if query == "FixFunMinRes":
             data_parsed = parse_yaml_value(model.F, data["value"])
             result: Interval[UpperSet] = load_repr1(data["result"], Interval)
@@ -89,7 +88,7 @@ def solve_dp_queries_main() -> None:
             info_struct = {
                 # "testcase": fn,
                 "dp": filename,
-                "query": repr(query),
+                "query": query,
                 "value": repr(data_parsed),
                 "result_expected": repr(result),
                 "result_obtained": repr(solution),
@@ -118,7 +117,7 @@ def solve_dp_queries_main() -> None:
             info_struct = {
                 # "testcase": fn,
                 "dp": filename,
-                "query": repr(query),
+                "query": query,
                 "value": repr(data_parsed),
                 "result_expected": repr(result),
                 "result_obtained": repr(solution),
