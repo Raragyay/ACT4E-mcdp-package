@@ -22,11 +22,11 @@ class UpperSet(Generic[X]):
     Describes a finitely-supported **upper set** of elements of type X.
 
     Attributes:
-        minima: A list of elements of type X, which are the minimal elements of the set.
+        minimals: A list of elements of type X, which are the minimal elements of the set.
 
     """
 
-    minima: list[X]
+    minimals: list[X]
 
 
 @dataclass
@@ -35,11 +35,11 @@ class LowerSet(Generic[X]):
     Describes a finitely-supported **lower set** of elements of type X.
 
     Attributes:
-        maxima: A list of elements of type X, which are the minimal elements of the set.
+        maximals: A list of elements of type X, which are the minimal elements of the set.
 
     """
 
-    maxima: list[X]
+    maximals: list[X]
 
 
 @dataclass(kw_only=True)
@@ -74,7 +74,7 @@ class DPSolverInterface(ABC):
         resolution_optimistic: int = 0,
         resolution_pessimistic: int = 0,
     ) -> Interval[UpperSet[object]]:
-        """
+        r"""
 
         Solves the problem of finding the minimal resources needed to satisfy a given functional requirement.
 
@@ -119,9 +119,12 @@ class DPSolverInterface(ABC):
         Parameters:
             dp: A design problem.
             functionality_needed: The functionality needed.
-            resolution_optimistic: An integer returning the resolution of the optimistic answer, to be used
-            in the case of DPs that are not computable.
-            resolution_pessimistic: Same thing, for the pessimistic answer.
+            resolution_optimistic: An integer returning the resolution of the optimistic answer, to
+                be used in the case of DPs that are not computable.
+
+            resolution_pessimistic: Same for the pessimistic answer.
+
+
 
         Returns:
 
@@ -146,8 +149,8 @@ class DPSolverInterface(ABC):
         Parameters:
             dp: A design problem.
             resource_budget: The resources available.
-            resolution_optimistic: An integer returning the resolution of the optimistic answer, to be used
-            in the case of DPs that are not computable.
+            resolution_optimistic: An integer returning the resolution of the optimistic answer,
+                to be used in the case of DPs that are not computable.
             resolution_pessimistic: Same thing, for the pessimistic answer.
 
         Returns:
@@ -224,8 +227,8 @@ class MCDPSolverInterface(ABC):
         Parameters:
             graph: The model of the problem.
             functionality_needed: The functionality needed (key-value dictionary).
-            resolution_optimistic: An integer returning the resolution of the optimistic answer, to be used
-            in the case of DPs that are not computable.
+            resolution_optimistic: An integer returning the resolution of the optimistic answer,
+                to be used in the case of DPs that are not computable.
             resolution_pessimistic: Same thing, for the pessimistic answer.
 
         Returns:
@@ -268,8 +271,8 @@ class MCDPSolverInterface(ABC):
         Parameters:
             graph: The model of the problem.
             resources_budget: The maximum budget that we have (key-value dictionary).
-            resolution_optimistic: An integer returning the resolution of the optimistic answer, to be used
-            in the case of DPs that are not computable.
+            resolution_optimistic: An integer returning the resolution of the optimistic answer,
+                to be used in the case of DPs that are not computable.
             resolution_pessimistic: Same thing, for the pessimistic answer.
 
         Returns:

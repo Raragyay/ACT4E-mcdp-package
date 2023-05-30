@@ -2,21 +2,17 @@ import argparse
 import os
 import sys
 from importlib import import_module
+from typing import Any, cast
 
 import yaml
 
 from . import logger
-from .primitivedps import PrimitiveDP
 from .loading import load_repr1, parse_yaml_value
 from .nameddps import NamedDP
+from .primitivedps import PrimitiveDP
 from .solution_interface import MCDPSolverInterface
 
-
-def import_from_string(dot_path: str) -> object:
-    module_path, _, name = dot_path.rpartition(".")
-    module = import_module(module_path)
-    return getattr(module, name)
-
+from .utils import import_from_string
 
 __all__ = ["solve_mcdp_main"]
 
@@ -75,7 +71,7 @@ def solve_mcdp_main() -> None:
             sys.exit(1)
 
     model = load_repr1(data, NamedDP)
-    if not isinstance(model, NamedDP):
+    if not isinstance(model, NamedDP):  # type: ignore
         if isinstance(model, PrimitiveDP):
             msg = f"Expected a NamedDP, got a PrimitiveDP. Did you mean to use 'act4e-mcdp-solve-dp'?"
             raise ValueError(msg)
@@ -84,9 +80,10 @@ def solve_mcdp_main() -> None:
         raise ValueError(msg)
     logger.info("model: %s", model)
 
-    yaml_query = yaml.load(query_data, Loader=yaml.SafeLoader)
-    if not isinstance(yaml_query, dict):
-        raise ValueError(f"Expected dict, got {yaml_query!r}")
+    yaml_query0 = yaml.load(query_data, Loader=yaml.SafeLoader)
+    if not isinstance(yaml_query0, dict):
+        raise ValueError(f"Expected dict, got {yaml_query0!r}")
+    yaml_query = cast(dict[str, Any], yaml_query0)
 
     if query == "FixFunMinRes":
         found = set(yaml_query)

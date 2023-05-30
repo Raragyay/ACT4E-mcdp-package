@@ -1,0 +1,19 @@
+dp: lib1-parts.primitivedps.e04_splitter2.mcdpr1.yaml
+query: FixFunMinRes
+approximated: false
+value:
+- Infinity
+- Infinity
+result:
+  $schema:
+    title: Interval
+  pessimistic:
+    $schema:
+      title: UpperSet
+    minimals:
+    - Infinity
+  optimistic:
+    $schema:
+      title: UpperSet
+    minimals:
+    - Infinity

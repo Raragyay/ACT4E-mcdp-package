@@ -3,7 +3,9 @@ import os
 
 from . import logger
 
-__all__ = ["download_main"]
+__all__ = [
+    "download_main",
+]
 
 
 def download_main() -> None:

@@ -3,7 +3,7 @@ all:
 .PHONY: build
 
 build:
-	rm -f dist/*
+	rm -rf dist/*
 	poetry build -f wheel
 
 publish: build
@@ -12,12 +12,15 @@ publish: build
 
 bump:
 	./bump-version.sh patch
+	git push --tags
 
 bump-minor:
 	./bump-version.sh minor
+	git push --tags
 
 bump-major:
 	./bump-version.sh major
+	git push --tags
 
 .PHONY: docs
 
@@ -27,5 +30,11 @@ docs:
 docs-serve:
 	mkdocs serve
 
-pack:
-	zuper-cli pack -d assets/test-data/downloaded --include '*yaml' -o src/act4e_mcdp/autogen_packed_test_data.py
+TD=assets/test-data/downloaded
+
+pack:  
+	zuper-cli pack -d $(TD) --include '*yaml' -o src/act4e_mcdp/autogen_packed_test_data.py
+
+get-data:
+	rm -f $(TD)/*
+	zuper-ide-imp-create-test-cases --github-username AndreaCensi --source https://github.com/co-design-models/ACT4E-exercises-spring2023  -o $(TD)
