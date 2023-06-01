@@ -48,6 +48,14 @@ class PrimitiveDP:
         description: An optional string description.
         F: The functionality poset $\F$
         R: The resources poset $\R$
+
+
+    Note:
+        This class is only a general superclass
+        for morphisms of the category DP.
+        It does not contain interface/information
+        regarding the feasible relationship itself.
+
     """
 
     description: Optional[str]

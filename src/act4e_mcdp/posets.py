@@ -11,7 +11,17 @@ __all__ = [
 
 @dataclass
 class Poset:
-    """The base class for Posets"""
+    """
+    
+    The base class for Posets
+    
+
+    Note:
+        This class is only a general superclass for posets.
+        It does not contain interface/information
+        regarding the partial-order itself.
+    
+    """
 
 
 @dataclass
