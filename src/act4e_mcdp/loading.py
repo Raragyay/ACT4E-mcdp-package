@@ -114,7 +114,13 @@ def load_CatalogueDP(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
     entries = fields["entries"] = {}
     for k, v in ob["entries"].items():
-        entries[k] = EntryInfo(**v)
+        f_max_raw = v["f_max"]
+        r_min_raw = v["r_min"]
+        F = fields["F"]
+        R = fields["R"]
+        f_max = parse_yaml_value(F, f_max_raw)
+        r_min = parse_yaml_value(R, r_min_raw)
+        entries[k] = EntryInfo(f_max=f_max, r_min=r_min)
     return CatalogueDP(**fields)
 
 
@@ -420,7 +426,7 @@ def parse_yaml_value(poset: Poset, ob: object) -> object:
     match poset:
         case Numbers():
             if not isinstance(ob, (int, str, float, bool)):
-                msg = "For Poset of numbers, expected string or int, got %s" % type(ob)
+                msg = "For Poset of numbers, expected string or int, got %s.\b%s" % (type(ob), repr(ob))
                 raise ValueError(msg)
             return Decimal(ob)
         case FinitePoset():
