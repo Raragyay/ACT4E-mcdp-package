@@ -46,7 +46,7 @@ dps:
             title: Numbers
           bottom: '0'
           top: Infinity
-          units: N
+          units: N²
       coords:
         $schema:
           title: ComposeList
@@ -202,7 +202,7 @@ dps:
                 title: Numbers
               bottom: '0'
               top: Infinity
-              units: N
+              units: N²
             - $schema:
                 kind: Poset
                 title: PosetProduct
@@ -255,77 +255,33 @@ dps:
                 kind: PrimitiveDP
               dps:
               - $schema:
-                  title: SeriesN
+                  title: M_Res_MultiplyConstant_DP
                   kind: PrimitiveDP
-                dps:
-                - $schema:
-                    title: M_Power_DP
-                    kind: PrimitiveDP
-                    description: f² ≤ r
-                  F:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: N
-                  R:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: N²
-                  num: 2
-                  den: 1
-                  ann:
-                - $schema:
-                    title: M_Res_MultiplyConstant_DP
-                    kind: PrimitiveDP
-                    description: f ⋅ 0.002 W/N² ≤ r
-                  F:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: N²
-                  vu:
-                    $schema:
-                      title: ValueFromPoset
-                    value: '0.002'
-                    poset:
-                      $schema:
-                        kind: Poset
-                        title: Numbers
-                      bottom: '0.002'
-                      top: '0.002'
-                      units: W/N²
-                  opspace:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: -Infinity
-                    top: Infinity
-                  R:
-                    $schema:
-                      kind: Poset
-                      title: Numbers
-                    bottom: '0'
-                    top: Infinity
-                    units: W
-                  ann:
-                labels:
-                - - 0
-                - - 1
-                ann:
+                  description: f ⋅ 0.002 W/N² ≤ r
                 F:
                   $schema:
                     kind: Poset
                     title: Numbers
                   bottom: '0'
                   top: Infinity
-                  units: N
+                  units: N²
+                vu:
+                  $schema:
+                    title: ValueFromPoset
+                  value: '0.002'
+                  poset:
+                    $schema:
+                      kind: Poset
+                      title: Numbers
+                    bottom: '0.002'
+                    top: '0.002'
+                    units: W/N²
+                opspace:
+                  $schema:
+                    kind: Poset
+                    title: Numbers
+                  bottom: -Infinity
+                  top: Infinity
                 R:
                   $schema:
                     kind: Poset
@@ -333,6 +289,7 @@ dps:
                   bottom: '0'
                   top: Infinity
                   units: W
+                ann:
               - $schema:
                   title: IdentityDP
                   kind: PrimitiveDP
@@ -374,7 +331,7 @@ dps:
                     title: Numbers
                   bottom: '0'
                   top: Infinity
-                  units: N
+                  units: N²
                 - $schema:
                     kind: Poset
                     title: PosetProduct
@@ -544,7 +501,7 @@ dps:
                   title: Numbers
                 bottom: '0'
                 top: Infinity
-                units: N
+                units: N²
               - $schema:
                   kind: Poset
                   title: PosetProduct
@@ -607,7 +564,7 @@ dps:
                   title: Numbers
                 bottom: '0'
                 top: Infinity
-                units: N
+                units: N²
               - $schema:
                   kind: Poset
                   title: PosetProduct
@@ -893,7 +850,7 @@ dps:
                 title: Numbers
               bottom: '0'
               top: Infinity
-              units: N
+              units: N²
             - $schema:
                 kind: Poset
                 title: PosetProduct
@@ -980,7 +937,7 @@ dps:
                 title: Numbers
               bottom: '0'
               top: Infinity
-              units: N
+              units: N²
             - $schema:
                 kind: Poset
                 title: PosetProduct
@@ -1308,9 +1265,31 @@ dps:
             top: Infinity
             units: N
           ann:
+        - $schema:
+            title: M_Power_DP
+            kind: PrimitiveDP
+            description: f² ≤ r
+          F:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: N
+          R:
+            $schema:
+              kind: Poset
+              title: Numbers
+            bottom: '0'
+            top: Infinity
+            units: N²
+          num: 2
+          den: 1
+          ann:
         labels:
         - - 0
         - - 1
+        - - 2
         ann:
         F:
           $schema:
@@ -1335,7 +1314,7 @@ dps:
             title: Numbers
           bottom: '0'
           top: Infinity
-          units: N
+          units: N²
       labels:
       - - 0
       - - 1
@@ -1391,7 +1370,7 @@ dps:
             title: Numbers
           bottom: '0'
           top: Infinity
-          units: N
+          units: N²
     labels:
     - - 0
     - - 1
@@ -1430,7 +1409,7 @@ dps:
           title: Numbers
         bottom: '0'
         top: Infinity
-        units: N
+        units: N²
     R:
       $schema:
         kind: Poset
@@ -1451,7 +1430,7 @@ dps:
           title: Numbers
         bottom: '0'
         top: Infinity
-        units: N
+        units: N²
   ann:
   F:
     $schema:

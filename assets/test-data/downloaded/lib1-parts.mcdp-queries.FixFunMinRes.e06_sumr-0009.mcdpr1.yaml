@@ -10,15 +10,15 @@ result:
     $schema:
       title: UpperSet
     minimals:
-    - r1: '0'
-      r2: Infinity
     - r1: Infinity
       r2: '0'
+    - r1: '0'
+      r2: Infinity
   optimistic:
     $schema:
       title: UpperSet
     minimals:
-    - r1: '0'
-      r2: Infinity
     - r1: Infinity
       r2: '0'
+    - r1: '0'
+      r2: Infinity

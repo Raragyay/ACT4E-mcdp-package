@@ -2,20 +2,20 @@ $schema:
   title: FinitePoset
   kind: Poset
 elements:
-- d
+- e
 - h
 - b
-- a
-- e
 - c
+- a
+- d
 relations:
-- - b
-  - d
 - - a
   - b
 - - c
   - d
 - - b
-  - e
+  - d
 - - a
   - c
+- - b
+  - e
