@@ -227,7 +227,7 @@ class M_Res_AddMany_DP(PrimitiveDP):
 
 
 @dataclass
-class MeetNDualDP(PrimitiveDP):
+class JoinNDP(PrimitiveDP):
     r"""
     This DP is used as plumbing. It is the dual of [JoinNDP][act4e_mcdp.primitivedps.JoinNDP].
 
@@ -255,7 +255,7 @@ class MeetNDualDP(PrimitiveDP):
 
 
 @dataclass
-class JoinNDP(PrimitiveDP):
+class MeetNDualDP(PrimitiveDP):
     r"""
     This DP is used as plumbing. It is the dual of [MeetNDualDP][act4e_mcdp.primitivedps.MeetNDualDP].
 
