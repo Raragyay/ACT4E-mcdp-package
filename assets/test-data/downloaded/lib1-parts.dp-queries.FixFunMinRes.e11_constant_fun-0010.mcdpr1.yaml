@@ -8,10 +8,8 @@ result:
   pessimistic:
     $schema:
       title: UpperSet
-    minimals:
-    - []
+    minimals: []
   optimistic:
     $schema:
       title: UpperSet
-    minimals:
-    - []
+    minimals: []

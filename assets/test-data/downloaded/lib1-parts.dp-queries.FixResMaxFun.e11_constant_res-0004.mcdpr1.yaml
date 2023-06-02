@@ -8,10 +8,8 @@ result:
   pessimistic:
     $schema:
       title: LowerSet
-    maximals:
-    - []
+    maximals: []
   optimistic:
     $schema:
       title: LowerSet
-    maximals:
-    - []
+    maximals: []

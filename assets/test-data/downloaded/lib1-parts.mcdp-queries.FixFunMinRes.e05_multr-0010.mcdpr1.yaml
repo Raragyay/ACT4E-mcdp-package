@@ -16,7 +16,7 @@ result:
     $schema:
       title: UpperSet
     minimals:
-    - r_1: Infinity
-      r_2: '0'
     - r_1: '0'
       r_2: Infinity
+    - r_1: Infinity
+      r_2: '0'
