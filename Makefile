@@ -2,7 +2,7 @@ all:
 
 .PHONY: build
 
-build:
+build: pack
 	rm -rf dist/*
 	poetry build -f wheel
 
