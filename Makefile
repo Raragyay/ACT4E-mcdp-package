@@ -33,7 +33,7 @@ docs-serve:
 TD=assets/test-data/downloaded
 
 pack:  
-	zuper-cli pack -d $(TD) --include '*yaml' -o src/act4e_mcdp/autogen_packed_test_data.py
+	zuper-cli pack -d $(TD) --include '**/*yaml' -o src/act4e_mcdp/autogen_packed_test_data.py
 
 get-data:
 	-rm -rf $(TD)/*
