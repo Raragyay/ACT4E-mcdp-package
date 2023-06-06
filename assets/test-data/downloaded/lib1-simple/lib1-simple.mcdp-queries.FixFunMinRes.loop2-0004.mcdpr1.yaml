@@ -1,0 +1,18 @@
+mcdp: assets/test-data/downloaded/lib1-simple/lib1-simple.models.loop2.mcdpr1.yaml
+query: FixFunMinRes
+approximated: false
+value:
+  f: '3.36000000'
+result:
+  $schema:
+    title: Interval
+  pessimistic:
+    $schema:
+      title: UpperSet
+    minimals:
+    - r: '3.36000000'
+  optimistic:
+    $schema:
+      title: UpperSet
+    minimals:
+    - r: '3.36000000'

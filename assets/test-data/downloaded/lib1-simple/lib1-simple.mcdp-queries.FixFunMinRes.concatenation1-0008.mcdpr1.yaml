@@ -1,0 +1,18 @@
+mcdp: assets/test-data/downloaded/lib1-simple/lib1-simple.models.concatenation1.mcdpr1.yaml
+query: FixFunMinRes
+approximated: false
+value:
+  f_1: '28.41000000'
+result:
+  $schema:
+    title: Interval
+  pessimistic:
+    $schema:
+      title: UpperSet
+    minimals:
+    - r_1: '185'
+  optimistic:
+    $schema:
+      title: UpperSet
+    minimals:
+    - r_1: '185'
