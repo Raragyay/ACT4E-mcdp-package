@@ -46,7 +46,7 @@ dps:
             title: Numbers
           bottom: '0'
           top: Infinity
-          units: kg
+          units: J
       coords:
         $schema:
           title: ComposeList
@@ -202,7 +202,7 @@ dps:
                 title: Numbers
               bottom: '0'
               top: Infinity
-              units: kg
+              units: J
             - $schema:
                 kind: Poset
                 title: PosetProduct
@@ -255,24 +255,121 @@ dps:
                 kind: PrimitiveDP
               dps:
               - $schema:
-                  title: MeetNDualDP
+                  title: SeriesN
                   kind: PrimitiveDP
-                  description: f ≤  r₁ ∨ r₂
+                dps:
+                - $schema:
+                    title: M_Res_DivideConstant_DP
+                    kind: PrimitiveDP
+                    description: f / 500 Wh/kg ≤ r
+                  F:
+                    $schema:
+                      kind: Poset
+                      title: Numbers
+                    bottom: '0'
+                    top: Infinity
+                    units: J
+                  vu:
+                    $schema:
+                      title: ValueFromPoset
+                    value: '500'
+                    poset:
+                      $schema:
+                        kind: Poset
+                        title: Numbers
+                      bottom: '500'
+                      top: '500'
+                      units: Wh/kg
+                  opspace:
+                    $schema:
+                      kind: Poset
+                      title: Numbers
+                    bottom: '0'
+                    top: Infinity
+                    units: J
+                  R:
+                    $schema:
+                      kind: Poset
+                      title: Numbers
+                    bottom: '0'
+                    top: Infinity
+                    units: J*kg/Wh
+                  ann:
+                - $schema:
+                    title: UnitConversion
+                    kind: PrimitiveDP
+                    description: f * F 1/3600 ≤ r
+                  F:
+                    $schema:
+                      kind: Poset
+                      title: Numbers
+                    bottom: '0'
+                    top: Infinity
+                    units: J*kg/Wh
+                  R:
+                    $schema:
+                      kind: Poset
+                      title: Numbers
+                    bottom: '0'
+                    top: Infinity
+                    units: kg
+                  opspace:
+                    $schema:
+                      kind: Poset
+                      title: Numbers
+                    bottom: -Infinity
+                    top: Infinity
+                    units: J*kg/Wh
+                  factor: 1/3600
+                  ann:
+                - $schema:
+                    title: MeetNDualDP
+                    kind: PrimitiveDP
+                    description: f ≤  r₁ ∨ r₂
+                  F:
+                    $schema:
+                      kind: Poset
+                      title: Numbers
+                    bottom: '0'
+                    top: Infinity
+                    units: kg
+                  C:
+                    $schema:
+                      kind: Poset
+                      title: Numbers
+                    bottom: '0'
+                    top: Infinity
+                    units: kg
+                  ann:
+                  R:
+                    $schema:
+                      kind: Poset
+                      title: PosetProduct
+                    subs:
+                    - $schema:
+                        kind: Poset
+                        title: Numbers
+                      bottom: '0'
+                      top: Infinity
+                      units: kg
+                    - $schema:
+                        kind: Poset
+                        title: Numbers
+                      bottom: '0'
+                      top: Infinity
+                      units: kg
+                labels:
+                - - 0
+                - - 1
+                - - 2
+                ann:
                 F:
                   $schema:
                     kind: Poset
                     title: Numbers
                   bottom: '0'
                   top: Infinity
-                  units: kg
-                C:
-                  $schema:
-                    kind: Poset
-                    title: Numbers
-                  bottom: '0'
-                  top: Infinity
-                  units: kg
-                ann:
+                  units: J
                 R:
                   $schema:
                     kind: Poset
@@ -331,7 +428,7 @@ dps:
                     title: Numbers
                   bottom: '0'
                   top: Infinity
-                  units: kg
+                  units: J
                 - $schema:
                     kind: Poset
                     title: PosetProduct
@@ -797,7 +894,7 @@ dps:
                   title: Numbers
                 bottom: '0'
                 top: Infinity
-                units: kg
+                units: J
               - $schema:
                   kind: Poset
                   title: PosetProduct
@@ -874,7 +971,7 @@ dps:
                   title: Numbers
                 bottom: '0'
                 top: Infinity
-                units: kg
+                units: J
               - $schema:
                   kind: Poset
                   title: PosetProduct
@@ -1227,7 +1324,7 @@ dps:
                 title: Numbers
               bottom: '0'
               top: Infinity
-              units: kg
+              units: J
             - $schema:
                 kind: Poset
                 title: PosetProduct
@@ -1318,7 +1415,7 @@ dps:
                 title: Numbers
               bottom: '0'
               top: Infinity
-              units: kg
+              units: J
             - $schema:
                 kind: Poset
                 title: PosetProduct
@@ -1571,112 +1668,22 @@ dps:
             units: kg
         ann:
       - $schema:
-          title: SeriesN
+          title: M_Res_MultiplyMany_DP
           kind: PrimitiveDP
-        dps:
-        - $schema:
-            title: M_Res_MultiplyMany_DP
-            kind: PrimitiveDP
-            description: f₁⋅f₂ ≤ r
-          R:
-            $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: J
-          opspace:
-            $schema:
-              kind: Poset
-              title: Numbers
-            bottom: -Infinity
-            top: Infinity
-          ann:
-          F:
-            $schema:
-              kind: Poset
-              title: PosetProduct
-            subs:
-            - $schema:
-                kind: Poset
-                title: Numbers
-              bottom: '0'
-              top: Infinity
-              units: s
-            - $schema:
-                kind: Poset
-                title: Numbers
-              bottom: '0'
-              top: Infinity
-              units: W
-        - $schema:
-            title: M_Res_DivideConstant_DP
-            kind: PrimitiveDP
-            description: f / 500 Wh/kg ≤ r
-          F:
-            $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: J
-          vu:
-            $schema:
-              title: ValueFromPoset
-            value: '500'
-            poset:
-              $schema:
-                kind: Poset
-                title: Numbers
-              bottom: '500'
-              top: '500'
-              units: Wh/kg
-          opspace:
-            $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: J
-          R:
-            $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: J*kg/Wh
-          ann:
-        - $schema:
-            title: UnitConversion
-            kind: PrimitiveDP
-            description: f * F 1/3600 ≤ r
-          F:
-            $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: J*kg/Wh
-          R:
-            $schema:
-              kind: Poset
-              title: Numbers
-            bottom: '0'
-            top: Infinity
-            units: kg
-          opspace:
-            $schema:
-              kind: Poset
-              title: Numbers
-            bottom: -Infinity
-            top: Infinity
-            units: J*kg/Wh
-          factor: 1/3600
-          ann:
-        labels:
-        - - 0
-        - - 1
-        - - 2
+          description: f₁⋅f₂ ≤ r
+        R:
+          $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '0'
+          top: Infinity
+          units: J
+        opspace:
+          $schema:
+            kind: Poset
+            title: Numbers
+          bottom: -Infinity
+          top: Infinity
         ann:
         F:
           $schema:
@@ -1695,13 +1702,6 @@ dps:
             bottom: '0'
             top: Infinity
             units: W
-        R:
-          $schema:
-            kind: Poset
-            title: Numbers
-          bottom: '0'
-          top: Infinity
-          units: kg
       labels:
       - - 0
       - - 1
@@ -1757,7 +1757,7 @@ dps:
             title: Numbers
           bottom: '0'
           top: Infinity
-          units: kg
+          units: J
     labels:
     - - 0
     - - 1
@@ -1796,7 +1796,7 @@ dps:
           title: Numbers
         bottom: '0'
         top: Infinity
-        units: kg
+        units: J
     R:
       $schema:
         kind: Poset
@@ -1817,7 +1817,7 @@ dps:
           title: Numbers
         bottom: '0'
         top: Infinity
-        units: kg
+        units: J
   ann:
   F:
     $schema:
