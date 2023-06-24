@@ -116,11 +116,13 @@ class Connection:
     A connection in a co-design graph.
 
     Note that the **source** of a connection can be either:
+
     - a [ModelFunctionality][act4e_mcdp.nameddps.ModelFunctionality]: a **functionality** of the entire
     diagram
     - a [NodeResource][act4e_mcdp.nameddps.NodeResource]: a **resource** of a node.
 
     Note that the **target** of a connection can be either:
+
     - a [ModelResource][act4e_mcdp.nameddps.ModelResource]: a **resource** of the entire diagram
     - a [NodeFunctionality][act4e_mcdp.nameddps.NodeFunctionality]: a **functionality** of a node.
 
