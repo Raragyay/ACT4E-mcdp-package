@@ -8,7 +8,8 @@
         - ValueFromPoset
 
 ## Structures used in solution
-::: act4e_mcdp.solution_interface
+
+::: act4e_mcdp.posets
     options:
       members:
         - UpperSet

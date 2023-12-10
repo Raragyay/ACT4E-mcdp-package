@@ -117,8 +117,9 @@ class Poset(ABC, Generic[T]):
 
     @abstractmethod
     def close(self, x: T, y: T, /, *, atol: float, rtol: float) -> bool:
-        # returns True if x and y are close enough
-        ...
+        """
+        returns True if x and y are close enough according to the given absolute and relative tolerances.
+        """
 
 
 @dataclass
@@ -274,10 +275,13 @@ class FinitePoset(Poset[str]):
     """
     Represents a finite poset of elements
 
+
     Attributes:
         elements: A set of strings
         relations: A set of pairs of strings that represent the relations between the elements
 
+
+    `('a', 'b')`  in relations represents `a <= b`
 
     Examples:
 
