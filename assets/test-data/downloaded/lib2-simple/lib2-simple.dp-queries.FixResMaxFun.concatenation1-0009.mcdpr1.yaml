@@ -9,9 +9,9 @@ result:
     $schema:
       title: LowerSet
     maximals:
-    - '2'
+    - '3'
   optimistic:
     $schema:
       title: LowerSet
     maximals:
-    - '2'
+    - '3'

@@ -167,19 +167,23 @@ def solve_dp_queries_main() -> None:
             else:
                 if query == "FixFunMinRes":
                     P = model.R
+                    logger.info("query: %s , solution: %s", query, solution)
                     result = cast(Interval[UpperSet[Any]], result)
                     solution = cast(Interval[UpperSet[Any]], solution)
 
                     ok1 = UpperSet.close(P, solution.pessimistic, result.pessimistic, atol=atol, rtol=rtol)
                     ok2 = UpperSet.close(P, solution.optimistic, result.optimistic, atol=atol, rtol=rtol)
                     ok = ok1 and ok2
-                else:
+                elif query == "FixResMaxFun":
                     P = model.F
                     result = cast(Interval[LowerSet[Any]], result)
                     solution = cast(Interval[LowerSet[Any]], solution)
                     ok1 = LowerSet.close(P, solution.pessimistic, result.pessimistic, atol=atol, rtol=rtol)
                     ok2 = LowerSet.close(P, solution.optimistic, result.optimistic, atol=atol, rtol=rtol)
                     ok = ok1 and ok2
+                    logger.info("ok1: %s", ok1)
+                else:
+                    assert False, query
 
                 if ok:
                     status = "succeeded"
@@ -275,7 +279,40 @@ def solve_dp_queries_main() -> None:
         logger.error(m)
 
     total_failed = num_failed + num_exceptions + num_not_implemented
+
+    methods = get_all_methods(solver)
+    fixfunminres_defined = set([x for x in methods if x.startswith("solve_dp_FixFunMinRes_")])
+    fixresmaxfun_defined = set([x for x in methods if x.startswith("solve_dp_FixResMaxFun_")])
+    fixfunminres_used = DPSolverInterface.fixfunminres_used
+    fixresmaxfun_used = DPSolverInterface.fixresmaxfun_used
+    fixfunminres_not_used = fixfunminres_defined - fixfunminres_used
+    fixresmaxfun_not_used = fixresmaxfun_defined - fixresmaxfun_used
+    fixfunminres_not_defined = fixfunminres_used - fixfunminres_defined
+    fixresmaxfun_not_defined = fixresmaxfun_used - fixresmaxfun_defined
+    assert not fixfunminres_not_defined
+    assert not fixresmaxfun_not_defined
+    logger.info("FixFunMinRes used:\n" + "".join(f"- {_}\n" for _ in sorted(fixfunminres_used)))
+
+    logger.info("FixFunMinRes not used:\n" + "".join(f"- {_}\n" for _ in sorted(fixfunminres_not_used)))
+    # logger.info("FixFunMinRes used but not defined:\n" + "".join(f'- {_}\n' for _ in sorted(fixfunminres_not_defined)))
+
+    logger.info("FixResMaxFun not used:\n" + "".join(f"- {_}\n" for _ in sorted(fixresmaxfun_not_used)))
+    logger.info("FixResMaxFun used:\n" + "".join(f"- {_}\n" for _ in sorted(fixresmaxfun_used)))
+    #
+    # logger.info("FixResMaxFun used but not defined:\n" + "".join(f'- {_}\n' for _ in sorted(fixresmaxfun_not_defined)))
+
     sys.exit(total_failed)
+
+
+def get_all_methods(obj: Any) -> set[str]:
+    methods: set[str] = set()
+    # Iterate over all superclasses
+    for superclass in obj.__class__.__mro__:
+        # Exclude the base 'object' class to avoid default Python methods
+        if superclass is not object:
+            methods.update(method for method in dir(superclass) if callable(getattr(superclass, method)))
+
+    return methods
 
 
 import re

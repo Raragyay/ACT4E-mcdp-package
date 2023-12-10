@@ -32,7 +32,7 @@ dps:
 - $schema:
     title: M_Res_MultiplyConstant_DP
     kind: PrimitiveDP
-    description: f ⋅ 8 ≤ r
+    description: f ⋅ 5 ≤ r
   F:
     $schema:
       kind: Poset
@@ -44,13 +44,13 @@ dps:
   vu:
     $schema:
       title: ValueFromPoset
-    value: '8'
+    value: '5'
     poset:
       $schema:
         kind: Poset
         title: Numbers
-      bottom: '8'
-      top: '8'
+      bottom: '5'
+      top: '5'
       units: ''
   opspace:
     $schema:
@@ -64,6 +64,46 @@ dps:
       title: Numbers
     bottom: '0'
     top: Infinity
+    step: '5'
+    units: ''
+  ann:
+- $schema:
+    title: M_Res_AddConstant_DP
+    kind: PrimitiveDP
+    description: f + 3 ≤ r
+  F:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '0'
+    top: Infinity
+    step: '5'
+    units: ''
+  vu:
+    $schema:
+      title: ValueFromPoset
+    value: '3'
+    poset:
+      $schema:
+        kind: Poset
+        title: Numbers
+      bottom: '3'
+      top: '3'
+      units: ''
+  opspace:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: -Infinity
+    top: Infinity
+    units: ''
+  R:
+    $schema:
+      kind: Poset
+      title: Numbers
+    bottom: '3'
+    top: Infinity
+    step: '5'
     units: ''
   ann:
 - $schema:
@@ -74,8 +114,9 @@ dps:
     $schema:
       kind: Poset
       title: Numbers
-    bottom: '0'
+    bottom: '3'
     top: Infinity
+    step: '5'
     units: ''
   common:
     $schema:
@@ -90,6 +131,7 @@ dps:
       title: Numbers
     bottom: '10'
     top: Infinity
+    step: '1.2'
     units: ''
   ann:
 - $schema:
@@ -102,6 +144,7 @@ dps:
       title: Numbers
     bottom: '10'
     top: Infinity
+    step: '1.2'
     units: ''
   vu:
     $schema:
@@ -127,6 +170,7 @@ dps:
       title: Numbers
     bottom: '0'
     top: Infinity
+    step: '1.2'
     units: ''
   ann:
 - $schema:
@@ -139,6 +183,7 @@ dps:
       title: Numbers
     bottom: '0'
     top: Infinity
+    step: '1.2'
     units: ''
   vu:
     $schema:
@@ -200,6 +245,7 @@ labels:
 - - 3
 - - 4
 - - 5
+- - 6
 ann:
 F:
   $schema:

@@ -87,12 +87,13 @@ nodes:
           title: Numbers
         bottom: '0'
         top: Infinity
+        step: '5'
         units: ''
     dp:
       $schema:
         title: M_Res_MultiplyConstant_DP
         kind: PrimitiveDP
-        description: f ⋅ 8 ≤ r
+        description: f ⋅ 5 ≤ r
       F:
         $schema:
           kind: Poset
@@ -104,13 +105,13 @@ nodes:
       vu:
         $schema:
           title: ValueFromPoset
-        value: '8'
+        value: '5'
         poset:
           $schema:
             kind: Poset
             title: Numbers
-          bottom: '8'
-          top: '8'
+          bottom: '5'
+          top: '5'
           units: ''
       opspace:
         $schema:
@@ -124,6 +125,69 @@ nodes:
           title: Numbers
         bottom: '0'
         top: Infinity
+        step: '5'
+        units: ''
+      ann:
+  _plus1:
+    $schema:
+      title: SimpleWrap
+      kind: NamedDP
+    functionalities:
+      _op02:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        step: '5'
+        units: ''
+    resources:
+      _res3:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '3'
+        top: Infinity
+        step: '5'
+        units: ''
+    dp:
+      $schema:
+        title: M_Res_AddConstant_DP
+        kind: PrimitiveDP
+        description: f + 3 ≤ r
+      F:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '0'
+        top: Infinity
+        step: '5'
+        units: ''
+      vu:
+        $schema:
+          title: ValueFromPoset
+        value: '3'
+        poset:
+          $schema:
+            kind: Poset
+            title: Numbers
+          bottom: '3'
+          top: '3'
+          units: ''
+      opspace:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: -Infinity
+        top: Infinity
+        units: ''
+      R:
+        $schema:
+          kind: Poset
+          title: Numbers
+        bottom: '3'
+        top: Infinity
+        step: '5'
         units: ''
       ann:
   _RuleFunFloor_NWU1:
@@ -131,7 +195,7 @@ nodes:
       title: SimpleWrap
       kind: NamedDP
     functionalities:
-      _res3:
+      _res4:
         $schema:
           kind: Poset
           title: Numbers
@@ -140,7 +204,7 @@ nodes:
         step: '1'
         units: ''
     resources:
-      _op02:
+      _op03:
         $schema:
           kind: Poset
           title: Numbers
@@ -186,6 +250,7 @@ nodes:
           title: Numbers
         bottom: '0'
         top: Infinity
+        step: '1.2'
         units: ''
     resources:
       _ops0:
@@ -207,6 +272,7 @@ nodes:
           title: Numbers
         bottom: '0'
         top: Infinity
+        step: '1.2'
         units: ''
       vu:
         $schema:
@@ -239,20 +305,22 @@ nodes:
       title: SimpleWrap
       kind: NamedDP
     functionalities:
-      _res3:
+      _res4:
         $schema:
           kind: Poset
           title: Numbers
         bottom: '10'
         top: Infinity
+        step: '1.2'
         units: ''
     resources:
-      _op02:
+      _op03:
         $schema:
           kind: Poset
           title: Numbers
         bottom: '0'
         top: Infinity
+        step: '1.2'
         units: ''
     dp:
       $schema:
@@ -265,6 +333,7 @@ nodes:
           title: Numbers
         bottom: '10'
         top: Infinity
+        step: '1.2'
         units: ''
       vu:
         $schema:
@@ -290,6 +359,7 @@ nodes:
           title: Numbers
         bottom: '0'
         top: Infinity
+        step: '1.2'
         units: ''
       ann:
   _conversion1:
@@ -297,20 +367,22 @@ nodes:
       title: SimpleWrap
       kind: NamedDP
     functionalities:
-      _op02:
+      _op03:
         $schema:
           kind: Poset
           title: Numbers
-        bottom: '0'
+        bottom: '3'
         top: Infinity
+        step: '5'
         units: ''
     resources:
-      _res3:
+      _res4:
         $schema:
           kind: Poset
           title: Numbers
         bottom: '10'
         top: Infinity
+        step: '1.2'
         units: ''
     dp:
       $schema:
@@ -321,8 +393,9 @@ nodes:
         $schema:
           kind: Poset
           title: Numbers
-        bottom: '0'
+        bottom: '3'
         top: Infinity
+        step: '5'
         units: ''
       common:
         $schema:
@@ -337,6 +410,7 @@ nodes:
           title: Numbers
         bottom: '10'
         top: Infinity
+        step: '1.2'
         units: ''
       ann:
 connections:
@@ -352,8 +426,14 @@ connections:
     node: _mult1
     node_functionality: _op01
 - from:
+    node: _mult1
+    node_resource: _res2
+  to:
+    node: _plus1
+    node_functionality: _op02
+- from:
     node: _RuleFunFloor_NWU1
-    node_resource: _op02
+    node_resource: _op03
   to:
     resource: r_1
 - from:
@@ -361,22 +441,22 @@ connections:
     node_resource: _ops0
   to:
     node: _RuleFunFloor_NWU1
-    node_functionality: _res3
+    node_functionality: _res4
 - from:
     node: _invplusop1
-    node_resource: _op02
+    node_resource: _op03
   to:
     node: _invmultvalue1
     node_functionality: _result
 - from:
-    node: _mult1
-    node_resource: _res2
-  to:
-    node: _conversion1
-    node_functionality: _op02
-- from:
-    node: _conversion1
+    node: _plus1
     node_resource: _res3
   to:
+    node: _conversion1
+    node_functionality: _op03
+- from:
+    node: _conversion1
+    node_resource: _res4
+  to:
     node: _invplusop1
-    node_functionality: _res3
+    node_functionality: _res4

@@ -6,7 +6,6 @@ from fractions import Fraction
 from typing import Generic, Optional, TypeVar, final, overload
 
 from mcdp_maps_reg import cco_map_value
-from . import logger
 from .posets import Interval, LowerSet, Numbers, PosetProduct, UpperSet
 from .primitivedps import (
     AmbientConversion,
@@ -109,6 +108,9 @@ class DPSolverInterface(ABC):
 
     """
 
+    fixfunminres_used: set[str] = set()
+    fixresmaxfun_used: set[str] = set()
+
     @final
     def solve_dp_FixFunMinRes(
         self,
@@ -173,12 +175,17 @@ class DPSolverInterface(ABC):
             raise TypeError(f"Expected a PrimitiveDP, got {type(dp)}")
         tname = type(dp).__name__
         fname = f"solve_dp_FixFunMinRes_{tname}"
+        DPSolverInterface.fixfunminres_used.add(fname)
         F = dp.F
         if not F.belongs(query.functionality):
             msg = f"The query functionality {query.functionality} do not belong to the poset of functionalities {F}"
             raise ValueError(msg)
 
-        return self._call_function(fname, dp, query)
+        solution = self._call_function(fname, dp, query)
+        assert isinstance(solution, Interval), (fname, solution)
+        assert isinstance(solution.pessimistic, UpperSet), (fname, solution)
+        assert isinstance(solution.optimistic, UpperSet), (fname, solution)
+        return solution
 
     @final
     def solve_dp_FixResMaxFun(
@@ -199,17 +206,22 @@ class DPSolverInterface(ABC):
 
             An interval of lower sets.
         """
-        if not isinstance(dp, PrimitiveDP):
+        if not isinstance(dp, PrimitiveDP):  # type: ignore
             raise TypeError(f"Expected a PrimitiveDP, got {type(dp)}")
         tname = type(dp).__name__
         fname = f"solve_dp_FixResMaxFun_{tname}"
+        DPSolverInterface.fixresmaxfun_used.add(fname)
 
         R = dp.R
         if not R.belongs(query.resources):
             msg = f"The query resources {query.resources} do not belong to the poset of resources {R}"
             raise ValueError(msg)
 
-        return self._call_function(fname, dp, query)
+        solution = self._call_function(fname, dp, query)
+        assert isinstance(solution, Interval), (fname, solution)
+        assert isinstance(solution.pessimistic, LowerSet), (fname, solution)
+        assert isinstance(solution.optimistic, LowerSet), (fname, solution)
+        return solution
 
     @overload
     def _call_function(
@@ -324,8 +336,6 @@ class DPSolverInterface(ABC):
 
         raise NotImplementedError
 
-    # todo: test cases for Limit
-
     # walkthrough: ceil(f) <= r  DP
 
     def solve_dp_FixFunMinRes_M_Ceil_DP(
@@ -439,39 +449,6 @@ class DPSolverInterface(ABC):
     ) -> Interval[LowerSet[FT]]:
         # Same pattern as above, but functionalities and resources are swapped.
 
-        raise NotImplementedError
-
-    # Exercise: parallel interconnection
-
-    def solve_dp_FixFunMinRes_ParallelDP(
-        self, dp: ParallelDP[FT, RT], query: FixFunMinResQuery[tuple[FT, ...]]
-    ) -> Interval[UpperSet[tuple[RT, ...]]]:
-        # This is the parallel composition of a sequence of DPs.
-
-        f = query.functionality
-
-        # F and R are PosetProducts
-        F: PosetProduct[FT] = dp.F
-        R: PosetProduct[RT] = dp.R
-
-        # and f is a tuple of functionalities
-        assert isinstance(f, tuple), f
-        # ... of the same length as the number of DPs
-        assert len(f) == len(dp.subs), (f, F)
-
-        # You should decompose f into its components, and then solve each DP.
-        # Then you need to take the *product* of the solutions.
-        # The product of upper sets is the upper set of the cartesian product
-        # and it is implemented as UpperSet.product().
-
-        raise NotImplementedError
-
-    def solve_dp_FixResMaxFun_ParallelDP(
-        self, dp: ParallelDP[FT, RT], query: FixResMaxFunQuery[tuple[RT, ...]]
-    ) -> Interval[LowerSet[FT]]:
-        # Hint: same as above, swapping functionalities and resources
-
-        # You will need to use LowerSet.product()
         raise NotImplementedError
 
     # exercise: series interconnections
@@ -604,26 +581,7 @@ class DPSolverInterface(ABC):
     ) -> Interval[LowerSet[Decimal]]:
         raise NotImplementedError
 
-    # exercise: divide by constant
-
-    def solve_dp_FixResMaxFun_M_Res_DivideConstant_DP(
-        self, dp: M_Res_DivideConstant_DP, query: FixResMaxFunQuery[Decimal]
-    ) -> Interval[LowerSet[Decimal]]:
-        raise NotImplementedError
-
-    def solve_dp_FixFunMinRes_M_Res_DivideConstant_DP(
-        self, dp: M_Res_DivideConstant_DP, query: FixFunMinResQuery[Decimal]
-    ) -> Interval[UpperSet[Decimal]]:
-        raise NotImplementedError
-
     # walktrough: multiply functionalities
-
-    def solve_dp_FixFunMinRes_M_Fun_MultiplyMany_DP(
-        self, dp: M_Fun_MultiplyMany_DP, query: FixFunMinResQuery[Decimal]
-    ) -> Interval[UpperSet[tuple[Decimal, ...]]]:
-        # f <= r1 * r2 * r3 * ...
-
-        raise NotImplementedError
 
     def solve_dp_FixResMaxFun_M_Fun_MultiplyMany_DP(
         self, dp: M_Fun_MultiplyMany_DP, query: FixResMaxFunQuery[tuple[Decimal, ...]]
@@ -650,16 +608,6 @@ class DPSolverInterface(ABC):
 
         raise NotImplementedError
 
-    def solve_dp_FixResMaxFun_M_Res_MultiplyMany_DP(
-        self, dp: M_Res_MultiplyMany_DP, query: FixResMaxFunQuery[Decimal]
-    ) -> Interval[LowerSet[tuple[Decimal, ...]]]:
-        # f1 * f2 * f3 * ... <= r
-        # similar to the above
-
-        # this is the difficult direction
-
-        raise NotImplementedError
-
     # walkthough: add many
 
     def solve_dp_FixFunMinRes_M_Res_AddMany_DP(
@@ -680,11 +628,6 @@ class DPSolverInterface(ABC):
         min_r = res
         us = dp.R.largest_upperset_above(min_r)
         return Interval.degenerate(us)
-
-    def solve_dp_FixResMaxFun_M_Res_AddMany_DP(
-        self, dp: M_Res_AddMany_DP, query: FixResMaxFunQuery[Decimal]
-    ) -> Interval[LowerSet[tuple[Decimal, ...]]]:
-        raise NotImplementedError
 
     # exercise: add many functionalities
 
@@ -737,6 +680,66 @@ class DPSolverInterface(ABC):
         us: UpperSet[X] = dp.R.largest_upperset_above(min_r)
         return Interval.degenerate(us)
 
+    def solve_dp_FixResMaxFun_JoinNDP(
+        self, dp: JoinNDP[X], query: FixResMaxFunQuery[X]
+    ) -> Interval[LowerSet[tuple[X, ...]]]:
+        raise NotImplementedError
+
+    # The above are sufficient for lib1
+    #
+    # The following are only for lib2.
+    #
+    #
+
+    def solve_dp_FixResMaxFun_M_Res_DivideConstant_DP(
+        self, dp: M_Res_DivideConstant_DP, query: FixResMaxFunQuery[Decimal]
+    ) -> Interval[LowerSet[Decimal]]:
+        # f/c <= r
+
+        # Similar to a case above
+        raise NotImplementedError
+
+    def solve_dp_FixFunMinRes_M_Res_DivideConstant_DP(
+        self, dp: M_Res_DivideConstant_DP, query: FixFunMinResQuery[Decimal]
+    ) -> Interval[UpperSet[Decimal]]:
+        # f/c <= r
+
+        # Similar to a case above
+        raise NotImplementedError
+
+    # Exercise: parallel interconnection
+
+    def solve_dp_FixFunMinRes_ParallelDP(
+        self, dp: ParallelDP[FT, RT], query: FixFunMinResQuery[tuple[FT, ...]]
+    ) -> Interval[UpperSet[tuple[RT, ...]]]:
+        # This is the parallel composition of a sequence of DPs.
+
+        f = query.functionality
+
+        # F and R are PosetProducts
+        F: PosetProduct[FT] = dp.F
+        R: PosetProduct[RT] = dp.R
+
+        # and f is a tuple of functionalities
+        assert isinstance(f, tuple), f
+        # ... of the same length as the number of DPs
+        assert len(f) == len(dp.subs), (f, F)
+
+        # You should decompose f into its components, and then solve each DP.
+        # Then you need to take the *product* of the solutions.
+        # The product of upper sets is the upper set of the cartesian product
+        # and it is implemented as UpperSet.product().
+
+        raise NotImplementedError
+
+    def solve_dp_FixResMaxFun_ParallelDP(
+        self, dp: ParallelDP[FT, RT], query: FixResMaxFunQuery[tuple[RT, ...]]
+    ) -> Interval[LowerSet[FT]]:
+        # Hint: same as above, swapping functionalities and resources
+
+        # You will need to use LowerSet.product()
+        raise NotImplementedError
+
     # exercise (advanced): loops!
 
     def solve_dp_FixFunMinRes_DPLoop2(
@@ -756,6 +759,10 @@ class DPSolverInterface(ABC):
 
         # Hint: same as above, but go the other way...
         raise NotImplementedError
+
+    # These are for lib3-advanced. You can skip them.
+
+    # These are very boring ones, already implemented
 
     # Ambient conversion
 
@@ -799,7 +806,8 @@ class DPSolverInterface(ABC):
         ls = dp.R.largest_lowerset_below(max_f)
         return Interval.degenerate(ls)
 
-    # solve_dp_FixFunMinRes_Mux
+    # Mux
+
     def solve_dp_FixFunMinRes_Mux(
         self, dp: Mux, query: FixFunMinResQuery[object]
     ) -> Interval[UpperSet[object]]:
@@ -818,13 +826,35 @@ class DPSolverInterface(ABC):
         r = dp.coords2.get_it(query.resources, cco=cco)  # type: ignore
         return Interval.degenerate(LowerSet.principal(r))
 
+    def solve_dp_FixFunMinRes_M_Fun_MultiplyMany_DP(
+        self, dp: M_Fun_MultiplyMany_DP, query: FixFunMinResQuery[Decimal]
+    ) -> Interval[UpperSet[tuple[Decimal, ...]]]:
+        # f <= r1 * r2 * r3 * ...
+
+        raise NotImplementedError
+
+    def solve_dp_FixResMaxFun_M_Res_MultiplyMany_DP(
+        self, dp: M_Res_MultiplyMany_DP, query: FixResMaxFunQuery[Decimal]
+    ) -> Interval[LowerSet[tuple[Decimal, ...]]]:
+        # f1 * f2 * f3 * ... <= r
+        # similar to the above
+
+        # this is the difficult direction
+
+        raise NotImplementedError
+
+    def solve_dp_FixResMaxFun_M_Res_AddMany_DP(
+        self, dp: M_Res_AddMany_DP, query: FixResMaxFunQuery[Decimal]
+    ) -> Interval[LowerSet[tuple[Decimal, ...]]]:
+        # f1 + f2 + f3 + ... <= r
+        # this is the hard direction
+        raise NotImplementedError
+
     # power
 
     def solve_dp_FixFunMinRes_M_Power_DP(
         self, dp: M_Power_DP, query: FixFunMinResQuery[Decimal]
     ) -> Interval[UpperSet[Decimal]]:
-        num = Decimal(dp.num)
-        den = Decimal(dp.den)
         f = query.functionality
         assert isinstance(f, Decimal), f
 
@@ -835,7 +865,12 @@ class DPSolverInterface(ABC):
     def solve_dp_FixResMaxFun_M_Power_DP(
         self, dp: M_Power_DP, query: FixResMaxFunQuery[Decimal]
     ) -> Interval[LowerSet[Decimal]]:
-        raise NotImplementedError
+        r = query.resources
+        assert isinstance(r, Decimal), r
+
+        min_r = exponentiate_up(r, dp.den, dp.num)  # <-- note switch
+        ls = dp.R.largest_lowerset_below(min_r)
+        return Interval.degenerate(ls)
 
 
 def exponentiate_up(x: Decimal, num: int, den: int) -> Decimal:

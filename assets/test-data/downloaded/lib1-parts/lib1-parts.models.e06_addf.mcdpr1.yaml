@@ -42,7 +42,7 @@ nodes:
       $schema:
         title: M_Res_AddConstant_DP
         kind: PrimitiveDP
-        description: f + 10 <= r
+        description: f + 10 ≤ r
       F:
         $schema:
           kind: Poset

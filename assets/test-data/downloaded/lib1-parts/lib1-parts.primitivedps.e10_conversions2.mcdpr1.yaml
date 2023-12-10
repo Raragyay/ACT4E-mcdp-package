@@ -58,7 +58,7 @@ dps:
 - $schema:
     title: M_Res_AddConstant_DP
     kind: PrimitiveDP
-    description: f + 0.01380823 fur*h/s <= r
+    description: f + 0.01380823 fur*h/s ≤ r
   F:
     $schema:
       kind: Poset

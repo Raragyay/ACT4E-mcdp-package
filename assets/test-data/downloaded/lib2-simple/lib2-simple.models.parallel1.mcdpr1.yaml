@@ -424,14 +424,14 @@ nodes:
         top: Infinity
         units: ''
     resources:
-      _f_2_0:
+      _f_1_0:
         $schema:
           kind: Poset
           title: Numbers
         bottom: '0'
         top: Infinity
         units: ''
-      _f_2_1:
+      _f_1_1:
         $schema:
           kind: Poset
           title: Numbers
@@ -488,14 +488,14 @@ nodes:
         top: Infinity
         units: ''
     resources:
-      _f_1_0:
+      _f_2_0:
         $schema:
           kind: Poset
           title: Numbers
         bottom: '0'
         top: Infinity
         units: ''
-      _f_1_1:
+      _f_2_1:
         $schema:
           kind: Poset
           title: Numbers
@@ -583,35 +583,35 @@ connections:
     resource: r
 - from:
     node: _join_fname1
-    node_resource: _f_2_0
-  to:
-    node: _mult1
-    node_functionality: _op0
-- from:
-    node: _join_fname1
-    node_resource: _f_2_1
-  to:
-    node: _sum2
-    node_functionality: _term11
-- from:
-    functionality: f_2
-  to:
-    node: _join_fname1
-    node_functionality: _a
-- from:
-    node: _join_fname2
     node_resource: _f_1_0
   to:
     node: _sum1
     node_functionality: _term0
 - from:
-    node: _join_fname2
+    node: _join_fname1
     node_resource: _f_1_1
   to:
     node: _mult2
     node_functionality: _op01
 - from:
     functionality: f_1
+  to:
+    node: _join_fname1
+    node_functionality: _a
+- from:
+    node: _join_fname2
+    node_resource: _f_2_0
+  to:
+    node: _mult1
+    node_functionality: _op0
+- from:
+    node: _join_fname2
+    node_resource: _f_2_1
+  to:
+    node: _sum2
+    node_functionality: _term11
+- from:
+    functionality: f_2
   to:
     node: _join_fname2
     node_functionality: _a

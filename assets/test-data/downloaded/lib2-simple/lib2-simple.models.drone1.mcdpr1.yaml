@@ -53,7 +53,7 @@ nodes:
         top: Infinity
         units: kg
     nodes:
-      _mult1:
+      _divr1:
         $schema:
           title: SimpleWrap
           kind: NamedDP
@@ -163,10 +163,10 @@ nodes:
     - from:
         functionality: capacity
       to:
-        node: _mult1
+        node: _divr1
         node_functionality: _op0
     - from:
-        node: _mult1
+        node: _divr1
         node_resource: _res
       to:
         node: _conversion1

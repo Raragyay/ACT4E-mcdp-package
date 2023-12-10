@@ -10,9 +10,9 @@ result:
     $schema:
       title: UpperSet
     minimals:
-    - r_1: '52'
+    - r_1: '32'
   optimistic:
     $schema:
       title: UpperSet
     minimals:
-    - r_1: '52'
+    - r_1: '32'

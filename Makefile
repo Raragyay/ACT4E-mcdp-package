@@ -32,11 +32,16 @@ docs-serve:
 
 TD=assets/test-data/downloaded
 
-pack:  
+pack:
 	zuper-cli pack -d $(TD) --include '**/*yaml' -o src/act4e_mcdp/autogen_packed_test_data.py
 
 get-data:
 	-rm -rf $(TD)/*
-	zuper-ide-imp-create-test-cases \
-		--only-single-output \
+	-zuper-ide-imp-create-test-cases \
+		--only-libraries lib3-advanced \
+		--github-username AndreaCensi --source https://github.com/co-design-models/ACT4E-exercises-spring2023  -o $(TD)
+	-zuper-ide-imp-create-test-cases \
+		--only-exact \
+		--only-libraries lib1-parts \
+		--only-libraries lib2-simple \
 		--github-username AndreaCensi --source https://github.com/co-design-models/ACT4E-exercises-spring2023  -o $(TD)
