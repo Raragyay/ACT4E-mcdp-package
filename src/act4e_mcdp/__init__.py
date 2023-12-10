@@ -18,3 +18,4 @@ from .primitivedps import *
 from .posets import *
 from .download import *
 from .main_solve_dp_queries import *
+from .mcdp_solution_interface import *

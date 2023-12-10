@@ -9,7 +9,7 @@ from . import logger
 from .loading import load_repr1, parse_yaml_value
 from .nameddps import NamedDP
 from .primitivedps import PrimitiveDP
-from .solution_interface import MCDPSolverInterface
+from .mcdp_solution_interface import MCDPSolverInterface
 from .utils import import_from_string
 
 __all__ = [
@@ -70,7 +70,7 @@ def solve_mcdp_main() -> None:
             logger.error("Cannot open file: %r", model_source)
             sys.exit(1)
 
-    model = load_repr1(data, NamedDP)
+    model: NamedDP[Any, Any] = load_repr1(data, NamedDP)
     if not isinstance(model, NamedDP):  # type: ignore
         if isinstance(model, PrimitiveDP):
             msg = f"Expected a NamedDP, got a PrimitiveDP. Did you mean to use 'act4e-mcdp-solve-dp'?"

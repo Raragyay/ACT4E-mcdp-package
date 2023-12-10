@@ -1,8 +1,10 @@
 from dataclasses import dataclass
+from decimal import Decimal
 from fractions import Fraction
-from typing import Optional
+from typing import Generic, Optional, TypeVar
 
-from .posets import Poset
+from .coords import Coords
+from .posets import Numbers, Poset, PosetProduct
 
 __all__ = [
     "AmbientConversion",
@@ -36,9 +38,19 @@ __all__ = [
     "ValueFromPoset",
 ]
 
+F = TypeVar("F")
+R = TypeVar("R")
 
-@dataclass
-class PrimitiveDP:
+FT = TypeVar("FT")
+RT = TypeVar("RT")
+T = TypeVar("T")
+
+Fcov = TypeVar("Fcov", covariant=True)
+Rcov = TypeVar("Rcov", covariant=True)
+
+
+@dataclass(frozen=True)
+class PrimitiveDP(Generic[Fcov, Rcov]):
     r"""
     A generic PrimitiveDP; a morphism of the category DP.
 
@@ -59,12 +71,12 @@ class PrimitiveDP:
     """
 
     description: Optional[str]
-    F: Poset
-    R: Poset
+    F: Poset[Fcov]
+    R: Poset[Rcov]
 
 
-@dataclass
-class DPSeries(PrimitiveDP):
+@dataclass(frozen=True)
+class DPSeries(PrimitiveDP[object, object]):
     r"""
     A series composition of two or more DPs.
 
@@ -74,18 +86,27 @@ class DPSeries(PrimitiveDP):
         subs: The list of DPs
     """
 
-    subs: list[PrimitiveDP]
+    subs: list[PrimitiveDP[object, object]]
 
 
-@dataclass
-class ParallelDP(PrimitiveDP):
-    r""" """
+@dataclass(frozen=True)
+class ParallelDP(Generic[FT, RT], PrimitiveDP[tuple[FT, ...], tuple[RT, ...]]):
+    r"""
+    This is the parallel composition of two or more DPs.
 
-    subs: list[PrimitiveDP]
+    Note that the functionality poset is a PosetProduct of the functionality posets of the sub-DPs.
+    The same holds for the resources poset.
 
 
-@dataclass
-class ValueFromPoset:
+    """
+    F: PosetProduct[FT]
+    R: PosetProduct[RT]
+
+    subs: list[PrimitiveDP[FT, RT]]
+
+
+@dataclass(frozen=True)
+class ValueFromPoset(Generic[T]):
     r"""
     A value in a particular poset (a "typed" value).
 
@@ -102,12 +123,12 @@ class ValueFromPoset:
 
     """
 
-    value: object
-    poset: Poset
+    value: T
+    poset: Poset[T]
 
 
-@dataclass
-class M_Res_MultiplyConstant_DP(PrimitiveDP):
+@dataclass(frozen=True)
+class M_Res_MultiplyConstant_DP(PrimitiveDP[Decimal, Decimal]):
     r"""
     Multiplication by a constant on the left side.
 
@@ -124,21 +145,39 @@ class M_Res_MultiplyConstant_DP(PrimitiveDP):
         opspace: The poset $\opspace$ where the multiplication and comparison take place.
 
     """
-
-    vu: ValueFromPoset
-    opspace: Poset
-
-
-@dataclass
-class M_Res_DivideConstant_DP(PrimitiveDP):
-    r""" """
-
-    vu: ValueFromPoset
-    opspace: Poset
+    F: Numbers
+    R: Numbers
+    vu: ValueFromPoset[Decimal]
+    opspace: Numbers
 
 
-@dataclass
-class M_Fun_MultiplyConstant_DP(PrimitiveDP):
+@dataclass(frozen=True)
+class M_Res_DivideConstant_DP(PrimitiveDP[Decimal, Decimal]):
+    r"""
+
+    Division by a constant
+
+    Relation:
+
+        $$
+            \fun /_{\opspace} v \leq_{\opspace} \res
+        $$
+
+    Attributes:
+        F (Poset): The functionality poset $\F$
+        R (Poset): The resources poset $\R$
+        vu: The value $v$ to be added.
+        opspace: The poset $\opspace$ where the division and comparison take place.
+    """
+
+    F: Numbers
+    R: Numbers
+    vu: ValueFromPoset[Decimal]
+    opspace: Numbers
+
+
+@dataclass(frozen=True)
+class M_Fun_MultiplyConstant_DP(PrimitiveDP[Decimal, Decimal]):
     r"""
     Multiplication by a constant on the right side.
 
@@ -155,12 +194,14 @@ class M_Fun_MultiplyConstant_DP(PrimitiveDP):
         opspace: The poset $\opspace$ where the multiplication and comparison take place.
 
     """
-    vu: ValueFromPoset
-    opspace: Poset
+    F: Numbers
+    R: Numbers
+    vu: ValueFromPoset[Decimal]
+    opspace: Numbers
 
 
-@dataclass
-class M_Res_AddConstant_DP(PrimitiveDP):
+@dataclass(frozen=True)
+class M_Res_AddConstant_DP(PrimitiveDP[Decimal, Decimal]):
     r"""
     Addition of a constant on the left side.
 
@@ -177,12 +218,14 @@ class M_Res_AddConstant_DP(PrimitiveDP):
         opspace: The poset $\opspace$ where the multiplication and comparison take place.
 
     """
-    vu: ValueFromPoset
-    opspace: Poset
+    F: Numbers
+    R: Numbers
+    vu: ValueFromPoset[Decimal]
+    opspace: Numbers
 
 
-@dataclass
-class M_Fun_AddMany_DP(PrimitiveDP):
+@dataclass(frozen=True)
+class M_Fun_AddMany_DP(PrimitiveDP[Decimal, tuple[Decimal, ...]]):
     r"""
     Addition on the right side.
 
@@ -202,11 +245,11 @@ class M_Fun_AddMany_DP(PrimitiveDP):
         opspace: The poset $\opspace$ where the operations and comparisons take place.
 
     """
-    opspace: Poset
+    opspace: Numbers
 
 
-@dataclass
-class M_Res_AddMany_DP(PrimitiveDP):
+@dataclass(frozen=True)
+class M_Res_AddMany_DP(PrimitiveDP[tuple[Decimal, ...], Decimal]):
     r"""
     Addition on the left side.
 
@@ -223,11 +266,13 @@ class M_Res_AddMany_DP(PrimitiveDP):
         opspace: The poset $\opspace$ where the operations and comparisons take place.
 
     """
-    opspace: Poset
+    F: PosetProduct[Decimal]
+    R: Numbers
+    opspace: Numbers
 
 
-@dataclass
-class JoinNDP(PrimitiveDP):
+@dataclass(frozen=True)
+class JoinNDP(Generic[T], PrimitiveDP[tuple[T, ...], T]):
     r"""
     This DP is used as plumbing. It is the dual of [MeetNDualDP][act4e_mcdp.primitivedps.MeetNDualDP].
 
@@ -251,11 +296,13 @@ class JoinNDP(PrimitiveDP):
 
 
     """
-    opspace: Poset
+    F: PosetProduct[T]
+    R: Poset[T]
+    opspace: Poset[T]
 
 
-@dataclass
-class MeetNDualDP(PrimitiveDP):
+@dataclass(frozen=True)
+class MeetNDualDP(Generic[T], PrimitiveDP[T, tuple[T, ...]]):
     r"""
     This DP is used as plumbing. It is the dual of [JoinNDP][act4e_mcdp.primitivedps.JoinNDP].
 
@@ -278,26 +325,47 @@ class MeetNDualDP(PrimitiveDP):
 
 
     """
+    F: Poset[T]
+    R: PosetProduct[T]
+    opspace: Poset[T]
 
-    opspace: Poset
 
-
-@dataclass
-class Mux(PrimitiveDP):
+@dataclass(frozen=True)
+class Mux(PrimitiveDP[object, object]):
     r""" """
 
-    coords: object
+    coords: Coords
+    coords2: Coords
+
+    def __post_init__(self):
+        assert isinstance(self.coords, Coords), self
 
 
-@dataclass
-class M_Power_DP(PrimitiveDP):
-    r""" """
+@dataclass(frozen=True)
+class M_Power_DP(PrimitiveDP[Decimal, Decimal]):
+    r"""
+    Exponentiation of functionalities.
+
+
+    Relation:
+
+        $$
+            \fun ^ (n / d) \leq_{\opspace}  \res
+        $$
+
+    Attributes:
+        F (Poset): The functionality poset $\F$
+        R (Poset): The resources poset $\R$
+        num: numerator of the exponent
+        den: denominator of the exponent
+
+    """
     num: int
     den: int
 
 
-@dataclass
-class M_Fun_MultiplyMany_DP(PrimitiveDP):
+@dataclass(frozen=True)
+class M_Fun_MultiplyMany_DP(PrimitiveDP[Decimal, tuple[Decimal, ...]]):
     r"""
     Multiplication on the right side.
 
@@ -313,11 +381,11 @@ class M_Fun_MultiplyMany_DP(PrimitiveDP):
         R (Poset): The resources poset $\R$
         opspace: The poset $\opspace$ where the operations and comparisons take place.
     """
-    opspace: Poset
+    opspace: Numbers
 
 
-@dataclass
-class M_Res_MultiplyMany_DP(PrimitiveDP):
+@dataclass(frozen=True)
+class M_Res_MultiplyMany_DP(PrimitiveDP[tuple[Decimal, ...], Decimal]):
     r"""
     Multiplication on the left side.
 
@@ -329,16 +397,18 @@ class M_Res_MultiplyMany_DP(PrimitiveDP):
         $$
 
     Attributes:
-        F (Poset): The functionality poset $\F$
-        R (Poset): The resources poset $\R$
+        F (Poset): The functionality poset $\F$ must be Numbers
+        R (Poset): The resources poset $\R$ must be Numbers
         opspace: The poset $\opspace$ where the operations and comparisons take place.
 
     """
-    opspace: Poset
+    F: PosetProduct[Decimal]
+    R: Numbers
+    opspace: Numbers
 
 
-@dataclass
-class M_Ceil_DP(PrimitiveDP):
+@dataclass(frozen=True)
+class M_Ceil_DP(PrimitiveDP[Decimal, Decimal]):
     r"""
 
     Relation:
@@ -348,16 +418,18 @@ class M_Ceil_DP(PrimitiveDP):
         $$
 
     Attributes:
-       F (Poset): The functionality poset $\F$
-       R (Poset): The resources poset $\R$
+       F (Poset): The functionality poset $\F$ must be Numbers
+       R (Poset): The resources poset $\R$ must be Numbers
        opspace: The poset $\opspace$ where the comparisons take place.
 
     """
-    opspace: Poset
+    F: Numbers
+    R: Numbers
+    opspace: Numbers
 
 
-@dataclass
-class M_FloorFun_DP(PrimitiveDP):
+@dataclass(frozen=True)
+class M_FloorFun_DP(PrimitiveDP[Decimal, Decimal]):
     r"""
 
     Relation:
@@ -373,11 +445,13 @@ class M_FloorFun_DP(PrimitiveDP):
 
     """
 
-    opspace: Poset
+    opspace: Numbers
+    F: Numbers
+    R: Numbers
 
 
-@dataclass
-class M_Fun_AddConstant_DP(PrimitiveDP):
+@dataclass(frozen=True)
+class M_Fun_AddConstant_DP(PrimitiveDP[Decimal, Decimal]):
     r"""
     Addition of a constant on the right side.
 
@@ -394,12 +468,14 @@ class M_Fun_AddConstant_DP(PrimitiveDP):
         opspace: The poset $\opspace$ where the multiplication and comparison take place.
 
     """
-    vu: ValueFromPoset
-    opspace: Poset
+    F: Numbers
+    R: Numbers
+    vu: ValueFromPoset[Decimal]
+    opspace: Numbers
 
 
-@dataclass
-class UnitConversion(PrimitiveDP):
+@dataclass(frozen=True)
+class UnitConversion(PrimitiveDP[Decimal, Decimal]):
     r"""
 
     A unit conversion between real numbers
@@ -419,13 +495,14 @@ class UnitConversion(PrimitiveDP):
         factor: The fraction $\text{factor}$
 
     """
-
-    opspace: Poset
+    F: Numbers
+    R: Numbers
+    opspace: Numbers
     factor: Fraction
 
 
-@dataclass
-class AmbientConversion(PrimitiveDP):
+@dataclass(frozen=True)
+class AmbientConversion(Generic[T], PrimitiveDP[T, T]):
     r"""
     A "conversion" between two posets $\F, \R$ that are subposets of a common ambient poset $\common$.
 
@@ -444,12 +521,13 @@ class AmbientConversion(PrimitiveDP):
         common: The common ambient poset $\common$
 
     """
+    F: Poset[T]
+    R: Poset[T]
+    common: Poset[T]
 
-    common: Poset
 
-
-@dataclass
-class IdentityDP(PrimitiveDP):
+@dataclass(frozen=True)
+class IdentityDP(Generic[T], PrimitiveDP[T, T]):
     r"""
     This is the identity DP ($\F = \R$)
 
@@ -472,16 +550,24 @@ class IdentityDP(PrimitiveDP):
         of [AmbientConversion][act4e_mcdp.primitivedps.AmbientConversion]
         where $\common = \F = \R$.
     """
+    F: Poset[T]
+    R: Poset[T]
 
 
-@dataclass
-class DPLoop2(PrimitiveDP):
+F1 = TypeVar("F1")
+
+R1 = TypeVar("R1")
+M = TypeVar("M")
+
+
+@dataclass(frozen=True)
+class DPLoop2(Generic[F1, R1, M], PrimitiveDP[F1, R1]):
     r""" """
-    dp: PrimitiveDP
+    dp: PrimitiveDP[tuple[F1, M], tuple[R1, M]]
 
 
-@dataclass
-class Limit(PrimitiveDP):
+@dataclass(frozen=True)
+class Limit(Generic[T], PrimitiveDP[T, tuple[()]]):
     r"""
     Implements a bound on the functionality.
 
@@ -504,11 +590,14 @@ class Limit(PrimitiveDP):
 
     """
 
-    c: ValueFromPoset
+    F: Poset[T]
+    R: Poset[tuple[()]]
+
+    c: ValueFromPoset[T]
 
 
-@dataclass
-class Constant(PrimitiveDP):
+@dataclass(frozen=True)
+class Constant(Generic[T], PrimitiveDP[tuple[()], T]):
     r"""
     Implements a bound on the resources.
 
@@ -531,11 +620,14 @@ class Constant(PrimitiveDP):
 
     """
 
-    c: ValueFromPoset
+    F: Poset[tuple[()]]
+    R: Poset[T]
+
+    c: ValueFromPoset[T]
 
 
-@dataclass
-class EntryInfo:
+@dataclass(frozen=True)
+class EntryInfo(Generic[FT, RT]):
     r"""
     Describes $\fun^{\max}_{\imp}$ and $\res^{\min}_{\imp}$ for an implementation.
 
@@ -545,12 +637,12 @@ class EntryInfo:
         r_min: The minimum resources $\res^{\min}_{\imp}$
 
     """
-    f_max: object
-    r_min: object
+    f_max: FT
+    r_min: RT
 
 
-@dataclass
-class CatalogueDP(PrimitiveDP):
+@dataclass(frozen=True)
+class CatalogueDP(Generic[FT, RT], PrimitiveDP[FT, RT]):
     r"""
     Implements a catalogue.
 
@@ -574,4 +666,4 @@ class CatalogueDP(PrimitiveDP):
 
     """
 
-    entries: dict[str, EntryInfo]
+    entries: dict[str, EntryInfo[FT, RT]]

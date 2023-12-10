@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+from typing import Any
 
 import yaml
 
@@ -69,7 +70,7 @@ def solve_dp_main() -> None:
             logger.error("Cannot open file: %r", model_source)
             sys.exit(1)
 
-    model = load_repr1(data, PrimitiveDP)
+    model: PrimitiveDP[Any, Any] = load_repr1(data, PrimitiveDP)
     if not isinstance(model, PrimitiveDP):  # type: ignore
         if isinstance(model, NamedDP):
             msg = f"Expected a PrimitiveDP, not a NamedDP. Did you mean to use 'act4e-mcdp-solve-mcdp'?"

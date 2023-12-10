@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Any, Generic, TypeVar
 
 from .posets import Poset
 from .primitivedps import PrimitiveDP
@@ -14,9 +15,12 @@ __all__ = [
     "SimpleWrap",
 ]
 
+FT = TypeVar("FT")
+RT = TypeVar("RT")
+
 
 @dataclass
-class NamedDP:
+class NamedDP(Generic[FT, RT]):
     r"""
     Generic interface of a NamedDP.
 
@@ -26,12 +30,12 @@ class NamedDP:
 
 
     """
-    functionalities: dict[str, Poset]
-    resources: dict[str, Poset]
+    functionalities: dict[str, Poset[FT]]
+    resources: dict[str, Poset[RT]]
 
 
 @dataclass
-class SimpleWrap(NamedDP):
+class SimpleWrap(NamedDP[FT, RT]):
     r"""
     A simple wrapper that wraps a [PrimitiveDP][act4e_mcdp.primitivedps.PrimitiveDP].
 
@@ -49,7 +53,7 @@ class SimpleWrap(NamedDP):
 
     """
 
-    dp: PrimitiveDP
+    dp: PrimitiveDP[tuple[FT, ...], tuple[RT, ...]]
 
 
 @dataclass
@@ -136,7 +140,7 @@ class Connection:
 
 
 @dataclass
-class CompositeNamedDP(NamedDP):
+class CompositeNamedDP(Generic[FT, RT], NamedDP[FT, RT]):
     r"""
     Description of a composite NamedDP.
 
@@ -191,5 +195,7 @@ class CompositeNamedDP(NamedDP):
 
     """
 
-    nodes: dict[str, NamedDP]
+    functionalities: dict[str, Poset[FT]]
+    resources: dict[str, Poset[RT]]
+    nodes: dict[str, NamedDP[Any, Any]]
     connections: list[Connection]

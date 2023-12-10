@@ -1,9 +1,10 @@
 from decimal import Decimal
-from typing import Any, Callable, cast, Optional, Type, TypeVar
+from typing import Any, Callable, Optional, Type, TypeVar, cast
 
 import yaml
 
 from . import logger
+from .coords import ComposeList, Coords, CoordsComp, CoordsIdentity
 from .nameddps import (
     CompositeNamedDP,
     Connection,
@@ -69,10 +70,10 @@ def loader_for(classname: str) -> Callable[[FF], FF]:
 
 
 @loader_for("PosetProduct")
-def load_PosetProduct(ob: dict[str, Any]) -> PosetProduct:
-    subs: list[Poset] = []
-    for p in ob["subs"]:
-        p = load_repr1(p, Poset)
+def load_PosetProduct(ob: dict[str, Any]) -> PosetProduct[Any]:
+    subs: list[Poset[Any]] = []
+    for ps in ob["subs"]:
+        p: Poset[Any] = load_repr1(ps, Poset)
         subs.append(p)
 
     return PosetProduct(subs=subs)
@@ -80,8 +81,8 @@ def load_PosetProduct(ob: dict[str, Any]) -> PosetProduct:
 
 def _load_DP_fields(ob: dict[str, Any]) -> dict[str, Any]:
     description = ob["$schema"].get("description", None)
-    F = load_repr1(ob["F"], Poset)
-    R = load_repr1(ob["R"], Poset)
+    F: Poset[Any] = load_repr1(ob["F"], Poset)
+    R: Poset[Any] = load_repr1(ob["R"], Poset)
     fields = dict(description=description, F=F, R=R)
 
     if "vu" in ob:
@@ -94,6 +95,11 @@ def _load_DP_fields(ob: dict[str, Any]) -> dict[str, Any]:
         fields["common"] = load_repr1(ob["common"], Poset)
     if "C" in ob:
         fields["opspace"] = load_repr1(ob["C"], Poset)
+
+    if "coords" in ob:
+        fields["coords"] = load_repr1(ob["coords"], Coords)
+    if "coords2" in ob:
+        fields["coords2"] = load_repr1(ob["coords2"], Coords)
     if "factor" in ob:
         from fractions import Fraction
 
@@ -102,8 +108,8 @@ def _load_DP_fields(ob: dict[str, Any]) -> dict[str, Any]:
 
 
 @loader_for("ValueFromPoset")
-def load_ValueFromPoset(ob: dict[str, Any]):
-    poset = load_repr1(ob["poset"], Poset)
+def load_ValueFromPoset(ob: dict[str, Any]) -> ValueFromPoset[Any]:
+    poset: Poset[Any] = load_repr1(ob["poset"], Poset)
     value = ob["value"]
     value = parse_yaml_value(poset, value)
     return ValueFromPoset(value=value, poset=poset)
@@ -145,7 +151,7 @@ def load_Identity_DP(ob: dict[str, Any]):
 @loader_for("Mux")
 def load_Mux(ob: dict[str, Any]):
     fields = _load_DP_fields(ob)
-    fields["coords"] = ob["coords"]
+    # fields["coords"] = load_repr1(ob["coords"], Coords)
     return Mux(**fields)
 
 
@@ -223,24 +229,24 @@ def load_M_FloorFun_DP(ob: dict[str, Any]):
 
 
 @loader_for("SeriesN")
-def load_SeriesN(ob: dict[str, Any]):
+def load_SeriesN(ob: dict[str, Any]) -> DPSeries:
     fields = _load_DP_fields(ob)
 
-    subs: list[PrimitiveDP] = []
-    for dp in ob["dps"]:
-        dp = load_repr1(dp, PrimitiveDP)
+    subs: list[PrimitiveDP[Any, Any]] = []
+    for dps in ob["dps"]:
+        dp: PrimitiveDP[Any, Any] = load_repr1(dps, PrimitiveDP)
         subs.append(dp)
 
     return DPSeries(**fields, subs=subs)
 
 
 @loader_for("ParallelN")
-def load_ParallelN(ob: dict[str, Any]):
+def load_ParallelN(ob: dict[str, Any]) -> ParallelDP[Any, Any]:
     fields = _load_DP_fields(ob)
 
-    subs: list[PrimitiveDP] = []
-    for dp in ob["dps"]:
-        dp = load_repr1(dp, PrimitiveDP)
+    subs: list[PrimitiveDP[Any, Any]] = []
+    for dps in ob["dps"]:
+        dp: PrimitiveDP[Any, Any] = load_repr1(dps, PrimitiveDP)
         subs.append(dp)
 
     return ParallelDP(**fields, subs=subs)
@@ -310,15 +316,15 @@ def load_Constant(ob: dict[str, Any]):
 
 @loader_for("CompositeNamedDP")
 def load_CompositeNamedDP(ob: dict[str, Any]):
-    functionalities = ob["functionalities"]
-    resources = ob["resources"]
+    functionalities_s = ob["functionalities"]
+    resources_s = ob["resources"]
 
-    functionalities = {k: load_repr1(v, Poset) for k, v in functionalities.items()}
-    resources = {k: load_repr1(v, Poset) for k, v in resources.items()}
+    functionalities: dict[str, Any] = {k: load_repr1(v, Poset) for k, v in functionalities_s.items()}
+    resources: dict[str, Any] = {k: load_repr1(v, Poset) for k, v in resources_s.items()}
     loaded_nodes = {}
     nodes = ob["nodes"]
     for k, v in nodes.items():
-        node = load_repr1(v, NamedDP)
+        node: NamedDP[Any, Any] = load_repr1(v, NamedDP)
         loaded_nodes[k] = node
     connections: list[Connection] = []
 
@@ -343,23 +349,24 @@ def load_CompositeNamedDP(ob: dict[str, Any]):
 
 
 @loader_for("SimpleWrap")
-def load_SimpleWrap(ob: dict[str, Any]):
+def load_SimpleWrap(ob: dict[str, Any]) -> SimpleWrap[object, object]:
     functionalities = {}
     for k, v in ob["functionalities"].items():
         functionalities[k] = load_repr1(v, Poset)
     resources = {}
     for k, v in ob["resources"].items():
         resources[k] = load_repr1(v, Poset)
-    dp = load_repr1(ob["dp"], PrimitiveDP)
+    dp: PrimitiveDP[Any, Any] = load_repr1(ob["dp"], PrimitiveDP)
     return SimpleWrap(functionalities=functionalities, resources=resources, dp=dp)
 
 
 @loader_for("FinitePoset")
-def load_FinitePoset(ob: dict[str, Any]):
+def load_FinitePoset(ob: dict[str, Any]) -> FinitePoset:
     elements = ob["elements"]
     relations = ob["relations"]
-    relations = set(tuple(x) for x in relations)
-    elements = set(elements)
+    # TODO: validation of relations
+    relations: set[tuple[str, str]] = set(tuple(x) for x in relations)  # type: ignore
+    elements: set[str] = set(elements)
     return FinitePoset(elements=elements, relations=relations)
 
 
@@ -422,24 +429,53 @@ def load_repr1(data: dict[str, Any], T: Optional[Type[X]] = None) -> X:
         raise ValueError(msg) from e
 
 
-def parse_yaml_value(poset: Poset, ob: object) -> object:
+@loader_for("ComposeList")
+def load_ComposeList(ob: dict[str, Any]) -> ComposeList:
+    res: list[Coords] = []
+    for c in ob["components"]:
+        r = load_repr1(c, Coords)
+        res.append(r)
+
+    return ComposeList(components=tuple(res))
+
+
+@loader_for("CoordsComp")
+def load_CoordsComp(ob: dict[str, Any]) -> CoordsComp:
+    index = ob["index"]
+    ntot = ob["ntot"]
+    rest = ob["rest"]
+    rest = load_repr1(rest, Coords)
+    return CoordsComp(index=index, ntot=ntot, rest=rest)
+
+
+@loader_for("CoordsIdentity")
+def load_CoordsIdentity(ob: dict[str, Any]) -> CoordsIdentity:
+    return CoordsIdentity()
+
+
+def parse_yaml_value(poset: Poset[X], ob: object) -> X:
     match poset:
         case Numbers():
             if not isinstance(ob, (int, str, float, bool)):
                 msg = "For Poset of numbers, expected string or int, got %s.\b%s" % (type(ob), repr(ob))
                 raise ValueError(msg)
-            return Decimal(ob)
+            return Decimal(ob)  # type: ignore
         case FinitePoset():
-            return ob
-        case PosetProduct(subs):
+            if not isinstance(ob, str):
+                msg = "For FinitePoset, expected string, got %s.\b%s" % (type(ob), repr(ob))
+                raise ValueError(msg)
+            return ob  # type: ignore
+        case PosetProduct() as PP:
+            subs: list[Poset[Any]] = PP.subs
             if not isinstance(ob, list):
                 msg = "Expected list, got %s" % type(ob)
                 raise ValueError(msg)
             obl = cast(list[Any], ob)
             val: list[Any] = []
-            for el, sub in zip(obl, subs):
+            for el, sub in zip(obl, subs):  # type: ignore
+                sub = cast(Poset[Any], sub)
                 el = parse_yaml_value(sub, el)
                 val.append(el)
-            return tuple(val)
+            return tuple(val)  # type: ignore
         case _:
             raise NotImplementedError(type(poset))
