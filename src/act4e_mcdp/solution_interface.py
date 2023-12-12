@@ -5,7 +5,6 @@ from decimal import Decimal
 from fractions import Fraction
 from typing import Generic, Optional, TypeVar, final, overload
 
-from mcdp_maps_reg import cco_map_value
 from .posets import Interval, LowerSet, Numbers, PosetProduct, UpperSet
 from .primitivedps import (
     AmbientConversion,
@@ -35,6 +34,7 @@ from .primitivedps import (
     PrimitiveDP,
     UnitConversion,
 )
+from .coords import cco_map_value
 
 __all__ = [
     "DPSolverInterface",
@@ -811,7 +811,7 @@ class DPSolverInterface(ABC):
     def solve_dp_FixFunMinRes_Mux(
         self, dp: Mux, query: FixFunMinResQuery[object]
     ) -> Interval[UpperSet[object]]:
-        cco = cco_map_value  # FIXME
+        cco = cco_map_value
 
         r = dp.coords.get_it(query.functionality, cco=cco)  # type: ignore
         return Interval.degenerate(UpperSet.principal(r))

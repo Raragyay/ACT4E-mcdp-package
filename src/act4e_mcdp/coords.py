@@ -3,8 +3,6 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from typing import Any, Generic, Literal, Optional, Sequence, TypeVar, final
 
-from mcdp_utils_misc import BoolLike, not_true
-
 __all__ = [
     "ComposeList",
     "Coords",
@@ -31,6 +29,7 @@ __all__ = [
     # "is_2_el_permutation",
     # "is_valid_coords",
     # "same_coords",
+    "cco_map_value"
 ]
 
 X = TypeVar("X")
@@ -517,11 +516,24 @@ class CCOTupleSimple(CoordsConcreteOp[object]):
 
 def check_valid_coords(coords: "Coords") -> None:
     if not (why := is_valid_coords(coords)):
-        raise InvalidCoords("Invalid coords")
+        raise InvalidCoords("Invalid coords", why)
 
 
 class InvalidCoords(ValueError):
     pass
+
+
+@dataclass
+class MyBool:
+    truthy: bool
+    reason: str
+    def __bool__(self):
+        return self.truthy
+
+BoolLike = bool | MyBool
+
+def not_true(reason: str):
+    return MyBool(False, reason)
 
 
 def is_valid_coords(c: "Coords") -> BoolLike:
@@ -550,3 +562,5 @@ class CCOMapValue(CoordsConcreteOp[object]):
                 raise ValueError(f"Expected {ntot} elements, got {n}")
 
         return x[i]  # type: ignore
+
+cco_map_value = CCOMapValue()
