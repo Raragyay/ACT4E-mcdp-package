@@ -14,7 +14,7 @@ def test_loading_all() -> Iterator[tuple[Callable[[str, dict[str, Any]], None], 
     for filename in files:
         if "queries" in filename:
             continue
-        with open(filename) as f:
+        with open(filename, encoding="utf-8") as f:
             content = f.read()
 
         data = yaml.load(content, Loader=yaml.SafeLoader)

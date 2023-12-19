@@ -30,10 +30,10 @@ def _check_md5(vname: str, data: Union[str, bytes], length: int, md5: str, orig_
     if os.path.exists(fn):
         orig_data: Union[bytes, str]
         if isinstance(data, str):
-            with open(fn, "r") as f1:
+            with open(fn, "r", encoding="utf-8") as f1:
                 orig_data = f1.read()
         else:
-            with open(fn, "rb") as f2:
+            with open(fn, "rb", encoding="utf-8") as f2:
                 orig_data = f2.read()
 
         if orig_data != data:
@@ -48,9 +48,9 @@ def _check_md5(vname: str, data: Union[str, bytes], length: int, md5: str, orig_
             # if False:
             # fns = f"pack-orig-{vname}", f"pack-curr-{vname}"
             #     try:
-            #         with open(fns[0], "wb") as fw1:
+            #         with open(fns[0], "wb", encoding="utf-8") as fw1:
             #             fw1.write(as_bytes(orig_data))
-            #         with open(fns[1], "wb") as fw2:
+            #         with open(fns[1], "wb", encoding="utf-8") as fw2:
             #             fw2.write(as_bytes(data))
             #     except:
             #         logger.error("Could not write diff files.", e=traceback.format_exc())
@@ -65,7 +65,7 @@ warned: Set[str] = set()
 def get_updated_str(data: str, orig_filename: str) -> str:
     fn = os.path.join(os.path.dirname(__file__), orig_filename)
     if os.path.exists(fn):
-        with open(fn, "r") as f1:
+        with open(fn, "r", encoding="utf-8") as f1:
             orig_data = f1.read()
             return orig_data
     else:
@@ -84,7 +84,7 @@ def get_updated_str(data: str, orig_filename: str) -> str:
 def get_updated_bytes(data: bytes, orig_filename: str) -> bytes:
     fn = os.path.join(os.path.dirname(__file__), orig_filename)
     if os.path.exists(fn):
-        with open(fn, "rb") as f1:
+        with open(fn, "rb", encoding="utf-8") as f1:
             orig_data = f1.read()
             return orig_data
     else:

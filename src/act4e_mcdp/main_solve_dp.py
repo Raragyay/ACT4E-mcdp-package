@@ -64,7 +64,7 @@ def solve_dp_main() -> None:
         data = yaml.load(model_source, Loader=yaml.SafeLoader)
     else:
         if os.path.exists(model_source):
-            model_source = open(model_source).read()
+            model_source = open(model_source, encoding="utf-8").read()
             data = yaml.load(model_source, Loader=yaml.SafeLoader)
         else:
             logger.error("Cannot open file: %r", model_source)

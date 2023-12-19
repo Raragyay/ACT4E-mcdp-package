@@ -91,13 +91,13 @@ def solve_dp_queries_main() -> None:
             logger.warn("Ignoring %r", x)
 
     for fn in sorted(set(filenames)):
-        data = yaml.load(open(fn).read(), Loader=yaml.SafeLoader)
+        data = yaml.load(open(fn, encoding="utf-8").read(), Loader=yaml.SafeLoader)
         filename_rel = cast(str, data["dp"])
         dp_filename = os.path.join(os.path.dirname(fn), filename_rel)
         if not os.path.exists(dp_filename):
             logger.error("File %r does not exist", dp_filename)
             sys.exit(1)
-        with open(dp_filename) as f:
+        with open(dp_filename, encoding="utf-8") as f:
             data_dp = yaml.load(f.read(), Loader=yaml.SafeLoader)
         model: PrimitiveDP[Any, Any] = load_repr1(data_dp, PrimitiveDP)
 
@@ -255,7 +255,7 @@ def solve_dp_queries_main() -> None:
     from . import __version__
 
     output = {"metadata": {"ACT4E-mcdp-version": __version__}, "queries": all_output, "summary": summary}
-    with open(fn_out, "w") as f:
+    with open(fn_out, "w", encoding="utf-8") as f:
         f.write(yaml.dump(output, allow_unicode=True, default_flow_style=False))
 
     # logger.info("Summary:\n" + yaml.dump(summary, allow_unicode=True, default_flow_style=False))

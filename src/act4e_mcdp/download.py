@@ -24,5 +24,5 @@ def download_main() -> None:
         os.makedirs(dn, exist_ok=True)
         logger.info("Writing %r", fn)
 
-        with open(fn, "w") as f:
+        with open(fn, "w", encoding="utf-8") as f:
             f.write(data)
